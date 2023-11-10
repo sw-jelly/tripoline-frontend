@@ -1,37 +1,71 @@
 # EnjoyTrip_Vue_서울_13반_지인성_양유경
 
 
+This template should help get you started developing with Vue 3 in Vite.
 
+
+
+## Recommended IDE Setup
 ## Getting started
 
+
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
+
+## Customize configuration
 Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Add your files
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
+## Project Setup
+- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
+
+- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+```sh
+
+npm install
+```
 ```
 cd existing_repo
-git remote add origin https://lab.ssafy.com/crm03008/enjoytrip_vue_Seoul13_JIS_YYK.git
-git branch -M master
-git push -uf origin master
-```
 
+git remote add origin https://lab.ssafy.com/crm03008/enjoytrip_vue_Seoul13_JIS_YYK.git
+### Compile and Hot-Reload for Development
+git branch -M master
+
+git push -uf origin master
+```sh
+```
+npm run dev
+
+```
 ## Integrate with your tools
 
+
+### Compile and Minify for Production
 - [ ] [Set up project integrations](https://lab.ssafy.com/crm03008/enjoytrip_vue_Seoul13_JIS_YYK/-/settings/integrations)
 
+
+```sh
 ## Collaborate with your team
+npm run build
 
+```
 - [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
+- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
+### Lint with [ESLint](https://eslint.org/)
+- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
+
+- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
+```sh
+- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+npm run lint
+
+```
 ## Test and Deploy
 
 Use the built-in continuous integration in GitLab.

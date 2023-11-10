@@ -21,7 +21,7 @@ import { RouterLink } from 'vue-router'
           <li class="nav-item"><a class="nav-link" href="#">공지사항</a></li>
           <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'board'}">게시판</RouterLink></li>
           <li class="nav-item">
-            <a class="nav-link" href="${root}/attraction/list">관광지 검색</a>
+            <RouterLink class="nav-link" :to="{ name: 'attraction' }">관광지 검색</RouterLink>
           </li>
         </ul>
         <c:if test="${empty userinfo}">

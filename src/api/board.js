@@ -18,11 +18,14 @@ function bestArticleList(params, success, fail) {
 // }
 
 function articleDetail(articleId, success, fail) {
+  console.log(articleId)
   local.get(`boardRest/${articleId}`).then(success).catch(fail)
 }
 
 function registArticle(article, success, fail) {
-  local.post(`boardRest`, JSON.stringify(article)).then(success).catch(fail)
+  const articleData = JSON.stringify(article);
+  console.log('resgistArticle.........',articleData)
+  local.post(`boardRest`, articleData).then(success).catch(fail)
 }
 
 function deleteArticle(articleId, success, fail) {

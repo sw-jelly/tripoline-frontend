@@ -19,7 +19,7 @@ import { RouterLink } from 'vue-router'
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a class="nav-link" href="#">공지사항</a></li>
-          <li class="nav-item"><a class="nav-link" href="${root}/board/list">게시판</a></li>
+          <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'board'}">게시판</RouterLink></li>
           <li class="nav-item">
             <a class="nav-link" href="${root}/attraction/list">관광지 검색</a>
           </li>
@@ -30,9 +30,7 @@ import { RouterLink } from 'vue-router'
               <RouterLink class="nav-link" :to="{ name: 'member-login' }">로그인</RouterLink>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal"
-                >회원가입</a
-              >
+              <RouterLink class="nav-link" :to="{ name: 'member-regist' }">회원가입</RouterLink>
             </li>
           </ul>
         </c:if>

@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/member/regist',
       name: 'member-regist',
-      component: () => import('@/views/MemberRegistView.vue')
+      component: () => import('@/components/member/MemberRegisterView.vue')
     },
     {
       path: '/member/update',
@@ -46,24 +46,29 @@ const router = createRouter({
     {
       path: '/board',
       name: 'board',
-      component: () => import('@/views/BoardView'),
+      component: () => import('@/views/BoardView.vue'),
       redirect: '/board/list',
       children: [
         {
           path: 'list',
           name: 'board-list',
-          component: () => import('@/views/BoardListView')
+          component: () => import('@/components/board/BoardListView.vue')
         },
         {
           path: 'write',
           name: 'board-write',
-          component: () => import('@/views/BoardWriteView')
+          component: () => import('@/components/board/BoardWriteView.vue')
         },
         {
-          path: 'detail',
+          path: 'detail:articleId',
           name: 'board-detail', // 수정,삭제 여기서
-          component: () => import('@/views/BoardDetailView')
-        }
+          component: () => import('@/components/board/BoardDetailView.vue')
+        },
+        {
+          path: 'update',
+          name: 'board-update', // 수정,삭제 여기서
+          component: () => import('@/components/board/BoardUpdateView.vue')
+        },
       ]
     }
   ]

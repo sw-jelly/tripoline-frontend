@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+
+function showAlert(){
+  alert('기능 구현 예정')
+}
+</script>
 
 <template>
   <div class="container-xxl vh-100">
@@ -14,7 +19,7 @@
             <div class="app-brand justify-content-center">
               <a href="${root}/index.jsp" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
-                  <img src="@/assets/flight.png" alt="브랜드로고" width="100px" />
+                  <img src="@/assets/flight.png" alt="브랜드로고" :style="{width : '100px'}"/>
                 </span>
               </a>
             </div>
@@ -32,14 +37,14 @@
                   id="userid"
                   name="userid"
                   placeholder="아이디를 입력해주세요"
-                  value="${saveid}"
+                  value=""
                   autofocus
                 />
               </div>
               <div class="mb-3 form-password-toggle">
                 <div class="d-flex justify-content-between">
                   <label class="form-label" for="userpwd">비밀번호</label>
-                  <a href="${root}/user/findPassword.jsp">
+                  <a href="#" @click="showAlert">
                     <small>비밀번호가 기억이 안나시나요?</small>
                   </a>
                 </div>
@@ -68,7 +73,7 @@
                 </div>
               </div>
               <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" id="btn-login" type="button">
+                <button class="btn btn-primary d-grid w-100" id="btn-login" type="button" @click="showAlert">
                   로그인
                 </button>
               </div>
@@ -76,9 +81,9 @@
 
             <p class="text-center">
               <span>Enjoy Trip이 처음이세요?</span>
-              <a href="${root}/user/register.jsp">
+              <RouterLink :to="{name : 'member-regist'}">
                 <span>회원 가입 하러 가기</span>
-              </a>
+              </RouterLink>
             </p>
           </div>
         </div>

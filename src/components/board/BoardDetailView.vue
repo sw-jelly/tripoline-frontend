@@ -88,8 +88,7 @@ function registerComment() {
     comment.value,
     ({ data }) => {
       console.log('성공적으로 댓글 등록 완료', data)
-      // router.push({ name: 'board-detail', params: { articleId: articleId } })
-      // getArticleComments()
+      getArticleComments(articleId) // 새로운 댓글 가져오기
     },
     (error) => {
       alert('댓글 등록 중 문제 발생', error)
@@ -128,8 +127,7 @@ function registerComment() {
           <div class="col-md-4 align-self-center text-end">댓글 : {{ comments.length }}</div>
 
           <div class="divider mb-3"></div>
-          <textarea class="form-control" rows="7" readonly="true"
-            >{{ article.articleContent }}
+          <textarea class="form-control" rows="7" readonly="true" v-model="article.articleContent">
           </textarea>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">

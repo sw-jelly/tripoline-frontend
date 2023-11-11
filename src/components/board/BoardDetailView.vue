@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { articleDetail, deleteArticle } from '@/api/board.js'
+import { articleDetail, deleteArticle, getComments, registComment } from '@/api/board.js'
+
+import BoardCommentItem from '@/components/board/item/BoardCommentItem.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -9,9 +11,20 @@ const router = useRouter()
 const articleId = route.params.articleId
 
 const article = ref({})
+const comments = ref([])
+
+const comment = ref({
+  commentId: 0,
+  articleId: 0,
+  memberId: 'ssafy',
+  memberName: 'ssafy',
+  content: '',
+  registerTime: ''
+})
 
 onMounted(() => {
   getArticle()
+  getArticleComments()
 })
 
 const getArticle = () => {
@@ -21,7 +34,22 @@ const getArticle = () => {
     articleId,
     ({ data }) => {
       console.log('성공적으로 글 얻어오기 완료', data)
-      article.value = data.article
+      article.value = data
+    },
+    (error) => {
+      console.log('글 얻어오기 실패', error)
+    }
+  )
+}
+
+const getArticleComments = () => {
+  console.log(articleId + '번글 댓글 얻으러 가자!!!')
+  // API 호출
+  getComments(
+    articleId,
+    ({ data }) => {
+      console.log('성공적으로 글 얻어오기 완료', data)
+      comments.value = data
     },
     (error) => {
       console.log('글 얻어오기 실패', error)
@@ -52,6 +80,22 @@ function onDeleteArticle() {
     }
   )
 }
+
+function registerComment() {
+  console.log('댓글 달러가자! 댓글 :', comment.value)
+  comment.value.articleId = articleId
+  registComment(
+    comment.value,
+    ({ data }) => {
+      console.log('성공적으로 댓글 등록 완료', data)
+      // router.push({ name: 'board-detail', params: { articleId: articleId } })
+      // getArticleComments()
+    },
+    (error) => {
+      alert('댓글 등록 중 문제 발생', error)
+    }
+  )
+}
 </script>
 
 <template>
@@ -64,7 +108,7 @@ function onDeleteArticle() {
       </div>
       <div class="col-lg-10 text-start">
         <div class="row my-2">
-          <h2 class="text-secondary px-5">{{ article.articleId }}. {{ article.articleTitle }}</h2>
+          <h2>{{ article.articleTitle }}</h2>
         </div>
         <div class="row">
           <div class="col-md-8">
@@ -74,19 +118,19 @@ function onDeleteArticle() {
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
               <p>
-                <span class="fw-bold">안효인</span> <br />
+                <span class="fw-bold">{{ article.memberName }}</span> <br />
                 <span class="text-secondary fw-light">
-                  {{ article.registerTime }}1 조회 : {{ article.hit }}
+                  {{ article.registerTime }} 조회 : {{ article.viewCount }}
                 </span>
               </p>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
+          <div class="col-md-4 align-self-center text-end">댓글 : {{ comments.length }}</div>
 
           <div class="divider mb-3"></div>
-          <div class="text-secondary">
-            {{ article.content }}
-          </div>
+          <textarea class="form-control" rows="7" readonly="true"
+            >{{ article.articleContent }}
+          </textarea>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
@@ -100,6 +144,18 @@ function onDeleteArticle() {
             </button>
           </div>
         </div>
+        <h4 class="mt-3 mb-3">댓글</h4>
+        <div class="d-flex">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="댓글을 작성하세요"
+            v-model="comment.content"
+          />
+          <button class="btn btn-primary ms-2 col-1" @click="registerComment">등록</button>
+        </div>
+        <BoardCommentItem v-for="comment in comments" :key="comment.commentId" :comment="comment">
+        </BoardCommentItem>
       </div>
     </div>
   </div>

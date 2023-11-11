@@ -40,6 +40,14 @@ function updateArticle(article, success, fail) {
   local.put(`boardRest`, JSON.stringify(article)).then(success).catch(fail)
 }
 
+function getComments(articleId, success, fail) {
+  local.get(`boardRest/comments/${articleId}`).then(success).catch(fail)
+}
+
+function registComment(comment, success, fail) {
+  local.post(`boardRest/comments`, comment).then(success).catch(fail)
+}
+
 export {
   totalArticleList,
   bestArticleList,
@@ -47,5 +55,7 @@ export {
   registArticle,
   updateArticle,
   deleteArticle,
-  likeArticle
+  likeArticle,
+  getComments,
+  registComment
 }

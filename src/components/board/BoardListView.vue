@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { totalArticleList } from '@/api/board.js'
+import { totalArticleList, categoryArticleList } from '@/api/board.js'
 import { bestArticleList } from '@/api/board.js'
 
 import VSelect from '@/components/common/VSelect.vue'
@@ -57,6 +57,24 @@ const changeKey = (val) => {
 
 const getArticleList = () => {
   totalArticleList(
+    param.value,
+    ({ data }) => {
+      console.log('데이터는', data)
+      articles.value = data.articles
+      currentPage.value = data.page.pageNo
+      totalPage.value = Math.ceil(data.page.total / parseInt(VITE_LIST_SIZE))
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
+}
+
+const changeCategory = (val) => {
+  console.log('BoarList에서 선택한 조건 : ' + val)
+  param.value.categoryId = val
+  categoryArticleList(
+    val,
     param.value,
     ({ data }) => {
       console.log('데이터는', data)
@@ -128,7 +146,7 @@ const moveWrite = () => {
             >
               베스트
             </button>
-            <VSelect :selectOption="categoryOption" />
+            <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
           </div>
           <div class="col-md-6">
             <form class="d-flex">

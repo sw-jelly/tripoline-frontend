@@ -13,9 +13,9 @@ function bestArticleList(params, success, fail) {
 }
 
 // 공사중
-// function categoryArticleList(params, success, fail) {
-//   local.get('boardRest/searchBest', { params }).then(success).catch(fail)
-// }
+function categoryArticleList(categoryId, params, success, fail) {
+  local.get(`boardRest/searchby/${categoryId}`, { params }).then(success).catch(fail)
+}
 
 function articleDetail(articleId, success, fail) {
   console.log(articleId + 'articleDetail........')
@@ -57,5 +57,6 @@ export {
   deleteArticle,
   likeArticle,
   getComments,
-  registComment
+  registComment,
+  categoryArticleList
 }

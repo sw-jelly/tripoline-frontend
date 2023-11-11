@@ -12,10 +12,10 @@ const route = useRoute();
 
 // category select options 
 const boardOptions = ref([
-  { text : "카테고리별 조회", value : "all"},
-  { text: "자유게시판", value: 0 },
-  { text: "공지사항", value: 1 },
-  { text: "기타게시판", value: 2 },
+  { text : "카테고리 선택", value : "all"},
+  { text: "자유게시판", value: 1 },
+  { text: "공지사항", value: 2 },
+  { text: "기타게시판", value: 3 },
 ]);
 
 // getting props 
@@ -25,7 +25,7 @@ const props = defineProps({ type: String });
 const isUseId = ref(false);
 
 // article Dto setting
-const article = ref({
+const article = ref({ 
   articleId : 0, // db에서 auto increment
   articleContent: "", 
   articleTitle : "",
@@ -50,6 +50,8 @@ if (props.type === "modify") {
 function changeKey(val){
   console.log("BoardForm에서 선택한 조건 : " + val);
   article.value.categoryId = val;
+  // 카테고리에 맞는 게시판 분류를 가져오자
+    
 }
 
 function writeArticle() {

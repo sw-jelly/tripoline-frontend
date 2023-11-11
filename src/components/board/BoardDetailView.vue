@@ -1,44 +1,56 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import {articleDetail} from "@/api/board.js";
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { articleDetail, deleteArticle } from '@/api/board.js'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-// const articleno = ref(route.params.articleno);
-console.log(route.params)
-const articleId = route.params.articleId;
+const articleId = route.params.articleId
 
-
-const article = ref({});
+const article = ref({})
 
 onMounted(() => {
-  getArticle();
-});
+  getArticle()
+})
 
 const getArticle = () => {
-  console.log(articleId + "번글 얻으러 가자!!!");
-   // API 호출
-   articleDetail(articleId, ({data}) => {
-    console.log('성공적으로 글 얻어오기 완료', data)
-    article.value = data.article;
-}, (error) => {
-    console.log('글 얻어오기 실패', error)
-})};
+  console.log(articleId + '번글 얻으러 가자!!!')
+  // API 호출
+  articleDetail(
+    articleId,
+    ({ data }) => {
+      console.log('성공적으로 글 얻어오기 완료', data)
+      article.value = data.article
+    },
+    (error) => {
+      console.log('글 얻어오기 실패', error)
+    }
+  )
+}
 
 function moveList() {
-  router.push({ name: "board-list" });
+  router.push({ name: 'board-list' })
 }
 
 function moveModify() {
-  router.push({ name: "board-update", params: { articleId } });
+  router.push({ name: 'board-update', params: { articleId } })
 }
 
 function onDeleteArticle() {
   // const { articleno } = route.params;
-  console.log(articleId + "번글 삭제하러 가자!!!");
-   // API 호출
+  console.log(articleId + '번글 삭제하러 가자!!!')
+  // API 호출
+  deleteArticle(
+    articleId,
+    ({ data }) => {
+      console.log('성공적으로 글 삭제 완료', data)
+      router.push({ name: 'board-list' })
+    },
+    (error) => {
+      console.log('글 삭제 실패', error)
+    }
+  )
 }
 </script>
 
@@ -70,7 +82,7 @@ function onDeleteArticle() {
             </div>
           </div>
           <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
-          
+
           <div class="divider mb-3"></div>
           <div class="text-secondary">
             {{ article.content }}

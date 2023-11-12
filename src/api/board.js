@@ -48,6 +48,15 @@ function registComment(comment, success, fail) {
   local.post(`boardRest/comments`, comment).then(success).catch(fail)
 }
 
+function updateComment(comment, success, fail) {
+  console.log(comment)
+  local.put(`boardRest/comments`, comment).then(success).catch(fail)
+}
+
+function deleteComment(commentId, success, fail) {
+  local.delete(`boardRest/comments/${commentId}`).then(success).catch(fail)
+}
+
 export {
   totalArticleList,
   bestArticleList,
@@ -58,5 +67,7 @@ export {
   likeArticle,
   getComments,
   registComment,
-  categoryArticleList
+  categoryArticleList,
+  deleteComment,
+  updateComment
 }

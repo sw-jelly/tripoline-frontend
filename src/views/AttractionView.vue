@@ -37,7 +37,6 @@ export default {
         <select
           id="search-area"
           class="form-select"
-          aria-label="Default select example"
           name="sido"
         >
           <option value="0" selected>시/도 전체</option>
@@ -64,7 +63,6 @@ export default {
         <select
           id="search-area-subelement"
           class="form-select"
-          aria-label="Default select example"
           name="gungu"
         >
           <option value="0" selected>시/군/구 선택</option>

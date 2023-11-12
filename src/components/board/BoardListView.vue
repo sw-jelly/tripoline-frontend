@@ -33,7 +33,7 @@ const categoryOption = ref([
   { text: '게시판 선택', value: 'all' },
   { text: '자유게시판', value: 1 },
   { text: '공지사항', value: 2 },
-  { text: '기타게시판', value: 3 }
+  { text: '질문게시판', value: 3 }
 ])
 
 /**

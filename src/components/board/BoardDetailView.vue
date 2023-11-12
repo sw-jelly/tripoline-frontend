@@ -54,11 +54,11 @@ const getArticleComments = () => {
   getComments(
     articleId,
     ({ data }) => {
-      console.log('성공적으로 글 얻어오기 완료', data)
+      console.log('성공적으로 댓글 얻어오기 완료', data)
       comments.value = data
     },
     (error) => {
-      console.log('글 얻어오기 실패', error)
+      console.log('댓글 얻어오기 실패', error)
     }
   )
 }
@@ -107,11 +107,16 @@ function registerComment() {
     ({ data }) => {
       console.log('성공적으로 댓글 등록 완료', data)
       getArticleComments(articleId) // 새로운 댓글 가져오기
+      comment.value.content = ''
     },
     (error) => {
       alert('댓글 등록 중 문제 발생', error)
     }
   )
+}
+
+function updateComment() {
+  console.log("댓글 수정하자!")
 }
 </script>
 
@@ -162,7 +167,7 @@ function registerComment() {
           </div>
         </div>
         <h4 class="mt-3 mb-3">댓글</h4>
-        <div class="d-flex">
+        <div class="d-flex mb-2">
           <input
             type="text"
             class="form-control"
@@ -171,8 +176,13 @@ function registerComment() {
           />
           <button class="btn btn-primary ms-2 col-1" @click="registerComment">등록</button>
         </div>
-        <BoardCommentItem v-for="comment in comments" :key="comment.commentId" :comment="comment">
-        </BoardCommentItem>
+        <div v-if="comments.length > 0">
+          <BoardCommentItem v-for="comment in comments" :key="comment.commentId" :comment="comment">
+          </BoardCommentItem>
+        </div>
+        <div v-else>
+          <h6 class="mt-3 mb-3 text-secondary">등록된 댓글이 없습니다.</h6>
+        </div>
       </div>
     </div>
   </div>

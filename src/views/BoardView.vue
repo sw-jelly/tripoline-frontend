@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="container-xxl vh-100 text-center">
+  <div class="container-xxl text-center">
     <div class="alert alert-info" role="alert">자유롭게 글쓰는 공간</div>
     <router-view></router-view>
   </div>

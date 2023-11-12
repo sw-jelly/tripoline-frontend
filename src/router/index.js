@@ -65,10 +65,10 @@ const router = createRouter({
           component: () => import('@/components/board/BoardDetailView.vue')
         },
         {
-          path: 'update',
+          path: 'update:articleId',
           name: 'board-update', // 수정,삭제 여기서
           component: () => import('@/components/board/BoardUpdateView.vue')
-        },
+        }
       ]
     }
   ]

@@ -1,5 +1,13 @@
 <script setup>
-import BoardFormItem from "./item/BoardFormItem.vue";
+import { ref, onMounted } from 'vue'
+import BoardFormItem from './item/BoardFormItem.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+onMounted(() => {
+  let { articleId } = route.params
+  console.log('글수정 페이지 진입', articleId)
+})
 </script>
 
 <template>

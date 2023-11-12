@@ -1,7 +1,7 @@
 <script setup>
-defineProps({ article: Object });
+defineProps({ article: Object })
 // enum 불러오기
-import { BoardCategoryEnum } from "@/Enums/Enum.js";
+import { BoardCategoryEnum } from '@/Enums/Enum.js'
 </script>
 
 <template>
@@ -20,7 +20,7 @@ import { BoardCategoryEnum } from "@/Enums/Enum.js";
     <td>{{ article.memberName }}</td>
     <td>{{ article.viewCount }}</td>
     <td>{{ article.likeCount }}</td>
-    <td>{{ article.registerTime }}</td>
+    <td>{{ article.updateTime }}</td>
   </tr>
 </template>
 

@@ -66,7 +66,6 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  // const { articleno } = route.params;
   console.log(articleId + '번글 삭제하러 가자!!!')
   // API 호출
   deleteArticle(

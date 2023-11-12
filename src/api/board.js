@@ -37,7 +37,7 @@ function likeArticle(articleId, success, fail) {
 }
 
 function updateArticle(article, success, fail) {
-  local.put(`boardRest`, JSON.stringify(article)).then(success).catch(fail)
+  local.put(`boardRest`, article).then(success).catch(fail)
 }
 
 function getComments(articleId, success, fail) {

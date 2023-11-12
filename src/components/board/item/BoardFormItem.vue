@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { registArticle, articleDetail, updateArticle } from '@/api/board'
+import { registArticle, articleDetail, updateArticle, likeArticle } from '@/api/board'
 import VSelect from '../../common/VSelect.vue'
 
 // router, route setting
@@ -47,13 +47,14 @@ if (props.type === 'modify') {
 onMounted(() => {
   if (props.type === 'modify') {
     getArticle()
+    console.log(article.value.categoryId)
   }
-}),
-  function changeKey(val) {
-    console.log('BoardForm에서 선택한 조건 : ' + val)
-    article.value.categoryId = val
-    // 카테고리에 맞는 게시판 분류를 가져오자
-  }
+})
+
+function changeKey(val) {
+  console.log('BoardForm에서 선택한 조건 : ' + val)
+  article.value.categoryId = val
+}
 
 function writeArticle() {
   console.log('글등록하자!!', article.value)

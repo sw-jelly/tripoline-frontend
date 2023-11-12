@@ -42,6 +42,7 @@ const categoryOption = ref([
 const articles = ref([])
 const currentPage = ref(1)
 const totalPage = ref(0)
+const isBest = ref(false)
 
 const param = ref({
   interval: parseInt(VITE_LIST_SIZE),
@@ -63,6 +64,7 @@ const getArticleList = () => {
       articles.value = data.articles
       currentPage.value = data.page.pageNo
       totalPage.value = Math.ceil(data.page.total / parseInt(VITE_LIST_SIZE))
+      isBest.value = false
     },
     (error) => {
       console.log(error)
@@ -100,6 +102,7 @@ const getBestArticleList = () => {
       articles.value = data.articles
       currentPage.value = data.page.pageNo
       totalPage.value = 1 + (data.page.total - 1) / parseInt(VITE_LIST_SIZE)
+      isBest.value = true
     },
     (error) => {
       console.log(error)
@@ -140,11 +143,20 @@ const moveWrite = () => {
             </button>
 
             <button
+              v-if="!isBest"
               type="button"
               class="btn btn-outline-primary btn-sm"
               @click="getBestArticleList"
             >
               베스트
+            </button>
+            <button
+              v-else
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              @click="getArticleList"
+            >
+              일반글
             </button>
             <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
           </div>

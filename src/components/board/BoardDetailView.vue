@@ -1,7 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { articleDetail, deleteArticle, getComments, registComment } from '@/api/board.js'
+import {
+  articleDetail,
+  deleteArticle,
+  getComments,
+  registComment,
+  likeArticle
+} from '@/api/board.js'
 
 import BoardCommentItem from '@/components/board/item/BoardCommentItem.vue'
 
@@ -53,6 +59,19 @@ const getArticleComments = () => {
     },
     (error) => {
       console.log('글 얻어오기 실패', error)
+    }
+  )
+}
+
+const like = () => {
+  likeArticle(
+    articleId,
+    ({ data }) => {
+      console.log(data)
+      getArticle()
+    },
+    (error) => {
+      console.log('좋아요 실패', error)
     }
   )
 }
@@ -124,6 +143,7 @@ function registerComment() {
             </div>
           </div>
           <div class="col-md-4 align-self-center text-end">댓글 : {{ comments.length }}</div>
+          <button class="btn btn-primary ms-2 col-1" @click="like">좋아요</button>
 
           <div class="divider mb-3"></div>
           <textarea class="form-control" rows="7" readonly="true" v-model="article.articleContent">

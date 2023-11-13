@@ -99,10 +99,14 @@ const getBestArticleList = () => {
     param.value,
     ({ data }) => {
       console.log('데이터는', data)
-      articles.value = data.articles
-      currentPage.value = data.page.pageNo
-      totalPage.value = 1 + (data.page.total - 1) / parseInt(VITE_LIST_SIZE)
-      isBest.value = true
+      if (data) {
+        articles.value = data.articles
+        currentPage.value = data.page.pageNo
+        totalPage.value = 1 + (data.page.total - 1) / parseInt(VITE_LIST_SIZE)
+        isBest.value = true
+      } else {
+        alert('베스트글이 없습니다.')
+      }
     },
     (error) => {
       console.log(error)

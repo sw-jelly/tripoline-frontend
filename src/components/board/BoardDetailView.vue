@@ -116,7 +116,7 @@ function registerComment() {
 }
 
 function updateComment() {
-  console.log("댓글 수정하자!")
+  console.log('댓글 수정하자!')
 }
 </script>
 
@@ -177,7 +177,13 @@ function updateComment() {
           <button class="btn btn-primary ms-2 col-1" @click="registerComment">등록</button>
         </div>
         <div v-if="comments.length > 0">
-          <BoardCommentItem v-for="comment in comments" :key="comment.commentId" :comment="comment">
+          <BoardCommentItem
+            v-for="comment in comments"
+            :key="comment.commentId"
+            :comment="comment"
+            @removeComment="getArticleComments"
+            @modifyComment="getArticleComments"
+          >
           </BoardCommentItem>
         </div>
         <div v-else>

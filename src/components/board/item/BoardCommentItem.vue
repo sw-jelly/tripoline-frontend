@@ -1,29 +1,34 @@
 <script setup>
 import { ref } from 'vue'
-import { deleteComment, updateComment } from '@/api/board.js'
+import { deleteComment, updateComment, getComments } from '@/api/board.js'
 const props = defineProps({ comment: Object })
 
-const isShow = ref(true)
 const isUpdate = ref(false)
 
+/**
+ * 댓글 변동시 최신화를 위한 emit 정의
+ */
+const emit = defineEmits(['modifyComment', 'removeComment'])
+
 const comment = ref({
-    commentId: props.comment.commentId,
-    articleId: props.comment.articleId,
-    memberId: props.comment.memberId,
-    memberName: props.comment.memberName,
-    content: props.comment.content,
-    registerTime: props.comment.registerTime
-  })
+  commentId: props.comment.commentId,
+  articleId: props.comment.articleId,
+  memberId: props.comment.memberId,
+  memberName: props.comment.memberName,
+  content: props.comment.content,
+  registerTime: props.comment.registerTime
+})
 
 function removeComment() {
   const commentId = comment.value.commentId
   console.log('댓글 삭제하러 가자~ 댓글 이름 :', commentId)
+
   if (!confirm('정말 삭제하시겠습니까?')) return
   deleteComment(
     commentId,
-    ({ data }) => {
+    () => {
       alert('댓글 삭제가 완료되었습니다.')
-      isShow.value = false
+      emit('removeComment')
     },
     (error) => {
       console.log('댓글 삭제 실패', error)
@@ -41,7 +46,8 @@ function modifyComment() {
     comment.value,
     ({ data }) => {
       alert('댓글 수정이 완료되었습니다.')
-      isUpdate.value = false
+      update()
+      emit('modifyComment')
     },
     (error) => {
       console.log('댓글 수정 실패', error)
@@ -51,7 +57,7 @@ function modifyComment() {
 </script>
 
 <template>
-  <div id="comment" class="mt-3 mb-3" v-show="isShow">
+  <div id="comment" class="mt-3 mb-3">
     <div v-if="!isUpdate">
       <div class="d-flex justify-content-between align-items-center">
         <p class="mb-1 h5">
@@ -59,7 +65,7 @@ function modifyComment() {
         </p>
         <div>
           <button class="small text-primary" @click="update">수정</button>
-          <button class="small text-danger" @click="removeComment()">삭제</button>
+          <button class="small text-danger" @click="removeComment">삭제</button>
         </div>
       </div>
       <p class="text-body mb-1">{{ comment.content }}</p>
@@ -71,7 +77,7 @@ function modifyComment() {
           {{ comment.memberName }} <span class="small">{{ comment.registerTime }}</span>
         </p>
         <div>
-          <button class="small text-primary" @click="modifyComment()">수정</button>
+          <button class="small text-primary" @click="modifyComment">수정</button>
           <button class="small text-danger" @click="update">취소</button>
         </div>
       </div>

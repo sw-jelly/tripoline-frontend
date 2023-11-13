@@ -20,6 +20,12 @@
 |추가|나만의 여행 계획 관리 페이지||X|
 |심화|HotPlace 관리  페이지||X|
 
+<br/>
+
+## [중요] 데이터 베이스 설정
+1. resources > sql 폴더에 '먼저 실행해주세요' 파일을 실행해주세요
+2. dump 파일을 import 해주세요!
+<br/>
 
 ## 실행화면 캡쳐
 구현 기능: FrontEnd(Vue) + BackEnd(SpringMVC(Controller), Model(Dao, Service, Dto))

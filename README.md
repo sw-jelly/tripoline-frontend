@@ -60,7 +60,11 @@
 
 ---
 
-#### 6. 카테고리 별 게시글 보기
+#### 6. 게시글 삭제
+![image](/uploads/ec0eca7d2727abff2264ed538db150ce/image.png)
+![image](/uploads/e754e16dfbdba7f9475c3c642af0096e/image.png)
+
+#### 7. 카테고리 별 게시글 보기
 <__질문게시판__> <br/>
 ![image](/uploads/d3c00b66f7053cc39b5c7f14465f5fd6/image.png)
 <__자유게시판__> <br/>
@@ -68,12 +72,19 @@
 
 ---
 
-#### 7. 게시글 댓글 (QnA 답변) 
+#### 8. 게시글 댓글 (QnA 답변) 
+<__댓글 보기__> <br/>
 ![image](/uploads/2f2021f75c59b07967e884ff2d179f09/image.png)
+<__댓글 수정__> <br/>
+![image](/uploads/2459313e6be63157dd2a74a8a77ea72a/image.png)
+<__댓글 삭제__> <br/>
+![image](/uploads/14e6af0efe4a6fb3ab31f89ef92c5633/image.png)
+댓글 2 삭제 후
+![image](/uploads/f628fccaf51b159d687a3fd6586315a3/image.png)
 
 ---
 
-#### 8. 베스트 글 모아보기
+#### 9. 베스트 글 모아보기
 <__전체 보기__> <br/>
 ![image](/uploads/766a9c87047c7c742e0874f9045c450a/image.png)
 

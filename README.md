@@ -45,26 +45,26 @@
 ![image](/uploads/dfbf5550b9b0eb38b6badd80aecfd8f2/image.png)
 
 #### 6. 카테고리 별 게시글 보기
-<__질문게시판__>
+<__질문게시판__> <br/>
 ![image](/uploads/d3c00b66f7053cc39b5c7f14465f5fd6/image.png)
-<__자유게시판__>
+<__자유게시판__> <br/>
 ![image](/uploads/dd42605c4c2058631e76d10cb8ec3db3/image.png)
 
 #### 7. 게시글 댓글 (QnA 답변) 
 ![image](/uploads/2f2021f75c59b07967e884ff2d179f09/image.png)
 
 #### 8. 베스트 글 모아보기
-<__전체 보기__>
+<__전체 보기__> <br/>
 ![image](/uploads/766a9c87047c7c742e0874f9045c450a/image.png)
 
-<__베스트 글__>
+<__베스트 글__> <br/>
 ![image](/uploads/401ab0a6916ef694487e379386f08045/image.png)
 
 ### [회 원 페 이 지 - Vue 적용]
-<__로그인__>
+<__로그인__> <br/>
 ![image](/uploads/8a1258d51124a6a40e39b23e34e42806/image.png)
 
-<__회원 가입__>
+<__회원 가입__> <br/>
 ![image](/uploads/595a8a020a3660fd876154cc503f40ec/image.png)
 
 ### [관 광 지 검 색]

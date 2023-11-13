@@ -75,11 +75,11 @@
 #### 8. 게시글 댓글 (QnA 답변) 
 <__댓글 보기__> <br/>
 ![image](/uploads/2f2021f75c59b07967e884ff2d179f09/image.png)
-<__댓글 수정__> <br/>
+<br/> <__댓글 수정__> <br/>
 ![image](/uploads/2459313e6be63157dd2a74a8a77ea72a/image.png)
-<__댓글 삭제__> <br/>
+<br/> <__댓글 삭제__> <br/>
 ![image](/uploads/14e6af0efe4a6fb3ab31f89ef92c5633/image.png)
-댓글 2 삭제 후
+<br/> 댓글 2 삭제 후 <br/>
 ![image](/uploads/f628fccaf51b159d687a3fd6586315a3/image.png)
 
 ---
@@ -88,7 +88,7 @@
 <__전체 보기__> <br/>
 ![image](/uploads/766a9c87047c7c742e0874f9045c450a/image.png)
 
-<__베스트 글__> <br/>
+<br/> <__베스트 글__> <br/>
 ![image](/uploads/401ab0a6916ef694487e379386f08045/image.png)
 
 ---
@@ -98,7 +98,7 @@
 <__로그인__> <br/>
 ![image](/uploads/8a1258d51124a6a40e39b23e34e42806/image.png)
 
-<__회원 가입__> <br/>
+<br/> <__회원 가입__> <br/>
 ![image](/uploads/595a8a020a3660fd876154cc503f40ec/image.png)
 
 ---

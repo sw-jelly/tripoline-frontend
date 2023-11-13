@@ -29,20 +29,30 @@
 #### 1. 게시글 목록
 ![image](/uploads/e794f830c669ab7a688673aca96b4eae/image.png)
 
+---
+
 #### 2. 게시글 등록
 ![image](/uploads/63284e96393588f47cefba92ba32c081/image.png)
 ![image](/uploads/32e5f6f90cfc2c6d11a0333f9fadd9cc/image.png)
+
+---
 
 #### 3. 게시글 수정
 ![image](/uploads/1379e822fde7704651b3f7f02d6b1b70/image.png)
 ![image](/uploads/5f3cf13a3a54e235d224ae5b6e0cbcb9/image.png)
 
+---
+
 #### 4. 게시글 상세보기
 ![image](/uploads/83df659430763695ba1af5acb5f62a4a/image.png)
+
+---
 
 #### 5. 게시글 검색
 ![image](/uploads/cbc585689c3065744eccbf7be663042e/image.png)
 ![image](/uploads/dfbf5550b9b0eb38b6badd80aecfd8f2/image.png)
+
+---
 
 #### 6. 카테고리 별 게시글 보기
 <__질문게시판__> <br/>
@@ -50,8 +60,12 @@
 <__자유게시판__> <br/>
 ![image](/uploads/dd42605c4c2058631e76d10cb8ec3db3/image.png)
 
+---
+
 #### 7. 게시글 댓글 (QnA 답변) 
 ![image](/uploads/2f2021f75c59b07967e884ff2d179f09/image.png)
+
+---
 
 #### 8. 베스트 글 모아보기
 <__전체 보기__> <br/>
@@ -60,12 +74,18 @@
 <__베스트 글__> <br/>
 ![image](/uploads/401ab0a6916ef694487e379386f08045/image.png)
 
+---
+---
+
 ### [회 원 페 이 지 - Vue 적용]
 <__로그인__> <br/>
 ![image](/uploads/8a1258d51124a6a40e39b23e34e42806/image.png)
 
 <__회원 가입__> <br/>
 ![image](/uploads/595a8a020a3660fd876154cc503f40ec/image.png)
+
+---
+---
 
 ### [관 광 지 검 색]
 ![image](/uploads/408ad4b99552247ca089d9f3f05f5967/image.png)

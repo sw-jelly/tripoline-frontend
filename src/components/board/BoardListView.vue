@@ -132,24 +132,28 @@ const moveWrite = () => {
 </script>
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
+  <div class="flex flex-col w-full h-full">
+    <div class="flex flex-col w-full h-full">
       <div class="col-lg-10">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글목록</mark>
+          <mark class="sky"> 글목록 </mark>
         </h2>
       </div>
-      <div class="col-lg-10">
-        <div class="row align-self-center mb-2">
-          <div class="col-md-6 text-start d-flex justify-content-between">
-            <button type="button" class="btn btn-outline-primary btn-sm" @click="moveWrite">
+      <div class="flex flex-col h-full w-full">
+        <div class="flex items-center justify-center">
+          <div class="ml-30 flex flex-start">
+            <button
+              type="button"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              @click="moveWrite"
+            >
               글쓰기
             </button>
 
             <button
               v-if="!isBest"
               type="button"
-              class="btn btn-outline-primary btn-sm"
+              class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
               @click="getBestArticleList"
             >
               베스트
@@ -157,7 +161,7 @@ const moveWrite = () => {
             <button
               v-else
               type="button"
-              class="btn btn-outline-primary btn-sm"
+              class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
               @click="getArticleList"
             >
               일반글
@@ -165,7 +169,7 @@ const moveWrite = () => {
             <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
           </div>
           <div class="col-md-6">
-            <form class="d-flex">
+            <form class="flex">
               <!-- @onKeySelect="changeKey" -->
               <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
               <div class="input-group input-group-sm">

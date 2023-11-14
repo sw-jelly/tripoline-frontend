@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router'
       <RouterLink :to="{ name: 'main' }">
         <img src="@/assets/flight.png" width="90" />
       </RouterLink>
-      <h1 class="text-2xl mx-4">Enjoy Trip</h1>
+      <h1 class="text-2xl mx-4">Tripoline</h1>
     </div>
     <div class="flex flex-row items-center">
       <ul>
@@ -20,6 +20,9 @@ import { RouterLink } from 'vue-router'
         </li>
         <li class="float-left ml-[10px] text-lg">
           <RouterLink class="nav-link" :to="{ name: 'attraction' }">관광지 검색</RouterLink>
+        </li>
+        <li class="float-left ml-[10px] text-lg">
+          <RouterLink class="nav-link" :to="{ name: 'plan' }">여행 계획</RouterLink>
         </li>
       </ul>
       <ul class="mx-10">

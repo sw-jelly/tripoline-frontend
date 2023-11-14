@@ -9,9 +9,9 @@ const user = ref(true)
 </script>
 
 <template>
-  <TheHeadingNavbar v-if="true" />
+  <TheHeadingNavbar v-if="false" />
   <RouterView />
-  <Footer />
+  <Footer v-if="false" />
 </template>
 
 <style scoped></style>

@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { totalArticleList, categoryArticleList } from '@/api/board.js'
 import { bestArticleList } from '@/api/board.js'
+import { BoardCategoryEnum } from '@/Enums/Enum.js'
 
 import VSelect from '@/components/common/VSelect.vue'
 import BoardListItem from '@/components/board/item/BoardListItem.vue'
@@ -40,9 +41,10 @@ const categoryOption = ref([
  * 검색, 데이터 출력을 위한 반응형 변수
  */
 const articles = ref([])
-const currentPage = ref(1)
+const currentPage = ref(0)
 const totalPage = ref(0)
 const isBest = ref(false)
+const board = ref(0)
 
 const param = ref({
   interval: parseInt(VITE_LIST_SIZE),
@@ -75,6 +77,7 @@ const getArticleList = () => {
 const changeCategory = (val) => {
   console.log('BoarList에서 선택한 조건 : ' + val)
   param.value.categoryId = val
+  board.value = val
   categoryArticleList(
     val,
     param.value,
@@ -132,11 +135,11 @@ const moveWrite = () => {
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-full">
+  <div class="flex flex-col w-4/6 h-full m-auto">
     <div class="flex flex-col w-full h-full">
       <div class="col-lg-10">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky"> 글목록 </mark>
+          {{ BoardCategoryEnum[board] }}
         </h2>
       </div>
       <div class="flex flex-col h-full w-full">
@@ -144,7 +147,7 @@ const moveWrite = () => {
           <div class="ml-30 flex flex-start">
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-[80px] h-[40px]"
               @click="moveWrite"
             >
               글쓰기
@@ -153,7 +156,7 @@ const moveWrite = () => {
             <button
               v-if="!isBest"
               type="button"
-              class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
+              class="w-[80px] h-[40px] bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
               @click="getBestArticleList"
             >
               베스트
@@ -184,7 +187,55 @@ const moveWrite = () => {
             </form>
           </div>
         </div>
-        <table class="table table-hover">
+        <div class="flex flex-col items-center justify-center">
+          <table class="min-w-[1000px] mt-10 bg-stone-50">
+            <thead>
+              <tr class="text-center">
+                <th scope="col">카테고리</th>
+                <th scope="col">글번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">조회수</th>
+                <th scope="col">좋아요</th>
+                <th scope="col">작성일(최종수정일)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr
+                class="text-center bg-white h-[40px] border-y border-solid border-gray-500 hover:bg-stone-200 cursor-pointer"
+              >
+                <th scope="row">자유게시판</th>
+                <th scope="row">1</th>
+                <td>제목</td>
+                <td>지인성</td>
+                <td>10</td>
+                <td>10</td>
+                <td>2023-03-23</td>
+              </tr>
+              <tr class="text-center bg-white h-[40px] border-y border-solid border-gray-500">
+                <th scope="row">자유게시판</th>
+                <th scope="row">1</th>
+                <td>제목입니당구리</td>
+                <td>지인성</td>
+                <td>10</td>
+                <td>10</td>
+                <td>2023-03-23</td>
+              </tr> -->
+              <BoardListItem
+                v-for="article in articles"
+                :key="article.articleNo"
+                :article="article"
+              ></BoardListItem>
+            </tbody>
+          </table>
+          <PageNavigation
+            :currentPage="currentPage"
+            :total-page="totalPage"
+            @page-change="onPageChange"
+          ></PageNavigation>
+        </div>
+
+        <!-- <table class="table table-hover">
           <thead>
             <tr class="text-center">
               <th scope="col">카테고리</th>
@@ -203,13 +254,8 @@ const moveWrite = () => {
               :article="article"
             ></BoardListItem>
           </tbody>
-        </table>
+        </table> -->
       </div>
-      <PageNavigation
-        :currentPage="currentPage"
-        :total-page="totalPage"
-        @page-change="onPageChange"
-      ></PageNavigation>
     </div>
   </div>
 </template>

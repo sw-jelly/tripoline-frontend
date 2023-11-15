@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { searchSido, searchGugun, searchByLocation } from '@/api/attraction'
+import { searchSido, searchGugun, searchByLocation, searchByTitle } from '@/api/attraction'
 
 import KakaoMap from '@/components/attraction/KakaoMap.vue'
 import VSelect from '@/components/common/VSelect.vue'
@@ -13,7 +13,8 @@ const attractionList = ref([])
 const param = ref({
   sidoCode: 0,
   gugunCode: 0,
-  contentTypeId: 0
+  contentTypeId: 0,
+  keyword: ''
 })
 
 onMounted(() => {
@@ -78,12 +79,42 @@ const onChangeContentType = (val) => {
   param.value.contentTypeId = val
 }
 
-const getAttrations = () => {
+const getAttrationsByLocation = () => {
   console.log('선택된 친구들은...', param.value)
+  if (param.value.sidoCode === 0) {
+    alert('시/도는 필수 선택 사항입니다!')
+    return
+  }
   searchByLocation(
     param.value,
     ({ data }) => {
-      console.log('data', data.attractions)
+      console.log('searchByLocation data', data.attractions)
+      if (!data) {
+        alert('검색 결과가 없습니다!')
+        return
+      }
+      attractionList.value = data.attractions
+    },
+    (err) => {
+      console.log(err)
+    }
+  )
+}
+
+const getAttrationsByTitle = () => {
+  console.log('선택된 친구들은...', param.value)
+  if (param.value.keyword === '') {
+    alert('검색어를 입력하세요!')
+    return
+  }
+  searchByTitle(
+    param.value,
+    ({ data }) => {
+      console.log('searchByTitle data', data.attractions)
+      if (!data) {
+        alert('검색 결과가 없습니다!')
+        return
+      }
       attractionList.value = data.attractions
     },
     (err) => {
@@ -99,7 +130,18 @@ const getAttrations = () => {
       <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
       <VSelect :selectOption="gugunList" @onKeySelect="onChangeGugun" />
       <VSelect :selectOption="contentList" @onKeySelect="onChangeContentType" />
-      <button class="btn btn-success" @click="getAttrations">검색</button>
+      <button class="btn btn-success" @click="getAttrationsByLocation">검색</button>
+    </div>
+    <div class="input-group d-flex justify-content-center mt-3">
+      <div class="form-outline col-md-3">
+        <input
+          v-model="param.keyword"
+          type="search"
+          class="form-control"
+          placeholder="검색어를 입력하세요"
+        />
+      </div>
+      <button class="btn btn-success" @click="getAttrationsByTitle">검색</button>
     </div>
     <KakaoMap :attractions="attractionList" />
   </div>

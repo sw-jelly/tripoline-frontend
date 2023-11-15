@@ -7,11 +7,11 @@ const router = createRouter({
   // 히스토리모드 -> 히스토리가 쌓임, 단점은 새로고침시 히스토리가 날라감, 홈페이지로 초기화됨
   // 해시모드 -> 새로고침시에도 현재 페이지 유지, 단점은 url에 #이 붙음
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'main',
-    //   component: BeforeLoginView
-    // },
+    {
+      path: '/',
+      name: 'main',
+      component: BeforeLoginView
+    },
     {
       path: '/',
       name: 'home',

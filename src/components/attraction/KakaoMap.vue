@@ -131,9 +131,6 @@ const setInfoWindow = () => {
           <div class="img">
             <img
               src="${info.value.firstImage}"
-              class="image"
-              width="73"
-              height="70"
             />
           </div>
           <div class="desc">
@@ -165,6 +162,7 @@ const deleteMarkers = () => {
   width: 67%;
   height: 40rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* 지도 스타일 */
@@ -210,6 +208,7 @@ const deleteMarkers = () => {
   padding: 5px 0 0 10px;
   height: 30px;
   background: #eee;
+  color: #333;
   border-bottom: 1px solid #ddd;
   font-size: 18px;
   font-weight: bold;
@@ -261,6 +260,11 @@ const deleteMarkers = () => {
   border: 1px solid #ddd;
   color: #888;
   overflow: hidden;
+}
+
+.info .img img {
+  width: 100%;
+  height: 100%;
 }
 
 .info .link {

@@ -44,8 +44,7 @@ const router = createRouter({
       children: [
         {
           path: 'view',
-          name: 'attraction-view',
-          component: () => import('@/views/AttractionDetailView.vue')
+          name: 'attraction-view'
         }
       ]
     },

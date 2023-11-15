@@ -21,7 +21,7 @@ const onSelect = () => {
   <select
     v-model="key"
     @change="onSelect"
-    class="form-select form-select-sm ms-5 me-1 w-50"
+    class="form-select form-select-sm me-2 w-50"
     aria-label="검색조건"
   >
     <option

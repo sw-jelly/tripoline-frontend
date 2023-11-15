@@ -1,228 +1,269 @@
-<template>
-  <div id="map">
-    <div class="modal fade" id="descriptionModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <h1>여기에 내용</h1>
-          <h3 @click="changeState">여기 다시누르면 꺼짐</h3>
+<script setup>
+import { ref, watch, onMounted } from 'vue'
+import DescriptionItem from './item/DescriptionItem.vue'
+
+const props = defineProps({ attractions: Array })
+
+var map
+const spots = ref([])
+const markers = ref([])
+
+const infoWindow = ref(null)
+const info = ref({
+  title: '',
+  addr1: '',
+  tel: '',
+  overview: '',
+  firstImage: ''
+})
+const pos = ref(null)
+
+onMounted(() => {
+  if (window.kakao && window.kakao.maps) {
+    initMap()
+  } else {
+    const script = document.createElement('script')
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
+      import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+    }&libraries=services,clusterer`
+    script.onload = () => kakao.maps.load(() => initMap())
+    document.head.appendChild(script)
+  }
+})
+
+watch(
+  () => props.attractions.value,
+  () => {
+    spots.value = []
+
+    props.attractions.forEach((attraction) => {
+      let obj = {}
+      obj.latlng = new kakao.maps.LatLng(attraction.latitude, attraction.longitude)
+      obj.contentId = attraction.contentId
+      obj.title = attraction.title
+      obj.addr1 = attraction.addr1
+      obj.tel = attraction.tel
+      obj.overview = attraction.overview
+      obj.firstImage = attraction.firstImage
+      // TO-DO : pin 이미지 장소 유형에 맞게 변경
+      obj.img = createMarkerImage(
+        `http://localhost:8080/tripoline/assets/img/pin.png`,
+        new kakao.maps.Size(32, 32)
+      )
+      spots.value.push(obj)
+    })
+
+    loadMarkers()
+  },
+  { deep: true }
+)
+
+const initMap = () => {
+  const container = document.getElementById('map')
+  const options = {
+    center: new kakao.maps.LatLng(37.50128520917558, 127.03955377219623),
+    level: 3
+  }
+  map = new kakao.maps.Map(container, options)
+  infoWindow.value = new kakao.maps.CustomOverlay({
+    position: null,
+    content: null
+  })
+}
+
+const createMarkerImage = (src, size) => {
+  const markerImage = new kakao.maps.MarkerImage(src, size)
+  return markerImage
+}
+
+const loadMarkers = () => {
+  deleteMarkers()
+
+  spots.value.forEach((spot) => {
+    const marker = new kakao.maps.Marker({
+      map: map,
+      position: spot.latlng,
+      title: spot.contentId,
+      image: spot.img,
+      clickable: true
+    })
+    markers.value.push(marker)
+
+    var m = document.querySelector(`[title="${marker.getTitle()}"]`)
+    m.setAttribute('data-bs-toggle', 'modal')
+    m.setAttribute('data-bs-target', '#descriptionView')
+
+    kakao.maps.event.addListener(marker, 'mouseover', function () {
+      pos.value = spot.latlng
+      info.value = {
+        title: spot.title,
+        addr1: spot.addr1,
+        tel: spot.tel,
+        overview: spot.overview,
+        firstImage: spot.firstImage
+      }
+      if (!info.value.firstImage.includes('tong')) {
+        info.value.firstImage = 'http://localhost:8080/tripoline/assets/img/noimage.jpg'
+      }
+      setInfoWindow()
+      infoWindow.value.setMap(map)
+    })
+
+    kakao.maps.event.addListener(marker, 'mouseout', function () {
+      infoWindow.value.setMap(null)
+    })
+  })
+
+  const bounds = spots.value.reduce((bounds, spot) => {
+    return bounds.extend(spot.latlng)
+  }, new kakao.maps.LatLngBounds())
+
+  map.setBounds(bounds)
+}
+
+const setInfoWindow = () => {
+  infoWindow.value.setPosition(pos.value)
+  infoWindow.value.setContent(`
+    <div class="wrap">
+      <div class="info">
+        <div class="title">${info.value.title}</div>
+        <div class="body">
+          <div class="img">
+            <img
+              src="${info.value.firstImage}"
+              class="image"
+              width="73"
+              height="70"
+            />
+          </div>
+          <div class="desc">
+            <div class="ellipsis">${info.value.addr1}</div>
+            <div class="jibun ellipsis">${info.value.tel}</div>
+            <div class="link">마커 클릭 시 상세 정보</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</template>
+  `)
+}
 
-<script>
-export default {
-  name: 'KakaoMap',
-  components: {},
-  data() {
-    return {
-      is_show: false
-    }
-  },
-
-  mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap()
-    } else {
-      const script = document.createElement('script')
-      script.onload = () => kakao.maps.load(this.initMap)
-      script.src =
-        'https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=cfc1e7455936fe459743b8dfe3dae5fe&libraries=services,drawing'
-      document.head.appendChild(script)
-    }
-  },
-
-  methods: {
-    initMap() {
-      const container = document.getElementById('map')
-      var options = {
-        center: new kakao.maps.LatLng(37.50128520917558, 127.03955377219623),
-        level: 7
-      }
-
-      var map = new kakao.maps.Map(container, options) ///zoom control
-
-      this.kakaoMapEvent(map) //맵이벤트
-    },
-
-    kakaoMapEvent(map) {
-      var markers = []
-
-      let input = document.getElementById('search-area')
-      let resultDiv = document.getElementById('search-area-subelement')
-
-      input.addEventListener('change', () => {
-        let sidoCode = input.value
-        var url = `http://localhost:8080/tripoline/attraction/findGugun?sidoCode=` + sidoCode
-        console.log('url = ' + url)
-
-        fetch(url)
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data)
-            makeGugunOption(data)
-          })
-      })
-
-      function makeGugunOption(data) {
-        var gugun
-        let areasList = `<option value="0" selected>시/군/구 선택</option>`
-        for (gugun of data) {
-          areasList += `<option value="${gugun.gugunCode}">${gugun.gugunName}</option>`
-        }
-
-        resultDiv.innerHTML = areasList
-      }
-
-      /*
-       * 검색 버튼 click 이벤트
-       */
-      document.getElementById('btn-search').addEventListener('click', () => {
-        var url = `http://localhost:8080/tripoline/attraction/search`
-
-        let sidoCode = document.getElementById('search-area').value
-        let contentTypeId = document.getElementById('search-content-id').value
-        let gugunCode = document.getElementById('search-area-subelement').value
-        if (sidoCode == 0) {
-          alert('시/도는 필수 선택 사항입니다!')
-          return
-        }
-
-        url += `?sidoCode=${sidoCode}`
-        url += `&gugunCode=${gugunCode}`
-        url += `&contentTypeId=${contentTypeId}`
-        fetch(url)
-          .then((response) => response.json())
-          .then((data) => makeList(data))
-      })
-
-      /*
-       * 받아온 데이터 지도에 표시하기
-       */
-      function makeList(data) {
-        let trips = data
-
-        // 데이터가 없으면 return;
-        if (trips.length == 0) {
-          alert('검색된 결과가 없습니다.')
-          return
-        }
-
-        map.setCenter(new kakao.maps.LatLng(trips[0].latitude, trips[0].longitude))
-        // 있던 마커 제거
-        if (markers) {
-          for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null)
-          }
-        }
-
-        // 마커 이미지 생성
-        function createMarkerImage(src, size) {
-          var markerImage = new kakao.maps.MarkerImage(src, size)
-          return markerImage
-        }
-
-        markers = []
-        var marker
-        var markerPosition
-        var img = createMarkerImage(
-          `http://localhost:8080/tripoline/assets/img/pin.png`,
-          new kakao.maps.Size(32, 32)
-        )
-
-        trips.forEach((area) => {
-          markerPosition = new kakao.maps.LatLng(area.latitude, area.longitude)
-
-          marker = new kakao.maps.Marker({
-            title: `${area.contentId}`,
-            position: markerPosition,
-            image: img,
-            clickable: true
-          })
-
-          marker.setMap(map)
-          markers.push(marker)
-          var m = document.querySelector(`[title="${marker.getTitle()}"]`)
-          m.setAttribute('data-bs-toggle', 'modal')
-          m.setAttribute('data-bs-target', '#descriptionModal')
-
-          var content = `
-		<div class="wrap">
-			<div class="info">
-				<div class="title">${area.title}</div>
-				<div class="body">
-                    <input type="hidden" id="overview" name="overview" value="${area.overview}">
-					<div class="img">
-						<img src="${area.firstImage}" class="image"
-						onerror="this.src='http://localhost:8080/tripoline/assets/img/noimage.jpg';"
-						width="73" height="70">
-					</div>
-					<div class="desc">
-						<div class="ellipsis">${area.addr1}</div>
-						<div class="jibun ellipsis">${area.tel}</div>
-						<div class="link">마커 클릭 시 상세 정보</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    	`
-
-          function handle_toggle() {}
-          // 마커에 표시할 인포윈도우를 생성
-          var infowindow = new kakao.maps.CustomOverlay({
-            position: markerPosition,
-            content: content // 인포윈도우에 표시할 내용
-          })
-
-          ;(function (marker, infowindow) {
-            // 마우스 오버 시 인포윈도우를 표시
-            kakao.maps.event.addListener(marker, 'mouseover', function () {
-              infowindow.setMap(map)
-            })
-
-            // 마우스 아웃 시 인포윈도우를 닫기
-            kakao.maps.event.addListener(marker, 'mouseout', function () {
-              infowindow.setMap(null)
-            })
-
-            // 마우스 클릭 시 상세페이지
-            kakao.maps.event.addListener(marker, 'click', function () {
-              var parser = new DOMParser()
-              var doc = parser.parseFromString(infowindow.getContent(), 'text/html')
-
-              let img = doc.getElementsByClassName('image')[0].src
-              let desc = doc.getElementById('overview').value
-              console.log(desc)
-              console.log(img)
-              if (img.includes('attraction')) {
-                img = `http://localhost:8080/tripoline/assets/img/noimage.jpg`
-              }
-              let title = doc.getElementsByClassName('title')[0].innerText
-
-              let contents = `
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div id="container">
-						<input type="hidden" class= value="search" />
-						<div class="card">
-							<img src="${img}">
-							<div class="card__details">
-								<div class="name">${title}</div>
-								<p>${desc}</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			`
-              document.getElementById('descriptionModal').innerHTML = contents
-            })
-          })(marker, infowindow)
-        })
-      }
-    }
-  }
+const deleteMarkers = () => {
+  markers.value.forEach((marker) => {
+    marker.setMap(null)
+  })
+  markers.value = []
 }
 </script>
-<style scoped></style>
+
+<template>
+  <DescriptionItem :info="info" />
+  <div id="map"></div>
+</template>
+
+<style>
+#map {
+  width: 67%;
+  height: 40rem;
+  margin-top: 1rem;
+}
+
+/* 지도 스타일 */
+.wrap {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -144px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+  line-height: 1.5;
+}
+
+.wrap * {
+  padding: 0;
+  margin: 0;
+}
+
+.wrap .body {
+  z-index: 2;
+}
+
+.wrap .info {
+  width: 286px;
+  height: 120px;
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+
+.wrap .info:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+
+.info .title {
+  padding: 5px 0 0 10px;
+  height: 30px;
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.info .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+  width: 17px;
+  height: 17px;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+}
+
+.info .close:hover {
+  cursor: pointer;
+}
+
+.info .body {
+  position: relative;
+  overflow: hidden;
+}
+
+.info .desc {
+  position: relative;
+  margin: 13px 0 0 90px;
+  height: 75px;
+}
+
+.desc .ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.desc .jibun {
+  font-size: 11px;
+  color: #888;
+  margin-top: -2px;
+}
+
+.info .img {
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  width: 73px;
+  height: 71px;
+  border: 1px solid #ddd;
+  color: #888;
+  overflow: hidden;
+}
+
+.info .link {
+  color: #5085bb;
+}
+</style>

@@ -5,25 +5,11 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-    <div class="main">
+  <div class="main">
     <TheHeadingNavbar />
     <RouterView />
     <Footer />
-</div>
+  </div>
 </template>
 
-
-
-<style scoped>
-
-.main {
-    position: absolute;
-    padding : 0px;
-    margin : 0px;
-    width : 100vw;
-    height : 100%;
-    display : flex;
-    flex-direction : column;
-    justify-content : space-between;
-}
-</style>
+<style scoped></style>

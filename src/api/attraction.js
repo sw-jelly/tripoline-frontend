@@ -12,8 +12,8 @@ function searchSido(success, fail) {
   local.get('attractionRest').then(success).catch(fail)
 }
 
-function searchGugun(sido, success, fail) {
-  local.get(`attractionRest/findGugun`, sido).then(success).catch(fail)
+function searchGugun(param, success, fail) {
+  local.get(`attractionRest/findGugun`, { params: param }).then(success).catch(fail)
 }
 
 function searchByTitle(params, success, fail) {

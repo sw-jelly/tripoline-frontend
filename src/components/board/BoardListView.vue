@@ -188,9 +188,9 @@ const moveWrite = () => {
           </div>
         </div>
         <div class="flex flex-col items-center justify-center">
-          <table class="min-w-[1000px] mt-10 bg-stone-50">
+          <table class="min-w-[1000px] w-full mt-10 bg-stone-50">
             <thead>
-              <tr class="text-center">
+              <tr class="text-center h-[50px]">
                 <th scope="col">카테고리</th>
                 <th scope="col">글번호</th>
                 <th scope="col">제목</th>

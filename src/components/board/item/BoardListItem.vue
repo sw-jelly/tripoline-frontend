@@ -6,12 +6,12 @@ import { BoardCategoryEnum } from '@/Enums/Enum.js'
 
 <template>
   <tr
-    class="text-center bg-white h-[40px] border-y border-solid border-gray-500 hover:bg-stone-200 cursor-pointer"
+    class="text-center bg-white h-[50px] border-y border-solid border-gray-500 hover:bg-stone-200 cursor-pointer"
   >
     <!-- boardCategoryEnum에 정의된 매핑된 값 불러오기 -->
     <th scope="row">{{ BoardCategoryEnum[article.categoryId] }}</th>
     <th scope="row">{{ article.articleId }}</th>
-    <td class="text-start">
+    <td class="text-center">
       <router-link
         :to="{ name: 'board-detail', params: { articleId: article.articleId } }"
         class="article-title link-dark"

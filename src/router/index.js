@@ -1,15 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import TheHomeView from '@/views/TheHomeView.vue'
+import BeforeLoginView from '@/views/BeforeLoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   // 히스토리모드 -> 히스토리가 쌓임, 단점은 새로고침시 히스토리가 날라감, 홈페이지로 초기화됨
   // 해시모드 -> 새로고침시에도 현재 페이지 유지, 단점은 url에 #이 붙음
   routes: [
+    // {
+    //   path: '/',
+    //   name: 'main',
+    //   component: BeforeLoginView
+    // },
     {
       path: '/',
-      name: 'main',
-      component: TheHomeView
+      name: 'home',
+      component: () => import('@/views/TheHomeView.vue')
     },
     {
       path: '/member/login',
@@ -69,6 +75,11 @@ const router = createRouter({
           component: () => import('@/components/board/BoardUpdateView.vue')
         }
       ]
+    },
+    {
+      path: '/plan',
+      name: 'plan',
+      component: () => import('@/components/board/PlanningView.vue')
     }
   ]
 })

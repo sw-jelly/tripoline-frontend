@@ -3,39 +3,40 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
-    <div class="container">
-      <RouterLink class="navbar-brand" :to="{ name: 'main' }">
-        <img src="@/assets/flight.png" width="100" /> Enjoy Trip
+  <nav class="flex w-full h-[140px] align-center justify-evenly text-center bg-gray-50">
+    <div class="flex items-center">
+      <RouterLink :to="{ name: 'main' }">
+        <img src="@/assets/flight.png" width="90" />
       </RouterLink>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapsibleNavbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="#">공지사항</a></li>
-          <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'board'}">게시판</RouterLink></li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :to="{ name: 'attraction' }">관광지 검색</RouterLink>
-          </li>
-        </ul>
-        <c:if test="${empty userinfo}">
-          <ul class="navbar-nav me-2">
-            <li class="nav-item">
-              <RouterLink class="nav-link" :to="{ name: 'member-login' }">로그인</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" :to="{ name: 'member-regist' }">회원가입</RouterLink>
-            </li>
-          </ul>
-        </c:if>
-        <!-- 로그인 후 -->
-        <!-- <c:if test="${!empty userinfo}">
+      <h1 class="text-2xl mx-4">Tripoline</h1>
+    </div>
+    <div class="flex flex-row items-center">
+      <ul>
+        <li class="float-left text-lg">
+          <a href="#" class="text-decoration-none text-black">공지사항</a>
+        </li>
+        <li class="float-left ml-[10px] text-lg">
+          <RouterLink class="nav-link" :to="{ name: 'board' }">게시판</RouterLink>
+        </li>
+        <li class="float-left ml-[10px] text-lg">
+          <RouterLink class="nav-link" :to="{ name: 'attraction' }">관광지 검색</RouterLink>
+        </li>
+        <li class="float-left ml-[10px] text-lg">
+          <RouterLink class="nav-link" :to="{ name: 'plan' }">여행 계획</RouterLink>
+        </li>
+      </ul>
+      <ul class="mx-10">
+        <li class="float-left ml-[10px] text-lg">
+          <RouterLink class="nav-link" :to="{ name: 'member-login' }">로그인</RouterLink>
+        </li>
+        <li class="float-left ml-[10px] text-lg">
+          <RouterLink class="nav-link" :to="{ name: 'member-regist' }">회원가입</RouterLink>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 로그인 후 -->
+    <!-- <c:if test="${!empty userinfo}">
           <ul class="navbar-nav me-2">
             <li class="nav-item me-5"><a class="nav-link" id="welcome"></a></li>
             <li class="nav-item">
@@ -48,8 +49,8 @@ import { RouterLink } from 'vue-router'
             </li>
           </ul>
         </c:if> -->
-      </div>
-    </div>
+    <!-- </div>
+    </div> -->
   </nav>
 </template>
 

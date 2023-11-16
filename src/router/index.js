@@ -118,14 +118,22 @@ const router = createRouter({
     {
       path: '/plan',
       name: 'plan',
-      component: () => import('@/components/board/PlanningView.vue'),
+      component: () => import('@/views/PlanView.vue'),
       beforeEnter: (to, from, next) => {
         if (useMemberStore().isLogin) {
           next()
         } else {
           next('/')
         }
-      }
+      },
+      redirect: '/plan/list',
+      children: [
+        {
+          path: 'list',
+          name: 'plan-list',
+          component: () => import('@/components/plan/PlanListView.vue')
+        }
+      ]
     }
   ]
 })

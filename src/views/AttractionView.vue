@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { searchSido, searchGugun, searchByLocation, searchByTitle } from '@/api/attraction'
 
-import KakaoMap from '@/components/attraction/KakaoMap.vue'
+import KakaoMap from '@/components/common/KakaoMap.vue'
 import VSelect from '@/components/common/VSelect.vue'
 
 const sidoList = ref([])

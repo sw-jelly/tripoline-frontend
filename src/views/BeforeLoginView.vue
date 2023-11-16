@@ -62,7 +62,11 @@ const signupshow = ref(false)
         로그인
       </button>
       <Transition class="w-[500px] h-[500px] bg-white rounded" :duration="250" name="nested">
-        <form class="absolute p-[50px] flex flex-col justify-evenly" v-show="loginshow">
+        <form
+          class="absolute p-[50px] flex flex-col justify-evenly"
+          v-show="loginshow"
+          @submit.prevent="login"
+        >
           <div
             class="absolute right-[15px] top-[15px] cursor-pointer"
             @click="loginshow = !loginshow"
@@ -102,7 +106,11 @@ const signupshow = ref(false)
         회원가입
       </button>
       <Transition class="w-[500px] h-[500px] bg-white rounded" :duration="250" name="nested">
-        <form class="absolute p-[50px] flex flex-col justify-evenly" v-show="signupshow">
+        <form
+          class="absolute p-[50px] flex flex-col justify-evenly"
+          v-show="signupshow"
+          @submit.prevent="login"
+        >
           <div
             class="absolute right-[15px] top-[15px] cursor-pointer"
             @click="signupshow = !signupshow"

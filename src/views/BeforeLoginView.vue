@@ -76,7 +76,7 @@ const signupshow = ref(false)
             class="rounded"
             type="text"
             :memberId="loginUser.memberId"
-            @click="loginUser.memberId = $event.target.value"
+            @change="loginUser.memberId = $event.target.value"
             placeholder="아이디를 입력해주세요"
             required
           />
@@ -84,7 +84,7 @@ const signupshow = ref(false)
             class="rounded"
             type="password"
             :memberPassword="loginUser.memberPassword"
-            @click="loginUser.memberPassword = $event.target.value"
+            @change="loginUser.memberPassword = $event.target.value"
             placeholder="비밀번호를 입력해주세요"
             required
           />

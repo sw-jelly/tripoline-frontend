@@ -13,9 +13,11 @@ const user = ref(true)
 </script>
 
 <template>
-  <TheHeadingNavbar v-if="isLogin" />
-  <RouterView />
-  <Footer v-if="isLogin" />
+  <div id="app">
+    <TheHeadingNavbar v-if="isLogin" />
+    <RouterView />
+    <Footer v-if="isLogin" />
+  </div>
 </template>
 
 <style scoped></style>

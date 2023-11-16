@@ -42,7 +42,7 @@ const logout = async () => {
       </ul>
       <ul class="mx-10">
         <li class="float-left ml-[10px] text-lg"></li>
-        <li class="float-left ml-[10px] text-lg" @click="logout">로그아웃</li>
+        <li class="float-left ml-[10px] text-lg cursor-pointer" @click="logout">로그아웃</li>
         <li class="float-left ml-[10px] text-lg">
           <RouterLink class="nav-link" :to="{ name: 'member-login' }">회원정보</RouterLink>
         </li>

@@ -144,10 +144,10 @@ const moveWrite = () => {
       </div>
       <div class="flex flex-col h-full w-full">
         <div class="flex items-center justify-center">
-          <div class="ml-30 flex flex-start">
+          <div class="flex w-full justify-evenly">
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-[80px] h-[40px]"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-indent"
               @click="moveWrite"
             >
               글쓰기
@@ -156,7 +156,7 @@ const moveWrite = () => {
             <button
               v-if="!isBest"
               type="button"
-              class="w-[80px] h-[40px] bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
+              class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
               @click="getBestArticleList"
             >
               베스트

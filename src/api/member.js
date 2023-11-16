@@ -23,11 +23,11 @@ async function logout(userid, success, fail) {
   await local.get(`/memberRest/logout/${userid}`).then(success).catch(fail)
 }
 
-export { userConfirm, findById, tokenRegeneration, logout }
+function regist(params, success, fail) {
+  local.post('/memberRest', params).then(success).catch(fail)
+}
 
-// function regist(params, success, fail) {
-//   local.post('memberRest', { params }).then(success).catch(fail)
-// }
+export { userConfirm, findById, tokenRegeneration, logout, regist }
 
 // function login(memberId, memberPassword, success, fail) {
 //   local.post('memberRest', { memberId, memberPassword }).then(success).catch(fail)

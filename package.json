@@ -10,6 +10,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@jamescoyle/vue-icon": "^0.1.2",
+    "@mdi/js": "^7.3.67",
+    "@tiptap/pm": "^2.1.12",
+    "@tiptap/starter-kit": "^2.1.12",
+    "@tiptap/vue-3": "^2.1.12",
     "@vue/cli-plugin-babel": "4.1.1",
     "antd": "^5.11.1",
     "axios": "^1.6.1",

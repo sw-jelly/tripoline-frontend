@@ -142,7 +142,7 @@ function moveList() {
     <div class="col-auto text-center">
       <button
         type="submit"
-        class="btn btn-outline-primary mb-3"
+        class="btn btn-outline-primary mb-3 bg-yellow-500"
         v-if="type === 'regist'"
         @click="writeArticle"
       >

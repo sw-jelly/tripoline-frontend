@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
-import DescriptionItem from './item/DescriptionItem.vue'
+import DescriptionItem from '@/components/attraction/item/DescriptionItem.vue'
 
 const props = defineProps({ attractions: Array })
 
@@ -157,14 +157,16 @@ const deleteMarkers = () => {
   <div id="map"></div>
 </template>
 
-<style>
+<style scoped>
 #map {
   width: 67%;
   height: 40rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+</style>
 
+<style>
 /* 지도 스타일 */
 .wrap {
   position: absolute;

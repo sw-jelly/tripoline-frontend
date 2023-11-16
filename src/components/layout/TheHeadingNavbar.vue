@@ -1,5 +1,20 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useMemberStore } from '@/stores/member'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const memberStore = useMemberStore()
+const { userLogout } = memberStore
+const { userInfo, isLogin } = storeToRefs(memberStore)
+
+const logout = async () => {
+  await userLogout(userInfo.value.memberId)
+  if (!isLogin.value) {
+    alert('로그아웃 완료!')
+    router.push('/')
+  }
+}
 </script>
 
 <template>
@@ -26,11 +41,10 @@ import { RouterLink } from 'vue-router'
         </li>
       </ul>
       <ul class="mx-10">
+        <li class="float-left ml-[10px] text-lg"></li>
+        <li class="float-left ml-[10px] text-lg" @click="logout">로그아웃</li>
         <li class="float-left ml-[10px] text-lg">
-          <RouterLink class="nav-link" :to="{ name: 'member-login' }">로그인</RouterLink>
-        </li>
-        <li class="float-left ml-[10px] text-lg">
-          <RouterLink class="nav-link" :to="{ name: 'member-regist' }">회원가입</RouterLink>
+          <RouterLink class="nav-link" :to="{ name: 'member-login' }">회원정보</RouterLink>
         </li>
       </ul>
     </div>

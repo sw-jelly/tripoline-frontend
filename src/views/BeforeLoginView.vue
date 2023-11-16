@@ -26,16 +26,17 @@ const login = async () => {
   if (isLogin) {
     console.log('로그인 성공아닌가???')
     getUserInfo(token)
-    changeMenuState()
+    router.push('/home')
+  } else {
+    router.push('/')
   }
-  router.push('/')
 }
 const loginshow = ref(false)
 const signupshow = ref(false)
 </script>
 
 <template>
-  <div class="absolute flex flex-col w-screen h-screen bg-stone-300">
+  <div class="relative flex flex-col w-full h-full bg-stone-300">
     <div class="relative flex flex-col w-full top-1/3 items-center justify-start h-[100px]">
       <Transition :duration="550" name="nested">
         <div class="flex justify-center items-center" v-show="!loginshow && !signupshow">
@@ -61,6 +62,7 @@ const signupshow = ref(false)
       >
         로그인
       </button>
+
       <Transition class="w-[500px] h-[500px] bg-white rounded" :duration="250" name="nested">
         <form class="absolute p-[50px] flex flex-col justify-evenly" v-show="loginshow">
           <div
@@ -101,8 +103,8 @@ const signupshow = ref(false)
       >
         회원가입
       </button>
-      <Transition class="w-[500px] h-[500px] bg-white rounded" :duration="250" name="nested">
-        <form class="absolute p-[50px] flex flex-col justify-evenly" v-show="signupshow">
+      <Transition class="w-[500px] h-[650px] bg-white rounded" :duration="250" name="nested">
+        <form class="absolute p-[50px] flex flex-col overflow-y-scroll" v-show="signupshow">
           <div
             class="absolute right-[15px] top-[15px] cursor-pointer"
             @click="signupshow = !signupshow"
@@ -114,6 +116,20 @@ const signupshow = ref(false)
           <h1 class="text-center text-2xl">회원가입</h1>
           <input class="rounded" type="text" placeholder="아이디를 입력해주세요" required />
           <input class="rounded" type="password" placeholder="비밀번호를 입력해주세요" required />
+          <input
+            class="rounded"
+            type="password"
+            placeholder="비밀번호를 한번더 입력해주세요"
+            required
+          />
+
+          <input class="rounded" type="text" placeholder="성함을 입력해주세요" required />
+          <input class="rounded" type="email" placeholder="이메일을 입력해주세요" required />
+          <input class="rounded" type="password" placeholder="시도, 구군코드" required />
+          <input class="rounded" type="password" placeholder="생년월일" required />
+          <input class="rounded" type="password" placeholder="성별" required />
+          <input class="rounded" type="password" placeholder="전화번호" required />
+
           <RouterLink :to="{ name: 'home' }"
             ><button class="login w-full">회원가입하기</button></RouterLink
           >

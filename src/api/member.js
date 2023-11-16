@@ -20,7 +20,7 @@ async function tokenRegeneration(user, success, fail) {
 }
 
 async function logout(userid, success, fail) {
-  await local.get(`/logout/${userid}`).then(success).catch(fail)
+  await local.get(`/memberRest/logout/${userid}`).then(success).catch(fail)
 }
 
 export { userConfirm, findById, tokenRegeneration, logout }

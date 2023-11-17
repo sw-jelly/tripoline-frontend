@@ -129,6 +129,10 @@ const onPageChange = (val) => {
   }
 }
 
+const moveDetail = (article) => {
+  router.push({ name: 'board-detail', params: { articleId: article } })
+}
+
 const moveWrite = () => {
   router.push({ name: 'board-write' })
 }
@@ -136,8 +140,8 @@ const moveWrite = () => {
 
 <template>
   <div>
-    <div class="flex flex-col w-4/6 h-full m-auto">
-      <div class="flex flex-col w-full h-full">
+    <div class="flex flex-col flex-1 items-center">
+      <div class="flex flex-col w-2/3">
         <div class="col-lg-10">
           <h2 class="my-3 py-3 shadow-sm bg-light text-center">
             {{ BoardCategoryEnum[board] }}
@@ -198,6 +202,7 @@ const moveWrite = () => {
                   <th scope="col">작성자</th>
                   <th scope="col">조회수</th>
                   <th scope="col">좋아요</th>
+                  <th scope="col">댓글수</th>
                   <th scope="col">작성일(최종수정일)</th>
                 </tr>
               </thead>
@@ -226,6 +231,7 @@ const moveWrite = () => {
                   v-for="article in articles"
                   :key="article.articleNo"
                   :article="article"
+                  @moveDetail="moveDetail"
                 ></BoardListItem>
               </tbody>
             </table>

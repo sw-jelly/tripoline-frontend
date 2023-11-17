@@ -28,14 +28,18 @@ function regist(params, success, fail) {
   local.post('/memberRest', params).then(success).catch(fail)
 }
 
-export { userConfirm, findById, tokenRegeneration, logout, regist }
+function updateMember(member, success, fail) {
+  local.put(`memberRest`, member).then(success).catch(fail)
+}
+
+function memberWithDrawal(memberId, success, fail) {
+  local.delete(`memberRest/${memberId}`).then(success).catch(fail)
+}
+
+export { userConfirm, findById, tokenRegeneration, logout, regist, updateMember, memberWithDrawal }
 
 // function login(memberId, memberPassword, success, fail) {
 //   local.post('memberRest', { memberId, memberPassword }).then(success).catch(fail)
-// }
-
-// function memberWithDrawal(memberId, success, fail) {
-//   local.delete(memberRest/${memberId}).then(success).catch(fail)
 // }
 
 // function memberLogOut(success, fail) {

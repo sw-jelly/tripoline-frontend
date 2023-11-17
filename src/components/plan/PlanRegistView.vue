@@ -57,7 +57,11 @@ const getSidoList = () => {
 const onChangeSido = (val) => {
   const city = sidoList.value.find((sido) => sido.value === val)
   defaultTitle.value = `나의 ${city.text} 여행`
+<<<<<<< Updated upstream
   params.value.sidoCode = val
+=======
+  console.log(sidoList.value)
+>>>>>>> Stashed changes
   searchGugun(
     { sidoCode: val },
     ({ data }) => {

@@ -136,8 +136,12 @@ function moveList() {
       <input type="text" class="form-control" v-model="article.memberName" placeholder="이름..." />
     </div>
     <div class="mb-3">
+      <label for="formFile" class="form-label">이미지 첨부하기</label>
+      <input class="form-control" type="file" id="formFile" />
+    </div>
+    <div class="mb-3">
       <label for="content" class="form-label">내용 : </label>
-      <textarea class="form-control" v-model="article.articleContent" rows="10"></textarea>
+      <textarea class="form-control" rows="10" v-model="article.articleContent"> </textarea>
     </div>
     <div class="col-auto text-center">
       <button

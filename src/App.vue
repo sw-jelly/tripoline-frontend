@@ -5,6 +5,7 @@ import { RouterView } from 'vue-router'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/stores/member'
+
 const memberStore = useMemberStore()
 const { isLogin } = storeToRefs(memberStore)
 

@@ -1,11 +1,38 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import router from '@/router/index.js'
 import { searchSido, searchGugun } from '@/api/attraction.js'
+import { useMemberStore } from '@/stores/member'
+import { registPlan } from '@/api/plan.js'
 import VSelect from '@/components/common/VSelect.vue'
+import { storeToRefs } from 'pinia'
+
+const memberStore = useMemberStore()
+const { userInfo } = storeToRefs(memberStore)
+
+const getCurrentStyle = (current) => {
+  const style = {}
+  if (current.date() === 1) {
+    style.border = '1px solid #1890ff'
+    style.borderRadius = '50%'
+  }
+  return style
+}
 
 const sidoList = ref([])
 const gugunList = ref([{ text: '구/군 선택', value: 'all' }])
 const defaultTitle = ref('나의 여행')
+const loading = ref(false)
+const dateInfo = ref(null)
+const params = ref({
+  sidoCode: 0,
+  gugunCode: 0,
+  planTitle: '',
+  startDate: '',
+  endDate: '',
+  memberId: ''
+})
+const planId = ref(0)
 
 onMounted(() => {
   getSidoList()
@@ -28,8 +55,9 @@ const getSidoList = () => {
 }
 
 const onChangeSido = (val) => {
-  defaultTitle.value = `나의 ${val} 여행`
-  console.log(sidoList.value)
+  const city = sidoList.value.find((sido) => sido.value === val)
+  defaultTitle.value = `나의 ${city.text} 여행`
+  params.value.sidoCode = val
   searchGugun(
     { sidoCode: val },
     ({ data }) => {
@@ -45,6 +73,47 @@ const onChangeSido = (val) => {
     }
   )
 }
+
+const onChangeGugun = (val) => {
+  params.value.gugunCode = val
+}
+
+const goToRegistDetail = () => {
+  if (params.value.sidoCode === 0) {
+    alert('시/도는 필수 선택사항입니다!')
+    return
+  }
+  if (!dateInfo.value) {
+    alert('날짜는 필수 선택사항입니다!')
+  }
+  loading.value = true
+  if (params.value.planTitle === '') {
+    params.value.planTitle = defaultTitle.value
+  }
+  params.value.memberId = userInfo.value.memberId
+  params.value.startDate = dateInfo.value[0].$d
+  params.value.endDate = dateInfo.value[1].$d
+  console.log('선택된 친구들은...', params.value)
+
+  setTimeout(() => {
+    loading.value = false
+    registPlan(
+      params.value,
+      ({ data }) => {
+        console.log('registPlan data', data)
+        planId.value = data
+
+        router.push({
+          name: 'plan-regist-detail',
+          params: { planId: planId.value }
+        })
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+  }, 1000)
+}
 </script>
 
 <template>
@@ -53,19 +122,39 @@ const onChangeSido = (val) => {
     <div class="col-md-12 d-flex" style="flex-direction: column; align-items: center">
       <div class="col-md-8 d-flex mt-3">
         <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
-        <VSelect :selectOption="gugunList" />
+        <VSelect :selectOption="gugunList" @onKeySelect="onChangeGugun" />
       </div>
     </div>
+
+    <h4 class="text-center m-3">날짜 선택</h4>
+    <div class="flex justify-center">
+      <a-space direction="vertical" :size="12">
+        <a-range-picker v-model:value="dateInfo">
+          <template #dateRender="{ current }">
+            <div class="ant-picker-cell-inner" :style="getCurrentStyle(current)">
+              {{ current.date() }}
+            </div>
+          </template>
+        </a-range-picker>
+      </a-space>
+    </div>
+
     <v-sheet max-width="300" class="mx-auto mt-3">
       <v-form validate-on="submit lazy" @submit.prevent="submit">
         <v-text-field
-          v-model="userName"
-          :rules="rules"
+          v-model="params.planTitle"
           label="여행 이름 (선택)"
           :placeholder="defaultTitle"
         ></v-text-field>
 
-        <v-btn :loading="loading" type="submit" block class="mt-2" text="Submit"></v-btn>
+        <v-btn
+          :loading="loading"
+          type="submit"
+          block
+          class="mt-2"
+          text="여행 계획 짜기"
+          @click="goToRegistDetail"
+        ></v-btn>
       </v-form>
     </v-sheet>
   </div>

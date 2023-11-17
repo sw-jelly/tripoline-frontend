@@ -29,6 +29,7 @@ const onSelect = () => {
       :value="option.value"
       :key="option.value"
       :disabled="option.value === 'all'"
+      :selected="option.value.selected != undefined && option.value.selected"
     >
       {{ option.text }}
     </option>

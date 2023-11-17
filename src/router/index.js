@@ -138,12 +138,17 @@ const router = createRouter({
           component: () => import('@/components/plan/PlanRegistView.vue')
         },
         {
-          path: 'detail:planId',
+          path: '/plan-regist-detail/:planId',
+          name: 'plan-regist-detail',
+          component: () => import('@/components/plan/PlanRegistDetailView.vue')
+        },
+        {
+          path: 'detail/:planId',
           name: 'plan-detail',
           component: () => import('@/components/plan/PlanDetailView.vue')
         },
         {
-          path: 'update:planId',
+          path: 'update/:planId',
           name: 'plan-update',
           component: () => import('@/components/plan/PlanUpdateView.vue')
         }

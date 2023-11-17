@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue'
 import { deleteComment, updateComment, getComments } from '@/api/board.js'
+import { onMounted } from 'vue'
 const props = defineProps({ comment: Object })
 
 const isUpdate = ref(false)
@@ -35,9 +36,23 @@ function removeComment() {
     }
   )
 }
+const temp = ref('')
+const copyCommnet = () => {
+  comment.value = JSON.parse(JSON.stringify(props.comment))
+}
 
-function update() {
-  isUpdate.value = !isUpdate.value
+const copyComment = () => {
+  comment.value = JSON.parse(JSON.stringify(props.comment))
+}
+
+function deactiveModfiy() {
+  isUpdate.value = false
+  comment.value.content = temp.value
+}
+
+function activeModfiy() {
+  isUpdate.value = true
+  temp.value = comment.value.content
 }
 
 function modifyComment() {
@@ -46,8 +61,11 @@ function modifyComment() {
     comment.value,
     ({ data }) => {
       alert('댓글 수정이 완료되었습니다.')
-      update()
-      emit('modifyComment')
+      ;(isUpdate.value = false),
+        emit('modifyComment', {
+          commentId: comment.value.commentId,
+          content: comment.value.content
+        })
     },
     (error) => {
       console.log('댓글 수정 실패', error)
@@ -64,7 +82,7 @@ function modifyComment() {
           {{ comment.memberName }} <span class="ml-3">{{ comment.registerTime }}</span>
         </p>
         <div>
-          <button class="small text-primary" @click="update">수정</button>
+          <button class="small text-primary" @click="activeModfiy">수정</button>
           <button class="small text-danger" @click="removeComment">삭제</button>
         </div>
       </div>
@@ -78,12 +96,12 @@ function modifyComment() {
         </p>
         <div>
           <button class="small text-primary" @click="modifyComment">수정</button>
-          <button class="small text-danger" @click="update">취소</button>
+          <button class="small text-danger" @click="deactiveModfiy">취소</button>
         </div>
       </div>
       <textarea class="form-control" rows="3" v-model.lazy="comment.content"></textarea>
     </div>
-    <hr />
+    <hr class="mb-[10px]" />
   </div>
 </template>
 

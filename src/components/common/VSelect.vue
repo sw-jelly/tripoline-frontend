@@ -1,15 +1,22 @@
 <script setup>
 import { ref } from 'vue'
 
-defineProps({
+const prop = defineProps({
   selectOption: {
     type: Array
+  },
+  select: {
+    type: String
+  },
+  readonly: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits(['onKeySelect'])
 
-const key = ref('all')
+const key = ref(prop.select)
 
 const onSelect = () => {
   console.log(key.value + '선택!!')
@@ -23,6 +30,7 @@ const onSelect = () => {
     @change="onSelect"
     class="form-select form-select-sm me-2 w-50"
     aria-label="검색조건"
+    :disabled="readonly"
   >
     <option
       v-for="option in selectOption"

@@ -3,7 +3,15 @@ import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import { jwtDecode } from 'jwt-decode'
 
-import { userConfirm, findById, tokenRegeneration, logout, regist } from '@/api/member'
+import {
+  userConfirm,
+  findById,
+  tokenRegeneration,
+  logout,
+  regist,
+  updateMember,
+  memberWithDrawal
+} from '@/api/member'
 import { httpStatusCode } from '@/utils/http-status'
 
 export const useMemberStore = defineStore(
@@ -23,9 +31,49 @@ export const useMemberStore = defineStore(
         (response) => {
           if (response.status === httpStatusCode.OK) {
             console.log('회원가입 성공')
-            router.push({ name: '/main' })
+            router.push('/')
           } else {
             console.log('회원가입 실패')
+          }
+        },
+        (error) => {
+          console.error(error)
+        }
+      )
+    }
+
+    const userUpdate = async (updateUser) => {
+      console.log('update......', updateUser)
+      await updateMember(
+        updateUser,
+        (response) => {
+          if (response.status === httpStatusCode.OK) {
+            getUserInfo(sessionStorage.getItem('accessToken'))
+            return true
+          } else {
+            console.log('회원정보 수정 실패')
+          }
+        },
+        (error) => {
+          console.error(error)
+        }
+      )
+    }
+
+    const userWithDrawal = async (memberId) => {
+      console.log('withdrawal......', memberId)
+      await memberWithDrawal(
+        memberId,
+        (response) => {
+          if (response.status === httpStatusCode.OK) {
+            alert('회원탈퇴 성공')
+            sessionStorage.clear()
+            isLogin.value = false
+            userInfo.value = null
+            isValidToken.value = false
+            router.push('/')
+          } else {
+            console.log('회원탈퇴 실패')
           }
         },
         (error) => {
@@ -160,7 +208,9 @@ export const useMemberStore = defineStore(
       getUserInfo,
       tokenRegenerate,
       userLogout,
-      userRegist
+      userRegist,
+      userUpdate,
+      userWithDrawal
     }
   },
   { persist: true }

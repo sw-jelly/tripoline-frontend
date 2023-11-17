@@ -78,7 +78,7 @@ const signupshow = ref(false)
     </div>
     <div class="relative top-1/2 flex w-full justify-center items-center h-[50px]">
       <button
-        class="bg-white hover:bg-stone-400 w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
+        class="bg-blue-500 hover:bg-blue-700 w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
         @click="loginshow = !loginshow"
       >
         로그인
@@ -98,7 +98,12 @@ const signupshow = ref(false)
               X
             </button>
           </div>
-          <h1 class="text-center text-2xl">로그인</h1>
+          <div class="flex flex-row justify-between items-center">
+            <img src="@/assets/T-rex.png" width="80" alt="logo" style="transform: scaleX(-1)" />
+            <h1 class="text-center text-2xl">로그인</h1>
+            <img src="@/assets/T-rex.png" width="80" alt="logo" />
+          </div>
+
           <input
             class="rounded"
             type="text"
@@ -119,17 +124,16 @@ const signupshow = ref(false)
 
           <a href="#">비밀번호가 기억이 안나나요?</a>
           <hr />
-          <button class="create-account">회원가입 하러 가기</button>
         </form>
       </Transition>
       <button
-        class="bg-white hover:bg-stone-400 w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
+        class="bg-stone-500 hover:bg-white w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
         @click="signupshow = !signupshow"
       >
         회원가입
       </button>
       <Transition
-        class="flex flex-col w-[500px] h-[650px] rounded bg-white"
+        class="flex flex-col w-[800px] h-[800px] rounded bg-white"
         :duration="250"
         name="nested"
       >

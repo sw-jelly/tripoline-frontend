@@ -134,7 +134,7 @@ function updateComment() {
 </script>
 
 <template>
-  <div class="flex flex-col flex-1 min-h-full">
+  <div class="flex flex-col flex-1">
     <div class="flex flex-col w-4/6 h-full mx-auto">
       <div id="categoryContainer">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">글 상세 보기</h2>
@@ -182,15 +182,13 @@ function updateComment() {
           </div>
         </div>
         <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+
         <div class="w-full h-full px-[10px] py-[10px]">
           <textarea
             class="w-full h-[300px] border-[1px] border-black border-solid rounded p-[15px]"
             readonly="true"
+            v-model="article.articleContent"
           >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum architecto adipisci earum tempora exercitationem, vel aliquam optio eligendi repudiandae fuga mollitia itaque, deleniti saepe, hic unde consequatur iusto nesciunt quisquam!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam repellat inventore temporibus eos rem debitis numquam illo enim, beatae odio vel praesentium, vitae, ipsa quam deserunt quae! Fugit, aliquam.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio alias obcaecati temporibus hic magni laborum sapiente provident quibusdam animi dolor! Esse aperiam aut omnis exercitationem perferendis natus? Perspiciatis, error non.
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione quaerat repellendus reprehenderit, consequatur ad nisi odit odio repellat facere deleniti esse, iusto sed velit dicta aliquid optio. Nulla, fugiat porro!
           </textarea>
         </div>
         <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
@@ -229,7 +227,7 @@ function updateComment() {
             <button class="btn btn-primary ms-2 col-1" @click="registerComment">등록</button>
           </div>
         </div>
-        <div v-if="comments.length > 0" class="flex flex-col my-[20px]">
+        <div v-if="comments.length > 0" class="flex flex-col">
           <BoardCommentItem
             class="flex flex-col"
             v-for="comment in comments"

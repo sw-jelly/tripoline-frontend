@@ -8,12 +8,26 @@ import { useMenuStore } from '@/stores/menu'
 const router = useRouter()
 const memberStore = useMemberStore()
 const { isLogin } = storeToRefs(memberStore)
-const { userLogin, getUserInfo } = memberStore
+const { userLogin, getUserInfo, userRegist } = memberStore
 const { changeMenuState } = useMenuStore()
 
 const loginUser = ref({
   memberId: '',
   memberPassword: ''
+})
+
+const memberPasswordCheck = ref('')
+const User = ref({
+  memberId: '',
+  memberPassword: '',
+  memberName: '',
+  memberEmail: '',
+  sidoCode: 0,
+  gugunCode: 0,
+  memberBirthdate: '',
+  memberGender: '',
+  memberPhone: '',
+  memberRole: 1
 })
 
 const login = async () => {
@@ -31,6 +45,13 @@ const login = async () => {
     router.push('/')
   }
 }
+
+const regist = async () => {
+  await userRegist(User.value)
+  console.log('registInfo', User.value)
+  router.push('/')
+}
+
 const loginshow = ref(false)
 const signupshow = ref(false)
 </script>
@@ -39,7 +60,7 @@ const signupshow = ref(false)
   <div class="relative flex flex-col w-full h-full bg-stone-300">
     <div class="relative flex flex-col w-full top-1/3 items-center justify-start h-[100px]">
       <Transition :duration="550" name="nested">
-        <div class="flex justify-center items-center" v-show="!loginshow && !signupshow">
+        <div class="flex justify-center items-center" v-if="!loginshow && !signupshow">
           <h1 class="title">
             <span class="title-item">T</span>
             <span class="title-item">R</span>
@@ -64,7 +85,11 @@ const signupshow = ref(false)
       </button>
 
       <Transition class="w-[500px] h-[500px] bg-white rounded" :duration="250" name="nested">
-        <form class="absolute p-[50px] flex flex-col justify-evenly" v-show="loginshow">
+        <form
+          class="absolute p-[50px] flex flex-col justify-evenly"
+          v-show="loginshow"
+          @submit.prevent="login"
+        >
           <div
             class="absolute right-[15px] top-[15px] cursor-pointer"
             @click="loginshow = !loginshow"
@@ -90,7 +115,7 @@ const signupshow = ref(false)
             placeholder="비밀번호를 입력해주세요"
             required
           />
-          <button type="button" class="login w-full" @click="login">로그인</button>
+          <button type="button" class="login w-full" @click.prevent="login">로그인</button>
 
           <a href="#">비밀번호가 기억이 안나나요?</a>
           <hr />
@@ -103,8 +128,16 @@ const signupshow = ref(false)
       >
         회원가입
       </button>
-      <Transition class="w-[500px] h-[650px] bg-white rounded" :duration="250" name="nested">
-        <form class="absolute p-[50px] flex flex-col overflow-y-scroll" v-show="signupshow">
+      <Transition
+        class="flex flex-col w-[500px] h-[650px] rounded bg-white"
+        :duration="250"
+        name="nested"
+      >
+        <form
+          class="absolute p-[50px] flex flex-col overflow-y-scroll"
+          v-show="signupshow"
+          @submit.prevent="login"
+        >
           <div
             class="absolute right-[15px] top-[15px] cursor-pointer"
             @click="signupshow = !signupshow"
@@ -114,24 +147,109 @@ const signupshow = ref(false)
             </button>
           </div>
           <h1 class="text-center text-2xl">회원가입</h1>
-          <input class="rounded" type="text" placeholder="아이디를 입력해주세요" required />
-          <input class="rounded" type="password" placeholder="비밀번호를 입력해주세요" required />
+          <input
+            class="rounded"
+            type="text"
+            :memberId="User.memberId"
+            @change="User.memberId = $event.target.value"
+            placeholder="아이디를 입력해주세요"
+            required
+          />
           <input
             class="rounded"
             type="password"
+            :memberPassword="User.memberPassword"
+            @change="User.memberPassword = $event.target.value"
+            placeholder="비밀번호를 입력해주세요"
+            required
+          />
+          <input
+            class="rounded"
+            type="password"
+            :memberPasswordCheck="memberPasswordCheck"
+            @change="memberPasswordCheck = $event.target.value"
             placeholder="비밀번호를 한번더 입력해주세요"
             required
           />
 
-          <input class="rounded" type="text" placeholder="성함을 입력해주세요" required />
-          <input class="rounded" type="email" placeholder="이메일을 입력해주세요" required />
-          <input class="rounded" type="password" placeholder="시도, 구군코드" required />
-          <input class="rounded" type="password" placeholder="생년월일" required />
-          <input class="rounded" type="password" placeholder="성별" required />
-          <input class="rounded" type="password" placeholder="전화번호" required />
+          <input
+            class="rounded"
+            type="text"
+            :memberName="User.memberName"
+            @change="User.memberName = $event.target.value"
+            placeholder="성함을 입력해주세요"
+            required
+          />
+          <input
+            class="rounded"
+            type="email"
+            :memberEmail="User.memberEmail"
+            @change="User.memberEmail = $event.target.value"
+            placeholder="이메일을 입력해주세요"
+            required
+          />
+          <div
+            class="flex justify-between border-2 border-solid border-black p-auto rounded h-[50px]"
+          >
+            <label for="sido">
+              <select
+                class="rounded"
+                name="sido"
+                id="sido"
+                :sidoCode="User.sidoCode"
+                @change="User.sidoCode = $event.target.value"
+                required
+              >
+                <option value="0">시도코드</option>
+                <option value="1">강남</option>
+                <option value="2">경기</option>
+                <option value="3">서울</option>
+              </select>
+            </label>
+            <label for="gugun">
+              <select
+                class="rounded"
+                name="gugun"
+                id="gugun"
+                :gugunCode="User.gugunCode"
+                @change="User.gugunCode = $event.target.value"
+                required
+              >
+                <option value="">강남</option>
+                <option value="1">서울</option>
+                <option value="2">용인</option>
+                <option value="3">시도</option>
+              </select>
+            </label>
+          </div>
+
+          <input
+            class="rounded"
+            type="date"
+            :memberBirthdate="User.memberBirthdate"
+            @change="User.memberBirthdate = $event.target.value"
+            placeholder="생년월일"
+            required
+          />
+          <input
+            class="rounded"
+            type="text"
+            :memberGender="User.memberGender"
+            @change="User.memberGender = $event.target.value"
+            placeholder="성별"
+            required
+          />
+          <input
+            class="rounded"
+            type="tel"
+            :memberPhone="User.memberPhone"
+            @change="User.memberPhone = $event.target.value"
+            placeholder="전화번호"
+            required
+          />
 
           <RouterLink :to="{ name: 'home' }"
-            ><button class="login w-full">회원가입하기</button></RouterLink
+            ><button class="login w-full" @click.prevent="regist">회원가입하기</button></RouterLink
           >
           <a href="#">소셜로그인???</a>
           <hr />

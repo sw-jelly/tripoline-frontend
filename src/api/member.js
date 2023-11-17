@@ -28,3 +28,21 @@ function regist(params, success, fail) {
 }
 
 export { userConfirm, findById, tokenRegeneration, logout, regist }
+
+// function login(memberId, memberPassword, success, fail) {
+//   local.post('memberRest', { memberId, memberPassword }).then(success).catch(fail)
+// }
+
+// function memberWithDrawal(memberId, success, fail) {
+//   local.delete(memberRest/${memberId}).then(success).catch(fail)
+// }
+
+// function memberLogOut(success, fail) {
+//   local.delete('memberRest/logout').then(success).catch(fail)
+// }
+
+// function updateMember(member, success, fail) {
+//   local.put(memberRest, JSON.stringify(member)).then(success).catch(fail)
+// }
+
+// export { regist, login, memberWithDrawal, updateMember, memberLogOut }

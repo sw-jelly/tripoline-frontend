@@ -1,3 +1,15 @@
+<!-- <script setup>
+import Tiptap from '@/components/Tiptap/Tiptap.vue'
+</script>
+
+<template>
+  <div>
+    <Tiptap />
+  </div>
+</template>
+
+<style scoped></style> -->
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -68,7 +80,8 @@ const like = () => {
     articleId,
     ({ data }) => {
       console.log(data)
-      getArticle()
+      article.value.likeCount += 1
+      // getArticle()
     },
     (error) => {
       console.log('좋아요 실패', error)
@@ -121,60 +134,100 @@ function updateComment() {
 </script>
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글보기</mark>
-        </h2>
+  <div class="min-h-full">
+    <div class="flex flex-col w-4/6 h-full mx-auto">
+      <div id="categoryContainer">
+        <h2 class="my-3 py-3 shadow-sm bg-light text-center">글 상세 보기</h2>
       </div>
-      <div class="col-lg-10 text-start">
-        <div class="row my-2">
-          <h2>{{ article.articleTitle }}</h2>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div class="clearfix align-content-center">
+      <div id="boardContents">
+        <div id="boardHeader" class="flex flex-col bg-stone-300">
+          <h1 class="text-2xl">게시판 : 게시판분류</h1>
+          <h1 class="text-2xl">제목 : {{ article.articleTitle }}</h1>
+          <div class="flex justify-between">
+            <div class="flex justify-center flex-start">
+              작성자 : {{ article.memberName }}
+              <div class="flex flex-col items-center">
+                <img
+                  class="avatar me-2 float-md-start bg-light p-2"
+                  src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                  width="30"
+                />
+                {{ article.registerTime }}
+              </div>
+            </div>
+            <div class="flex items-center gap-[10px]">
               <img
-                class="avatar me-2 float-md-start bg-light p-2"
-                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Eye.png"
+                alt="Eye"
+                width="25"
+                height="25"
               />
-              <p>
-                <span class="fw-bold">{{ article.memberName }}</span> <br />
-                <span class="text-secondary fw-light">
-                  {{ article.registerTime }} 조회 : {{ article.viewCount }}
-                </span>
-              </p>
+              <p>{{ article.viewCount }}</p>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Writing%20Hand%20Medium-Light%20Skin%20Tone.png"
+                alt="Writing Hand Medium-Light Skin Tone"
+                width="25"
+                height="25"
+              />
+              <p>{{ comments.length }}</p>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up.png"
+                alt="Thumbs Up"
+                width="25"
+                height="25"
+                @click="like"
+              />
+              <p class="pr-[10px]">{{ article.likeCount }}</p>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : {{ comments.length }}</div>
-          <button class="btn btn-primary ms-2 col-1" @click="like">좋아요</button>
-
-          <div class="divider mb-3"></div>
-          <textarea class="form-control" rows="7" readonly="true" v-model="article.articleContent">
-          </textarea>
-          <div class="divider mt-3 mb-3"></div>
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
-              글목록
-            </button>
-            <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
-              글수정
-            </button>
-            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteArticle">
-              글삭제
-            </button>
-          </div>
         </div>
-        <h4 class="mt-3 mb-3">댓글</h4>
-        <div class="d-flex mb-2">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="댓글을 작성하세요"
-            v-model="comment.content"
-          />
-          <button class="btn btn-primary ms-2 col-1" @click="registerComment">등록</button>
+        <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+        <div class="w-full h-full px-[10px] py-[10px]">
+          <textarea
+            class="w-full h-[300px] border-[1px] border-black border-solid rounded p-[15px]"
+            readonly="true"
+          >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum architecto adipisci earum tempora exercitationem, vel aliquam optio eligendi repudiandae fuga mollitia itaque, deleniti saepe, hic unde consequatur iusto nesciunt quisquam!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam repellat inventore temporibus eos rem debitis numquam illo enim, beatae odio vel praesentium, vitae, ipsa quam deserunt quae! Fugit, aliquam.
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio alias obcaecati temporibus hic magni laborum sapiente provident quibusdam animi dolor! Esse aperiam aut omnis exercitationem perferendis natus? Perspiciatis, error non.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione quaerat repellendus reprehenderit, consequatur ad nisi odit odio repellat facere deleniti esse, iusto sed velit dicta aliquid optio. Nulla, fugiat porro!
+          </textarea>
+        </div>
+        <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+        <div class="flex justify-center gap-[15px]">
+          <button
+            type="button"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3"
+            @click="moveList"
+          >
+            글목록
+          </button>
+          <button
+            type="button"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-3 ms-1"
+            @click="moveModify"
+          >
+            글수정
+          </button>
+          <button
+            type="button"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-3 ms-1"
+            @click="onDeleteArticle"
+          >
+            글삭제
+          </button>
+        </div>
+        <div class="flex flex-col">
+          <h4>댓글</h4>
+          <div class="flex mb-2">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="댓글을 작성하세요"
+              v-model="comment.content"
+            />
+            <button class="btn btn-primary ms-2 col-1" @click="registerComment">등록</button>
+          </div>
         </div>
         <div v-if="comments.length > 0">
           <BoardCommentItem
@@ -191,6 +244,7 @@ function updateComment() {
         </div>
       </div>
     </div>
+    <div></div>
   </div>
 </template>
 

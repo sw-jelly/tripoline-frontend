@@ -137,7 +137,8 @@ const getAttrationsByTitle = () => {
         <input
           v-model="param.keyword"
           type="search"
-          class="form-control"
+          label="Select"
+          variant="underlined"
           placeholder="검색어를 입력하세요"
         />
       </div>

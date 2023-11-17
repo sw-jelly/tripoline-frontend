@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TheHomeView from '@/views/TheHomeView.vue'
 import BeforeLoginView from '@/views/BeforeLoginView.vue'
 
 import { useMemberStore } from '@/stores/member'
@@ -132,6 +131,21 @@ const router = createRouter({
           path: 'list',
           name: 'plan-list',
           component: () => import('@/components/plan/PlanListView.vue')
+        },
+        {
+          path: 'regist',
+          name: 'plan-regist',
+          component: () => import('@/components/plan/PlanRegistView.vue')
+        },
+        {
+          path: 'detail:planId',
+          name: 'plan-detail',
+          component: () => import('@/components/plan/PlanDetailView.vue')
+        },
+        {
+          path: 'update:planId',
+          name: 'plan-update',
+          component: () => import('@/components/plan/PlanUpdateView.vue')
         }
       ]
     }

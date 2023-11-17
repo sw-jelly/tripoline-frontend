@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { getPlanListByMemberId } from '@/api/plan.js'
 import { useMemberStore } from '@/stores/member'
+import PlanListItem from './item/PlanListItem.vue'
 
 const memberStore = useMemberStore()
 const router = useRouter()
@@ -28,10 +29,22 @@ const getPlanList = () => {
     }
   )
 }
+
+const goToRegist = () => {
+  router.push('/plan/regist')
+}
 </script>
 
 <template>
-  <h1>잘 오셨습니다</h1>
+  <v-container>
+    <h1 class="text-center">나의 여행 계획</h1>
+    <v-col class="text-center" cols="12" @click="goToRegist">
+      <v-btn size="x-large">새 여행 계획 추가하기</v-btn>
+    </v-col>
+    <v-row align="center" justify="start">
+      <PlanListItem v-for="(plan, i) in plans" :key="i" :plan="plan" />
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped></style>

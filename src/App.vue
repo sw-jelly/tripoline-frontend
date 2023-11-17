@@ -13,7 +13,7 @@ const user = ref(true)
 </script>
 
 <template>
-  <div id="app">
+  <div id="app" class="flex flex-col">
     <TheHeadingNavbar v-if="isLogin" />
     <RouterView />
     <Footer v-if="isLogin" />

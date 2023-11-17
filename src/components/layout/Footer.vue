@@ -7,7 +7,7 @@ const showAlert = () => {
 </script>
 
 <template>
-  <footer class="h-[240px] relative translate-y-0 bg-stone-500">
+  <footer class="bg-stone-600 h-[300px] w-full">
     <!-- footer영역 채워넣기 -->
     <div class="w-full h-full flex justify-evenly items-center">
       <div class="flex flex-col justify-evenly">

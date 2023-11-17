@@ -57,11 +57,11 @@ function modifyComment() {
 </script>
 
 <template>
-  <div id="comment" class="mt-3 mb-3">
-    <div v-if="!isUpdate">
-      <div class="d-flex justify-content-between align-items-center">
+  <div id="comment">
+    <div v-if="!isUpdate" class="border-2 border-solid boder-black my-[4px] rounded">
+      <div class="flex justify-between items-center">
         <p class="mb-1 h5">
-          {{ comment.memberName }} <span class="small">{{ comment.registerTime }}</span>
+          {{ comment.memberName }} <span class="ml-3">{{ comment.registerTime }}</span>
         </p>
         <div>
           <button class="small text-primary" @click="update">수정</button>
@@ -72,7 +72,7 @@ function modifyComment() {
       <button class="small text-primary mt-1">답글</button>
     </div>
     <div v-else>
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="flex justify-between items-center">
         <p class="mb-1 h5">
           {{ comment.memberName }} <span class="small">{{ comment.registerTime }}</span>
         </p>

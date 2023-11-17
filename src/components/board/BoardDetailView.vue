@@ -20,7 +20,7 @@ import {
   registComment,
   likeArticle
 } from '@/api/board.js'
-
+import Footer from '@/components/layout/Footer.vue'
 import BoardCommentItem from '@/components/board/item/BoardCommentItem.vue'
 
 const route = useRoute()
@@ -134,7 +134,7 @@ function updateComment() {
 </script>
 
 <template>
-  <div class="min-h-full">
+  <div class="flex flex-col flex-1 min-h-full">
     <div class="flex flex-col w-4/6 h-full mx-auto">
       <div id="categoryContainer">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">글 상세 보기</h2>
@@ -229,8 +229,9 @@ function updateComment() {
             <button class="btn btn-primary ms-2 col-1" @click="registerComment">등록</button>
           </div>
         </div>
-        <div v-if="comments.length > 0">
+        <div v-if="comments.length > 0" class="flex flex-col my-[20px]">
           <BoardCommentItem
+            class="flex flex-col"
             v-for="comment in comments"
             :key="comment.commentId"
             :comment="comment"
@@ -244,8 +245,8 @@ function updateComment() {
         </div>
       </div>
     </div>
-    <div></div>
   </div>
+  <!-- <Footer /> -->
 </template>
 
 <style scoped></style>

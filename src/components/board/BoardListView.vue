@@ -135,73 +135,74 @@ const moveWrite = () => {
 </script>
 
 <template>
-  <div class="flex flex-col w-4/6 h-full m-auto">
-    <div class="flex flex-col w-full h-full">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          {{ BoardCategoryEnum[board] }}
-        </h2>
-      </div>
-      <div class="flex flex-col h-full w-full">
-        <div class="flex items-center justify-center">
-          <div class="flex w-full justify-evenly">
-            <button
-              type="button"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-indent"
-              @click="moveWrite"
-            >
-              글쓰기
-            </button>
-
-            <button
-              v-if="!isBest"
-              type="button"
-              class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
-              @click="getBestArticleList"
-            >
-              베스트
-            </button>
-            <button
-              v-else
-              type="button"
-              class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-              @click="getArticleList"
-            >
-              일반글
-            </button>
-            <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
-          </div>
-          <div class="col-md-6">
-            <form class="flex">
-              <!-- @onKeySelect="changeKey" -->
-              <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
-              <div class="input-group input-group-sm">
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="param.word"
-                  placeholder="검색어..."
-                />
-                <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
-              </div>
-            </form>
-          </div>
+  <div>
+    <div class="flex flex-col w-4/6 h-full m-auto">
+      <div class="flex flex-col w-full h-full">
+        <div class="col-lg-10">
+          <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+            {{ BoardCategoryEnum[board] }}
+          </h2>
         </div>
-        <div class="flex flex-col items-center justify-center">
-          <table class="min-w-[1000px] w-full mt-10 bg-stone-50">
-            <thead>
-              <tr class="text-center h-[50px]">
-                <th scope="col">카테고리</th>
-                <th scope="col">글번호</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">조회수</th>
-                <th scope="col">좋아요</th>
-                <th scope="col">작성일(최종수정일)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- <tr
+        <div class="flex flex-col h-full w-full">
+          <div class="flex items-center justify-center">
+            <div class="flex w-full justify-evenly">
+              <button
+                type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-indent"
+                @click="moveWrite"
+              >
+                글쓰기
+              </button>
+
+              <button
+                v-if="!isBest"
+                type="button"
+                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
+                @click="getBestArticleList"
+              >
+                베스트
+              </button>
+              <button
+                v-else
+                type="button"
+                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                @click="getArticleList"
+              >
+                일반글
+              </button>
+              <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
+            </div>
+            <div class="col-md-6">
+              <form class="flex">
+                <!-- @onKeySelect="changeKey" -->
+                <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
+                <div class="input-group input-group-sm">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="param.word"
+                    placeholder="검색어..."
+                  />
+                  <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center">
+            <table class="min-w-[1000px] w-full mt-10 bg-stone-50">
+              <thead>
+                <tr class="text-center h-[50px]">
+                  <th scope="col">카테고리</th>
+                  <th scope="col">글번호</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">작성자</th>
+                  <th scope="col">조회수</th>
+                  <th scope="col">좋아요</th>
+                  <th scope="col">작성일(최종수정일)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr
                 class="text-center bg-white h-[40px] border-y border-solid border-gray-500 hover:bg-stone-200 cursor-pointer"
               >
                 <th scope="row">자유게시판</th>
@@ -221,21 +222,21 @@ const moveWrite = () => {
                 <td>10</td>
                 <td>2023-03-23</td>
               </tr> -->
-              <BoardListItem
-                v-for="article in articles"
-                :key="article.articleNo"
-                :article="article"
-              ></BoardListItem>
-            </tbody>
-          </table>
-          <PageNavigation
-            :currentPage="currentPage"
-            :total-page="totalPage"
-            @page-change="onPageChange"
-          ></PageNavigation>
-        </div>
+                <BoardListItem
+                  v-for="article in articles"
+                  :key="article.articleNo"
+                  :article="article"
+                ></BoardListItem>
+              </tbody>
+            </table>
+            <PageNavigation
+              :currentPage="currentPage"
+              :total-page="totalPage"
+              @page-change="onPageChange"
+            ></PageNavigation>
+          </div>
 
-        <!-- <table class="table table-hover">
+          <!-- <table class="table table-hover">
           <thead>
             <tr class="text-center">
               <th scope="col">카테고리</th>
@@ -255,6 +256,7 @@ const moveWrite = () => {
             ></BoardListItem>
           </tbody>
         </table> -->
+        </div>
       </div>
     </div>
   </div>

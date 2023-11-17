@@ -44,7 +44,7 @@ const logout = async () => {
         <li class="float-left ml-[10px] text-lg"></li>
         <li class="float-left ml-[10px] text-lg cursor-pointer" @click="logout">로그아웃</li>
         <li class="float-left ml-[10px] text-lg">
-          <RouterLink class="nav-link" :to="{ name: 'member-login' }">회원정보</RouterLink>
+          <RouterLink class="nav-link" :to="{ name: 'member' }">회원정보</RouterLink>
         </li>
       </ul>
     </div>

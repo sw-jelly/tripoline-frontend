@@ -42,24 +42,29 @@ const router = createRouter({
       }
     },
     {
-      path: '/member/login',
-      name: 'member-login',
-      component: () => import('@/components/member/MemberLoginView.vue')
-    },
-    {
-      path: '/member/regist',
-      name: 'member-regist',
-      component: () => import('@/components/member/MemberRegisterView.vue')
-    },
-    {
-      path: '/member/update',
-      name: 'member-update',
-      component: () => import('@/views/MemberUpdateView.vue')
+      path: '/member',
+      name: 'member',
+      component: () => import('@/views/MyPageView.vue'),
+      redirect: '/member/manage',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      children: [
+        {
+          path: 'manage',
+          name: 'member-manage',
+          component: () => import('@/components/member/MemberManageView.vue')
+        }
+      ]
     },
     {
       path: '/member/withdrawal',
       name: 'member-withdrawal',
-      component: () => import('@/views/MemberWithdrawalView.vue')
+      component: () => import('@/components/MemberWithdrawalView.vue')
     },
     {
       path: '/attraction',

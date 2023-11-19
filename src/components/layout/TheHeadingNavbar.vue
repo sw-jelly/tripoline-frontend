@@ -9,42 +9,54 @@ const { userLogout } = memberStore
 const { userInfo, isLogin } = storeToRefs(memberStore)
 
 const logout = async () => {
-  await userLogout(userInfo.value.memberId)
+  await userLogout(userInfo.memberId)
   if (!isLogin.value) {
-    alert('로그아웃 완료!')
+    alert('로그 아웃 완료!')
     router.push('/')
   }
 }
+
+// const memberName = ref('')
+// onMounted(() => {
+//   memberName.value = userInfo.value.memberName
+// })
 </script>
 
 <template>
-  <nav class="flex w-full h-[140px] align-center justify-evenly text-center bg-gray-50">
+  <nav class="flex min-h-[100px] align-center justify-around bg-white text-black font-mono">
     <div class="flex items-center">
       <RouterLink :to="{ name: 'main' }">
         <img src="@/assets/flight.png" width="90" />
       </RouterLink>
       <h1 class="text-2xl mx-4">Tripoline</h1>
     </div>
-    <div class="flex flex-row items-center">
-      <ul>
-        <li class="float-left text-lg">
-          <a href="#" class="text-decoration-none text-black">공지사항</a>
+    <div class="flex items-center">
+      <ul class="cursor-pointer text-2xl">
+        <li class="float-left hover:text-blue-500">
+          <RouterLink class="nav-link" :to="{ name: 'board' }">공지사항</RouterLink>
         </li>
-        <li class="float-left ml-[10px] text-lg">
+        <li class="float-left ml-[10px] hover:text-blue-500">
           <RouterLink class="nav-link" :to="{ name: 'board' }">게시판</RouterLink>
         </li>
-        <li class="float-left ml-[10px] text-lg">
-          <RouterLink class="nav-link" :to="{ name: 'attraction' }">관광지 검색</RouterLink>
+        <li class="float-left ml-[10px] hover:text-blue-500">
+          <RouterLink class="nav-link" :to="{ name: 'attraction' }">관광지검색</RouterLink>
         </li>
-        <li class="float-left ml-[10px] text-lg">
-          <RouterLink class="nav-link" :to="{ name: 'plan' }">여행 계획</RouterLink>
+        <li class="float-left ml-[10px] hover:text-blue-500">
+          <RouterLink class="nav-link" :to="{ name: 'plan' }">여행계획</RouterLink>
         </li>
       </ul>
-      <ul class="mx-10">
-        <li class="float-left ml-[10px] text-lg"></li>
-        <li class="float-left ml-[10px] text-lg cursor-pointer" @click="logout">로그아웃</li>
-        <li class="float-left ml-[10px] text-lg">
-          <RouterLink class="nav-link" :to="{ name: 'member' }">회원정보</RouterLink>
+    </div>
+    <div class="flex flex-row items-center text-2xl">
+      <ul>
+        <li class="float-left ml-[10px">
+          <span class="underline" v-if="userInfo">{{ userInfo.memberName }}</span
+          >님환영합니다
+        </li>
+        <li class="float-left ml-[10px] cursor-pointer hover:text-red-300" @click="logout">
+          로그아웃
+        </li>
+        <li class="float-left ml-[10px] hover:text-blue-300">
+          <RouterLink class="nav-link" :to="{ name: 'member' }">마이페이지</RouterLink>
         </li>
       </ul>
     </div>

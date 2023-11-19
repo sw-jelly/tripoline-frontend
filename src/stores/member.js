@@ -10,7 +10,8 @@ import {
   logout,
   regist,
   updateMember,
-  memberWithDrawal
+  memberWithDrawal,
+  uploadProfile
 } from '@/api/member'
 import { httpStatusCode } from '@/utils/http-status'
 
@@ -49,6 +50,24 @@ export const useMemberStore = defineStore(
         (response) => {
           if (response.status === httpStatusCode.OK) {
             getUserInfo(sessionStorage.getItem('accessToken'))
+            return true
+          } else {
+            console.log('회원정보 수정 실패')
+          }
+        },
+        (error) => {
+          console.error(error)
+        }
+      )
+    }
+
+    const uploadProfileImage = async (formData) => {
+      console.log('uploadProfileImage......', formData)
+      await uploadProfile(
+        formData,
+        async (response) => {
+          if (response.status === httpStatusCode.OK) {
+            await getUserInfo(sessionStorage.getItem('accessToken'))
             return true
           } else {
             console.log('회원정보 수정 실패')
@@ -114,10 +133,10 @@ export const useMemberStore = defineStore(
       )
     }
 
-    const getUserInfo = (token) => {
+    const getUserInfo = async (token) => {
       let decodeToken = jwtDecode(token)
       console.log('2. decodeToken', decodeToken)
-      findById(
+      await findById(
         decodeToken.userId,
         (response) => {
           if (response.status === httpStatusCode.OK) {
@@ -210,7 +229,8 @@ export const useMemberStore = defineStore(
       userLogout,
       userRegist,
       userUpdate,
-      userWithDrawal
+      userWithDrawal,
+      uploadProfileImage
     }
   },
   { persist: true }

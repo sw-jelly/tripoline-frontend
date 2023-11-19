@@ -36,7 +36,27 @@ function memberWithDrawal(memberId, success, fail) {
   local.delete(`memberRest/${memberId}`).then(success).catch(fail)
 }
 
-export { userConfirm, findById, tokenRegeneration, logout, regist, updateMember, memberWithDrawal }
+function uploadProfile(formData, success, fail) {
+  local
+    .post('/memberRest/profileimage', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(success)
+    .catch(fail)
+}
+
+export {
+  userConfirm,
+  findById,
+  tokenRegeneration,
+  logout,
+  regist,
+  updateMember,
+  memberWithDrawal,
+  uploadProfile
+}
 
 // function login(memberId, memberPassword, success, fail) {
 //   local.post('memberRest', { memberId, memberPassword }).then(success).catch(fail)

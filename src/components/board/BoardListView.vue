@@ -141,9 +141,9 @@ const moveWrite = () => {
 <template>
   <div>
     <div class="flex flex-col flex-1 items-center">
-      <div class="flex flex-col w-2/3">
+      <div class="flex flex-col w-2/3 items-center">
         <div class="col-lg-10">
-          <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+          <h2 class="my-3 py-3 text-center">
             {{ BoardCategoryEnum[board] }}
           </h2>
         </div>

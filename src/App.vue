@@ -5,16 +5,17 @@ import { RouterView } from 'vue-router'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/stores/member'
+import { onMounted } from 'vue'
 
 const memberStore = useMemberStore()
 const { isLogin } = storeToRefs(memberStore)
-
-// 사용자 로그인 정보 있는지 여부 확인
-const user = ref(true)
+onMounted(() => {
+  console.log('App.vue에서 로그인 여부 : ' + isLogin.value)
+})
 </script>
 
 <template>
-  <div id="app" class="flex flex-col">
+  <div id="app" class="flex flex-col flex-1">
     <TheHeadingNavbar v-if="isLogin" />
     <RouterView />
     <Footer v-if="isLogin" />

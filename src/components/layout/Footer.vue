@@ -7,13 +7,13 @@ const showAlert = () => {
 </script>
 
 <template>
-  <footer class="bg-stone-600 h-[300px] w-full">
+  <footer class="bg-stone-600 p-[10px]">
     <!-- footer영역 채워넣기 -->
-    <div class="w-full h-full flex justify-evenly items-center">
-      <div class="flex flex-col justify-evenly">
+    <div class="flex justify-around items-between">
+      <div class="flex flex-col">
         <div class="text-2xl text-white">
-          <a href="index.html">
-            <span>Enjoy Trip</span>
+          <a href="/" class="none text-white">
+            <span>Tripoline</span>
           </a>
           <p>
             CopyRight &copy; SSAFY 서울 13반 지인성 <br />
@@ -32,7 +32,6 @@ const showAlert = () => {
           <p>대한민국 서울특별시</p>
           <p>강남구 역삼동 테헤란로 212</p>
           <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1004-1004 </span></p>
-          <p><strong>Email:</strong> <span>ssafy@ssafy.com</span></p>
         </div>
       </div>
       <div class="flex flex-col">

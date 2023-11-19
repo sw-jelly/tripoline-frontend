@@ -6,7 +6,8 @@ const prop = defineProps({
     type: Array
   },
   select: {
-    type: String
+    type: String,
+    default: 'all'
   },
   readonly: {
     type: Boolean,

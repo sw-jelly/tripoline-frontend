@@ -3,20 +3,68 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useMemberStore } from '@/stores/member'
-import { useMenuStore } from '@/stores/menu'
+import { onMounted } from 'vue'
+import { searchSido, searchGugun } from '@/api/attraction'
+import VSelect from '../components/common/VSelect.vue'
 
 const router = useRouter()
 const memberStore = useMemberStore()
-const { isLogin } = storeToRefs(memberStore)
+
+const { isLogin, userInfo } = storeToRefs(memberStore)
 const { userLogin, getUserInfo, userRegist } = memberStore
-const { changeMenuState } = useMenuStore()
 
 const loginUser = ref({
   memberId: '',
   memberPassword: ''
 })
 
-const memberPasswordCheck = ref('')
+const sidoList = ref([])
+const gugunList = ref([{ text: '구/군 선택', value: 'all' }])
+
+onMounted(() => {
+  getSidoList()
+})
+
+const getSidoList = () => {
+  searchSido(
+    ({ data }) => {
+      let options = []
+      options.push({ text: '시/도 선택', value: 'all' })
+      data.sidos.forEach((sido) => {
+        options.push({ text: sido.sidoName, value: sido.sidoCode })
+      })
+      sidoList.value = options
+    },
+    (err) => {
+      console.log(err)
+    }
+  )
+}
+
+const onChangeSido = (val) => {
+  User.value.sidoCode = val
+  searchGugun(
+    { sidoCode: val },
+    ({ data }) => {
+      let options = []
+      options.push({ text: '구/군 선택', value: 'all' })
+      data.guguns.forEach((gugun) => {
+        options.push({ text: gugun.gugunName, value: gugun.gugunCode })
+      })
+      gugunList.value = options
+    },
+    (err) => {
+      console.log(err)
+    }
+  )
+}
+
+const onChangeGugun = (val) => {
+  User.value.gugunCode = val
+}
+
+const date = ref()
+
 const User = ref({
   memberId: '',
   memberPassword: '',
@@ -33,23 +81,19 @@ const User = ref({
 const login = async () => {
   console.log('login ing!!!! !!!')
   await userLogin(loginUser.value)
-  console.log('loginInfo', loginUser.value)
+
   let token = sessionStorage.getItem('accessToken')
-  console.log('111. ', token)
-  console.log('isLogin: ', isLogin)
-  if (isLogin) {
-    console.log('로그인 성공아닌가???')
-    getUserInfo(token)
-    router.push('/home')
-  } else {
-    router.push('/')
-  }
+  await getUserInfo(token)
+  router.push('/home')
 }
 
 const regist = async () => {
-  await userRegist(User.value)
-  console.log('registInfo', User.value)
-  router.push('/')
+  userRegist(User.value)
+  router.go(0)
+}
+
+const handleDatePickerChange = (date) => {
+  User.value.memberBirthdate = date
 }
 
 const loginshow = ref(false)
@@ -132,70 +176,104 @@ const signupshow = ref(false)
       >
         회원가입
       </button>
-      <Transition
-        class="flex flex-col w-[800px] h-[800px] rounded bg-white"
-        :duration="250"
-        name="nested"
-      >
-        <form
-          class="absolute p-[50px] flex flex-col overflow-y-scroll"
-          v-show="signupshow"
-          @submit.prevent="login"
-        >
-          <div
-            class="absolute right-[15px] top-[15px] cursor-pointer"
-            @click="signupshow = !signupshow"
-          >
-            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
-              X
-            </button>
-          </div>
-          <h1 class="text-center text-2xl">회원가입</h1>
-          <input
-            class="rounded"
-            type="text"
-            :memberId="User.memberId"
-            @change="User.memberId = $event.target.value"
-            placeholder="아이디를 입력해주세요"
-            required
-          />
-          <input
-            class="rounded"
-            type="password"
-            :memberPassword="User.memberPassword"
-            @change="User.memberPassword = $event.target.value"
-            placeholder="비밀번호를 입력해주세요"
-            required
-          />
-          <input
-            class="rounded"
-            type="password"
-            :memberPasswordCheck="memberPasswordCheck"
-            @change="memberPasswordCheck = $event.target.value"
-            placeholder="비밀번호를 한번더 입력해주세요"
-            required
-          />
+      <Transition class="flex flex-col flex-1 rounded bg-white" :duration="250" name="nested">
+        <form class="absolute bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6" v-if="signupshow">
+          <div class="grid gap-4 gap-y-2 text-3xl grid-cols-1 lg:grid-cols-3">
+            <div class="text-gray-600">
+              <p class="font-medium text-lg">회원 가입 시작하기</p>
+              <p>회원 정보를 입력 후 트리폴린을 시작해보세요</p>
+              <img src="@/assets/T-rex.png" alt="logo" style="transform: scaleX(-1)" />
+            </div>
 
-          <input
-            class="rounded"
-            type="text"
-            :memberName="User.memberName"
-            @change="User.memberName = $event.target.value"
-            placeholder="성함을 입력해주세요"
-            required
-          />
-          <input
-            class="rounded"
-            type="email"
-            :memberEmail="User.memberEmail"
-            @change="User.memberEmail = $event.target.value"
-            placeholder="이메일을 입력해주세요"
-            required
-          />
-          <div
-            class="flex justify-between border-2 border-solid border-black p-auto rounded h-[50px]"
-          >
-            <label for="sido">
+            <div class="lg:col-span-2">
+              <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                <div class="md:col-span-5">
+                  <label for="id">아이디를 입력해주세요 </label>
+                  <input
+                    name="id"
+                    type="text"
+                    :memberId="User.memberId"
+                    @change="(User.memberId = $event.target.value), checkId"
+                    placeholder="아이디를 입력해주세요"
+                    required
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                  />
+                </div>
+                <div class="md:col-span-5">
+                  <label for="name">닉네임을 입력해주세요</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    :memberName="User.memberName"
+                    @change="User.memberName = $event.target.value"
+                    placeholder="닉네임 입력해주세요"
+                  />
+                </div>
+
+                <div class="md:col-span-5">
+                  <label for="password">비밀번호 입력</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="사용할 비밀번호 입력"
+                    :memberPassword="User.memberPassword"
+                    @change="User.memberPassword = $event.target.value"
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    value=""
+                  />
+                </div>
+
+                <div class="md:col-span-5">
+                  <label for="email">이메일을 입력해주세요</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    :memberEmail="User.memberEmail"
+                    @change="User.memberEmail = $event.target.value"
+                    placeholder="이메일을 입력해주세요"
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    required
+                  />
+                </div>
+
+                <div class="md:col-span-5">
+                  <label for="email">생년월일 입력</label>
+                  <a-space direction="vertical" :size="12">
+                    <a-date-picker v-model:value="date" @change="handleDatePickerChange" />
+                  </a-space>
+                </div>
+                <div class="md:col-span-5">
+                  <label for="gender">성별 입력</label>
+                  <select
+                    name="gender"
+                    id="gender"
+                    v-model="User.memberGender"
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    required
+                  >
+                    <option value="" disabled>성별 선택</option>
+                    <option value="M">남자</option>
+                    <option value="W">여자</option>
+                  </select>
+                </div>
+                <div class="md:col-span-5">
+                  <label for="email">전화번호 입력</label>
+                  <input
+                    type="phone"
+                    name="phone"
+                    id="phone"
+                    :memberEmail="User.memberPhone"
+                    @change="User.memberPhone = $event.target.value"
+                    placeholder="전화번호를 입력해주세요"
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    required
+                  />
+                </div>
+                <!-- <label for="sido">
               <select
                 class="rounded"
                 name="sido"
@@ -225,46 +303,38 @@ const signupshow = ref(false)
                 <option value="3">시도</option>
               </select>
             </label>
+          </div> -->
+                <div class="md:col-span-2">
+                  <label for="country">사는 지역(시도)</label>
+                  <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="state">사는지역(구군)</label>
+                  <VSelect :selectOption="gugunList" @onKeySelect="onChangeGugun" />
+                </div>
+
+                <div class="md:col-span-5 text-right">
+                  <div class="inline-flex items-end gap-[10px]">
+                    <button
+                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="regist"
+                    >
+                      회원가입
+                    </button>
+                    <button
+                      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      @click="signupshow = !signupshow"
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <input
-            class="rounded"
-            type="date"
-            :memberBirthdate="User.memberBirthdate"
-            @change="User.memberBirthdate = $event.target.value"
-            placeholder="생년월일"
-            required
-          />
-          <input
-            class="rounded"
-            type="text"
-            :memberGender="User.memberGender"
-            @change="User.memberGender = $event.target.value"
-            placeholder="성별"
-            required
-          />
-          <input
-            class="rounded"
-            type="tel"
-            :memberPhone="User.memberPhone"
-            @change="User.memberPhone = $event.target.value"
-            placeholder="전화번호"
-            required
-          />
-
-          <RouterLink :to="{ name: 'home' }"
-            ><button class="login w-full" @click.prevent="regist">회원가입하기</button></RouterLink
-          >
-          <a href="#">소셜로그인???</a>
-          <hr />
-          <button class="create-account">소셜로그인???</button>
         </form>
       </Transition>
-      <!-- <button
-        class="bg-white hover:bg-stone-400 w-[200px] mx-auto text-black font-bold py-2 px-4 rounded"
-      >
-        <RouterLink class="nav-link" :to="{ name: 'member-regist' }">회원가입</RouterLink>
-      </button> -->
     </div>
   </div>
 </template>

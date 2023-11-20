@@ -29,6 +29,19 @@ const router = createRouter({
       }
     },
     {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/AdminView.vue'),
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin && useMemberStore().userInfo.memberRole == 0) {
+          next()
+        } else {
+          alert('접근 권한이 없습니다')
+          next('/')
+        }
+      }
+    },
+    {
       path: '/home',
       name: 'home',
       component: TheHomeView,
@@ -86,8 +99,9 @@ const router = createRouter({
     {
       path: '/board',
       name: 'board',
-      component: () => import('@/views/BoardView.vue'),
 
+      component: () => import('@/views/BoardView.vue'),
+      props: true,
       beforeEnter: (to, from, next) => {
         if (useMemberStore().isLogin) {
           next()

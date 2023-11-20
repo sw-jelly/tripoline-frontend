@@ -33,7 +33,9 @@ const logout = async () => {
     <div class="flex items-center">
       <ul class="cursor-pointer text-2xl">
         <li class="float-left hover:text-blue-500">
-          <RouterLink class="nav-link" :to="{ name: 'board' }">공지사항</RouterLink>
+          <RouterLink class="nav-link" :to="{ name: 'board-list', params: { key: 2 } }"
+            >공지사항</RouterLink
+          >
         </li>
         <li class="float-left ml-[10px] hover:text-blue-500">
           <RouterLink class="nav-link" :to="{ name: 'board' }">게시판</RouterLink>
@@ -47,8 +49,23 @@ const logout = async () => {
       </ul>
     </div>
     <div class="flex flex-row items-center text-2xl">
-      <ul>
-        <li class="float-left ml-[10px">
+      <ul class="flex items-center">
+        <li class="flex float-left ml-[10px] my-auto">
+          <img
+            v-if="userInfo != null && userInfo.memberPhoto"
+            :src="`http://localhost:8080/tripoline/assets/img/${userInfo.memberPhoto}`"
+            alt="아바타"
+            class="rounded-full h-20 w-20"
+          />
+          <img
+            v-else
+            src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+            class="rounded-full"
+          />
+        </li>
+        <!-- src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" -->
+
+        <li class="float-left ml-[10px]">
           <span class="underline" v-if="userInfo">{{ userInfo.memberName }}</span
           >님환영합니다
         </li>
@@ -57,6 +74,12 @@ const logout = async () => {
         </li>
         <li class="float-left ml-[10px] hover:text-blue-300">
           <RouterLink class="nav-link" :to="{ name: 'member' }">마이페이지</RouterLink>
+        </li>
+        <li
+          class="float-left ml-[10px] hover:text-blue-300"
+          v-if="userInfo != null && userInfo.memberRole == 0"
+        >
+          <RouterLink class="nav-link" :to="{ name: 'admin' }">어드민페이지</RouterLink>
         </li>
       </ul>
     </div>

@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { getPlanListByMemberId } from '@/api/plan.js'
 import { useMemberStore } from '@/stores/member'
-import PlanListItem from './item/PlanListItem.vue'
+import PlanListItem from '@/components/plan/item/PlanListItem.vue'
 
 const memberStore = useMemberStore()
 const router = useRouter()
@@ -31,7 +31,9 @@ const getPlanList = () => {
 }
 
 const goToRegist = () => {
-  router.push('/plan/regist')
+  router.push({
+    name: 'plan-regist'
+  })
 }
 </script>
 

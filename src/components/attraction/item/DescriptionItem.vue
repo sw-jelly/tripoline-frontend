@@ -1,7 +1,20 @@
 <script setup>
-import { defineProps } from 'vue'
+import { ref, onMounted } from 'vue'
+const props = defineProps({ info: Object, isPlan: Boolean })
+const emit = defineEmits(['addPlanDetail'])
 
-const props = defineProps({ info: Object })
+let planDetail = ref({
+  contentId: 0,
+  planDetailId: -1,
+  visitOrder: 0,
+  visitDate: null,
+  memo: null
+})
+
+const addPlanDetail = () => {
+  planDetail.value.contentId = props.info.contentId
+  emit('addPlanDetail', planDetail.value)
+}
 </script>
 
 <template>
@@ -14,6 +27,11 @@ const props = defineProps({ info: Object })
             <div class="card_details">
               <div class="name">{{ props.info.title }}</div>
               <p>{{ props.info.overview }}</p>
+            </div>
+            <div v-if="props.isPlan" class="d-flex align-items-center">
+              <button class="btn btn-success" @click="addPlanDetail" data-bs-dismiss="modal">
+                계획에 추가
+              </button>
             </div>
           </div>
         </div>

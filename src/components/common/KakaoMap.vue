@@ -2,7 +2,8 @@
 import { ref, watch, onMounted } from 'vue'
 import DescriptionItem from '@/components/attraction/item/DescriptionItem.vue'
 
-const props = defineProps({ attractions: Array })
+const props = defineProps({ attractions: Array, isPlan: Boolean })
+const emit = defineEmits(['addPlanDetail'])
 
 var map
 const spots = ref([])
@@ -96,6 +97,7 @@ const loadMarkers = () => {
     kakao.maps.event.addListener(marker, 'mouseover', function () {
       pos.value = spot.latlng
       info.value = {
+        contentId: spot.contentId,
         title: spot.title,
         addr1: spot.addr1,
         tel: spot.tel,
@@ -150,17 +152,21 @@ const deleteMarkers = () => {
   })
   markers.value = []
 }
+
+const addPlanDetail = (planDetail) => {
+  emit('addPlanDetail', planDetail)
+}
 </script>
 
 <template>
-  <DescriptionItem :info="info" />
+  <DescriptionItem :info="info" :isPlan="isPlan" @addPlanDetail="addPlanDetail" />
   <div id="map"></div>
 </template>
 
 <style scoped>
 #map {
-  width: 67%;
-  height: 40rem;
+  width: 80%;
+  height: 100vh;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }

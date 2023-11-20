@@ -140,6 +140,10 @@ const moveDetail = (article) => {
   router.push({ name: 'board-detail', params: { articleId: article } })
 }
 
+const moveDetail = (article) => {
+  router.push({ name: 'board-detail', params: { articleId: article } })
+}
+
 const moveWrite = () => {
   router.push({ name: 'board-write' })
 }
@@ -216,6 +220,7 @@ const moveWrite = () => {
                   <th scope="col">조회수</th>
                   <th scope="col">좋아요</th>
                   <th scope="col">댓글수</th>
+                  <th scope="col">댓글수</th>
                   <th scope="col">작성일(최종수정일)</th>
                 </tr>
               </thead>
@@ -244,6 +249,7 @@ const moveWrite = () => {
                   v-for="article in articles"
                   :key="article.articleNo"
                   :article="article"
+                  @moveDetail="moveDetail"
                   @moveDetail="moveDetail"
                 ></BoardListItem>
               </tbody>

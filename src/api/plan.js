@@ -13,7 +13,7 @@ function deletePlan(planId, success, fail) {
   local.delete(`planRest/plan/${planId}`).then(success).catch(fail)
 }
 
-function registPlanDetail(planDetail, success, fail) {
+function savePlanDetail(planDetail, success, fail) {
   local.post('planRest/planDetail', planDetail).then(success).catch(fail)
 }
 
@@ -45,7 +45,7 @@ export {
   registPlan,
   updatePlan,
   deletePlan,
-  registPlanDetail,
+  savePlanDetail,
   updatePlanDetail,
   deletePlanDetail,
   getPlanDetail,

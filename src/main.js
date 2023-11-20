@@ -4,7 +4,15 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
-import { DatePicker, RangePicker } from 'ant-design-vue'
+import {
+  DatePicker,
+  RangePicker,
+  Card,
+  Timeline,
+  PageHeader,
+  Descriptions,
+  Button
+} from 'ant-design-vue'
 
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -32,5 +40,10 @@ app.use(router)
 app.use(vuetify)
 app.use(DatePicker)
 app.use(RangePicker)
+app.use(Card)
+app.use(Timeline)
+app.use(PageHeader)
+app.use(Descriptions)
+app.use(Button)
 
 app.mount('#app')

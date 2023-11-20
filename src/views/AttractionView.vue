@@ -144,7 +144,7 @@ const getAttrationsByTitle = () => {
       </div>
       <button class="btn btn-success" @click="getAttrationsByTitle">검색</button>
     </div>
-    <KakaoMap :attractions="attractionList" />
+    <KakaoMap :attractions="attractionList" :isPlan="false" />
   </div>
 </template>
 

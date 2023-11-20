@@ -112,7 +112,8 @@ const router = createRouter({
       redirect: '/board/list',
       children: [
         {
-          path: 'list',
+          path: 'list:key?',
+
           name: 'board-list',
           component: () => import('@/components/board/BoardListView.vue')
         },

@@ -20,7 +20,6 @@ import {
   registComment,
   likeArticle
 } from '@/api/board.js'
-import Footer from '@/components/layout/Footer.vue'
 import BoardCommentItem from '@/components/board/item/BoardCommentItem.vue'
 
 const route = useRoute()

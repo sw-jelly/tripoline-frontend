@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BeforeLoginView from '@/views/BeforeLoginView.vue'
-
+import TheHomeView from '@/views/TheHomeView.vue'
 import { useMemberStore } from '@/stores/member'
 
 const router = createRouter({
@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: () => import('@/views/TheHomeView.vue'),
+      component: TheHomeView,
       beforeEnter: (to, from, next) => {
         if (useMemberStore().isLogin) {
           next()

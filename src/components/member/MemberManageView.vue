@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { onMounted, ref } from 'vue'
 const memberStore = useMemberStore()
 const { userInfo } = storeToRefs(memberStore)
-const { userUpdate, userWithDrawal, getUserInfo } = memberStore
+const { userUpdate, userWithDrawal, getUserInfo, uploadProfileImage } = memberStore
 import { useRouter } from 'vue-router'
 import VSelect from '@/components/common/VSelect.vue'
 const router = useRouter()
@@ -87,119 +87,140 @@ const userModify = async () => {
 
   readonly.value = true
 }
+
+const selectedFile = ref(null)
+
+const handleFileChange = (e) => {
+  selectedFile.value = e.target.files
+}
+
+const upload = async () => {
+  const formData = new FormData()
+  // form에서 선택된 데이터 가져오기
+  formData.append('formData', selectedFile.value[0])
+  formData.append('memberId', user.value.memberId)
+  await uploadProfileImage(formData)
+}
 const readonly = ref(true)
 </script>
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">내정보</h2>
+  <div class="flex flex-col flex-1">
+    <div class="flex items-center justify-center">
+      <h2 class="my-3 py-3 text-center">내정보</h2>
+    </div>
+    <!-- 테일윈드식으로 사용자 정보 테이블형식으로 보여주기 -->
+    <div class="flex flex-col w-1/3 mx-auto justify-center">
+      <!-- 사용자 정보 표시할 테이블 -->
+      <div class="flex flex-col items-center justify-center">
+        <img
+          :src="`http://localhost:8080${userInfo.memberPhoto}`"
+          alt="아바타"
+          class="rounded-full h-24 w-24"
+        />
+        <!-- src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" -->
+
+        <form name="form" method="post" enctype="multipart/form-data" @submit.prevent="upload">
+          <input
+            type="file"
+            name="files"
+            ref="fileInput"
+            @change="handleFileChange"
+            multiple="multiple"
+          />
+          <button
+            type="button"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            @click="upload"
+          >
+            사진 업로드
+          </button>
+        </form>
       </div>
-      <div class="col-lg-10">
-        <div class="card mt-3 m-auto" style="max-width: 700px">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img
-                src="https://source.unsplash.com/random/250x250/?food"
-                class="img-fluid rounded-start"
-                alt="..."
+
+      <table class="table table-fixed text-start">
+        <tbody>
+          <tr>
+            <th colspan="1" class="bg-light">아이디</th>
+            <td colspan="2">
+              <input
+                type="text"
+                class="border rounded"
+                v-model="user.memberId"
+                readonly="readonly"
+                style="background-color: #e9ecef"
               />
-            </div>
-            <div class="col-md-8">
-              <div class="card-body text-start">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item flex">
-                    아이디 :
-                    <input
-                      type="text"
-                      class="border rounded"
-                      v-model="user.memberId"
-                      readonly="readonly"
-                      style="background-color: #e9ecef"
-                    />
-                  </li>
-                  <li class="list-group-item flex">
-                    이름 :
-                    <input
-                      type="text"
-                      class="border rounded"
-                      v-model="user.memberName"
-                      :readonly="readonly"
-                      :style="readonly ? 'background-color: #e9ecef' : ''"
-                    />
-                  </li>
-                  <li class="list-group-item flex">
-                    전화번호 :
-                    <input
-                      type="text"
-                      class="border rounded"
-                      v-model="user.memberPhone"
-                      :readonly="readonly"
-                      :style="readonly ? 'background-color: #e9ecef' : ''"
-                    />
-                  </li>
-                  <li class="list-group-item flex">
-                    이메일 :
-                    <input
-                      type="text"
-                      class="border rounded"
-                      v-model="user.memberEmail"
-                      :readonly="readonly"
-                      :style="readonly ? 'background-color: #e9ecef' : ''"
-                    />
-                  </li>
-                  <li class="list-group-item flex">
-                    시도 :
-                    <VSelect
-                      :selectOption="sidoList"
-                      :key="user.sidoCode"
-                      :select="user.sidoCode"
-                      @onKeySelect="onChangeSido"
-                      :readonly="readonly"
-                    />
-                    <!-- <input
-                      type="select"
-                      class="border rounded" 
-                      v-model="user.sidoCode"
-                      :readonly="readonly"
-                      :style="readonly ? 'background-color: #e9ecef' : ''"
-                    /> -->
-                  </li>
-                  <li class="list-group-item flex">
-                    구군 :
-                    <VSelect
-                      :selectOption="gugunList"
-                      :key="user.gugunCode"
-                      :select="user.gugunCode"
-                      @onKeySelect="onChangeGugun"
-                      :readonly="readonly"
-                    />
-                    <!-- <input
-                      type="text"
-                      class="border rounded"
-                      v-model="user.gugunCode"
-                      :readonly="readonly"
-                      :style="readonly ? 'background-color: #e9ecef' : ''"
-                    /> -->
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex justify-center">
-          <button type="button" class="btn btn-primary mt-2 mx-10" @click="toggleChange">
-            수정
-          </button>
-          <button type="button" class="btn btn-success mt-2" @click="userModify" v-if="!readonly">
-            정보 변경
-          </button>
-          <button type="button" class="btn btn-danger mt-2 mx-10" @click="userWithDrawl">
-            탈퇴
-          </button>
-        </div>
-      </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="bg-light">닉네임</th>
+            <td colspan="2">
+              <input
+                type="text"
+                class="border rounded"
+                v-model="user.memberName"
+                :readonly="readonly"
+                :style="readonly ? 'background-color: #e9ecef' : ''"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="bg-light">전화번호</th>
+            <td colspan="2">
+              <input
+                type="text"
+                class="border rounded"
+                v-model="user.memberPhone"
+                :readonly="readonly"
+                :style="readonly ? 'background-color: #e9ecef' : ''"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="bg-light">이메일</th>
+            <td colspan="2">
+              <input
+                type="text"
+                class="border rounded"
+                v-model="user.memberEmail"
+                :readonly="readonly"
+                :style="readonly ? 'background-color: #e9ecef' : ''"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="bg-light">거주지(시도)</th>
+            <td colspan="2">
+              <VSelect
+                :selectOption="sidoList"
+                :key="user.sidoCode"
+                :select="user.sidoCode"
+                @onKeySelect="onChangeSido"
+                :readonly="readonly"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="bg-light">거주지(구군)</th>
+            <td colspan="2">
+              <VSelect
+                :selectOption="gugunList"
+                :key="user.gugunCode"
+                :select="user.gugunCode"
+                @onKeySelect="onChangeGugun"
+                :readonly="readonly"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex justify-center">
+      <button type="button" class="btn btn-primary mt-2 mx-10" @click="toggleChange">수정</button>
+      <button type="button" class="btn btn-success mt-2" @click="userModify" v-if="!readonly">
+        정보 변경
+      </button>
+      <button type="button" class="btn btn-danger mt-2 mx-10" @click="userWithDrawl">탈퇴</button>
     </div>
   </div>
 </template>

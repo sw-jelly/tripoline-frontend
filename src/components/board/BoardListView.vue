@@ -140,10 +140,6 @@ const moveDetail = (article) => {
   router.push({ name: 'board-detail', params: { articleId: article } })
 }
 
-const moveDetail = (article) => {
-  router.push({ name: 'board-detail', params: { articleId: article } })
-}
-
 const moveWrite = () => {
   router.push({ name: 'board-write' })
 }
@@ -249,7 +245,6 @@ const moveWrite = () => {
                   v-for="article in articles"
                   :key="article.articleNo"
                   :article="article"
-                  @moveDetail="moveDetail"
                   @moveDetail="moveDetail"
                 ></BoardListItem>
               </tbody>

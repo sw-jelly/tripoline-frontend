@@ -1,7 +1,17 @@
 import axios from 'axios'
 import { httpStatusCode } from './http-status'
 
-const { VITE_API_BASE_URL, VITE_ELECTRIC_CHARGING_STATION_URL } = import.meta.env
+const { VITE_API_BASE_URL, VITE_ELECTRIC_CHARGING_STATION_URL, VITE_IMGBB_URL } = import.meta.env
+
+function IMG_AXIOS() {
+  const instance = axios.create({
+    baseURL: VITE_IMGBB_URL,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  return instance
+}
 
 // station vue api axios instance
 function stationAxios() {
@@ -87,4 +97,4 @@ function localAxios() {
   return instance
 }
 
-export { localAxios, stationAxios }
+export { localAxios, stationAxios, IMG_AXIOS }

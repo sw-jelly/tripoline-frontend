@@ -53,7 +53,7 @@ const logout = async () => {
         <li class="flex float-left ml-[10px] my-auto">
           <img
             v-if="userInfo != null && userInfo.memberPhoto"
-            :src="`http://localhost:8080/tripoline/assets/img/${userInfo.memberPhoto}`"
+            :src="`${userInfo.memberPhoto}`"
             alt="아바타"
             class="rounded-full h-20 w-20"
           />

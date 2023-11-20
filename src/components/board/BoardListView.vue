@@ -49,17 +49,6 @@ const param = ref({
   word: ''
 })
 
-onMounted(() => {
-  // getArticleList()
-  console.log(route.params.key)
-  getArticleList()
-
-  if (route.params.key) {
-    board.value = route.params.key
-    console.log(route.params.key)
-  }
-})
-
 const changeKey = (val) => {
   console.log('BoarList에서 선택한 조건 : ' + val)
   param.value.key = val
@@ -143,6 +132,15 @@ const moveDetail = (article) => {
 const moveWrite = () => {
   router.push({ name: 'board-write' })
 }
+
+onMounted(() => {
+  if (route.params.key == 2) {
+    board.value = route.params.key
+    changeCategory(2)
+  } else {
+    getArticleList()
+  }
+})
 </script>
 
 <template>
@@ -215,7 +213,6 @@ const moveWrite = () => {
                   <th scope="col">작성자</th>
                   <th scope="col">조회수</th>
                   <th scope="col">좋아요</th>
-                  <th scope="col">댓글수</th>
                   <th scope="col">댓글수</th>
                   <th scope="col">작성일(최종수정일)</th>
                 </tr>

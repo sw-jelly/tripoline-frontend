@@ -72,14 +72,30 @@ function modifyComment() {
     }
   )
 }
+
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp)
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const min = date.getMinutes()
+  const sec = date.getSeconds()
+  return `${year}-${month}-${day}`
+}
 </script>
+
+<!-- 
+axios -> api 
+<a href="" />  
+-->
 
 <template>
   <div id="comment">
-    <div v-if="!isUpdate" class="border-2 border-solid boder-black my-[4px] rounded">
+    <div v-if="!isUpdate" class="my-[4px] rounded">
       <div class="flex justify-between items-center">
         <p class="mb-1 h5">
-          {{ comment.memberName }} <span class="ml-3">{{ comment.registerTime }}</span>
+          {{ comment.memberName }} <span class="ml-3">{{ formatDate(comment.registerTime) }}</span>
         </p>
         <div>
           <button class="small text-primary" @click="activeModfiy">수정</button>
@@ -88,11 +104,12 @@ function modifyComment() {
       </div>
       <p class="text-body mb-1">{{ comment.content }}</p>
       <button class="small text-primary mt-1">답글</button>
+      <!-- 답글 기능 -->
     </div>
     <div v-else>
       <div class="flex justify-between items-center">
         <p class="mb-1 h5">
-          {{ comment.memberName }} <span class="small">{{ comment.registerTime }}</span>
+          {{ comment.memberName }} <span class="small">{{ formatDate(comment.registerTime) }}</span>
         </p>
         <div>
           <button class="small text-primary" @click="modifyComment">수정</button>

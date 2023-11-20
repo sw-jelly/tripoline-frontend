@@ -114,9 +114,15 @@ const readonly = ref(true)
       <!-- 사용자 정보 표시할 테이블 -->
       <div class="flex flex-col items-center justify-center">
         <img
-          :src="`http://localhost:8080${userInfo.memberPhoto}`"
+          v-if="userInfo.memberPhoto"
+          :src="`http://localhost:8080/tripoline/assets/img/${userInfo.memberPhoto}`"
           alt="아바타"
           class="rounded-full h-24 w-24"
+        />
+        <img
+          v-else
+          src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+          class="rounded-full"
         />
         <!-- src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" -->
 

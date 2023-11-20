@@ -11,8 +11,16 @@ import Tiptap from '@/components/Tiptap/Tiptap.vue'
 <style scoped></style> -->
 
 <script setup>
+import { clsx } from 'clsx'
+
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useMemberStore } from '@/stores/member'
+import { storeToRefs } from 'pinia'
+
+const memberStore = useMemberStore()
+const { userInfo } = storeToRefs(memberStore)
+
 import {
   articleDetail,
   deleteArticle,
@@ -21,7 +29,8 @@ import {
   likeArticle
 } from '@/api/board.js'
 import BoardCommentItem from '@/components/board/item/BoardCommentItem.vue'
-
+import Viewer_Deploy from '@/components/board/item/Viewer_Deploy.vue'
+import Editor_Deploy from './item/Editor_Deploy.vue'
 const route = useRoute()
 const router = useRouter()
 
@@ -38,6 +47,19 @@ const comment = ref({
   content: '',
   registerTime: ''
 })
+
+const selected = ref('latest')
+
+// const changeSelected = () => {
+//   if (selected.value === 'latest') {
+//     selected.value = 'regist'
+//     // comments의 순서를 최신순으로
+//   } else {
+//     selected.value = 'latest'
+//     // comments의 순서를 등록순으로
+
+//   }
+// }
 
 onMounted(() => {
   getArticle()
@@ -136,10 +158,10 @@ function updateComment() {
   <div class="flex flex-col flex-1">
     <div class="flex flex-col w-4/6 h-full mx-auto">
       <div id="categoryContainer">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">글 상세 보기</h2>
+        <h2 class="my-3 py-3 shadow-sm text-center">글 상세 보기</h2>
       </div>
       <div id="boardContents">
-        <div id="boardHeader" class="flex flex-col bg-stone-300">
+        <div id="boardHeader" class="flex flex-col">
           <h1 class="text-2xl">게시판 : 게시판분류</h1>
           <h1 class="text-2xl">제목 : {{ article.articleTitle }}</h1>
           <div class="flex justify-between">
@@ -147,8 +169,15 @@ function updateComment() {
               작성자 : {{ article.memberName }}
               <div class="flex flex-col items-center">
                 <img
-                  class="avatar me-2 float-md-start bg-light p-2"
-                  src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                  class="avatar me-2 float-md-start bg-light p-2 rounded-full"
+                  :src="`http://localhost:8080/tripoline/assets/img/${userInfo.memberPhoto}`"
+                  width="30"
+                  v-if="userInfo.memberPhoto"
+                />
+                <img
+                  v-else
+                  src="https://www.gravatar.com/"
+                  class="avatar me-2 float-md-start bg-light p-2 rounded-full"
                   width="30"
                 />
                 {{ article.registerTime }}
@@ -183,12 +212,13 @@ function updateComment() {
         <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
         <div class="w-full h-full px-[10px] py-[10px]">
-          <textarea
+          <Viewer_Deploy readonly="true" :modelValue="article.articleContent" />
+          <!-- <textarea
             class="w-full h-[300px] border-[1px] border-black border-solid rounded p-[15px]"
             readonly="true"
             v-model="article.articleContent"
           >
-          </textarea>
+          </textarea> -->
         </div>
         <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
         <div class="flex justify-center gap-[15px]">
@@ -215,7 +245,37 @@ function updateComment() {
           </button>
         </div>
         <div class="flex flex-col">
-          <h4>댓글</h4>
+          <div class="flex items-center">
+            <h2>댓글 {{ comments.length }}</h2>
+            <div class="ml-[15px] gap-[10px]">
+              <!-- <button
+                :class="
+                  clsx(
+                    selected === 'latest' ? 'text-gray-300' : 'text-black',
+                    'text-xl',
+                    'font-bold'
+                  )
+                "
+                @click="changeSelected"
+              >
+                최신순
+              </button>
+              <button
+                :class="
+                  clsx(
+                    selected !== 'latest' ? 'text-gray-300' : 'text-black',
+                    'text-xl',
+                    'font-bold'
+                  )
+                "
+                @click="changeSelected"
+              >
+                등록순
+              </button> -->
+            </div>
+          </div>
+
+          <hr />
           <div class="flex mb-2">
             <input
               type="text"

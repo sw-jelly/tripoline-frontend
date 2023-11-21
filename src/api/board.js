@@ -1,7 +1,15 @@
 // API 통신 모아놓기
-import { localAxios } from '@/utils/http-commons'
-
+import { localAxios, IMG_AXIOS } from '@/utils/http-commons'
+const { VITE_IMGBB_API } = import.meta.env
 const local = localAxios()
+
+const imgAXIOS = IMG_AXIOS()
+async function boardImage(blob, success, fail) {
+  const formData = new FormData()
+  formData.append('image', blob)
+  formData.append('key', VITE_IMGBB_API)
+  await imgAXIOS.post('', formData).then(success).catch(fail)
+}
 
 // 책 목록 조회
 function totalArticleList(params, success, fail) {
@@ -69,5 +77,6 @@ export {
   registComment,
   categoryArticleList,
   deleteComment,
-  updateComment
+  updateComment,
+  boardImage
 }

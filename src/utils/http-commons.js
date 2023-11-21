@@ -1,7 +1,18 @@
 import axios from 'axios'
 import { httpStatusCode } from './http-status'
 
-const { VITE_API_BASE_URL, VITE_ELECTRIC_CHARGING_STATION_URL, VITE_IMGBB_URL } = import.meta.env
+const { VITE_API_BASE_URL, VITE_ELECTRIC_CHARGING_STATION_URL, VITE_IMGBB_URL, VITE_PUBLIC_URL } =
+  import.meta.env
+
+function publicAxios() {
+  const instance = axios.create({
+    baseURL: VITE_PUBLIC_URL,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+  })
+  return instance
+}
 
 //IMGBB API axios Instance
 function IMG_AXIOS() {
@@ -98,4 +109,4 @@ function localAxios() {
   return instance
 }
 
-export { localAxios, stationAxios, IMG_AXIOS }
+export { localAxios, stationAxios, IMG_AXIOS, publicAxios }

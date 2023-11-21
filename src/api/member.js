@@ -10,6 +10,11 @@ async function sendImage(formData, success, fail) {
   console.log('sendImage ok')
 }
 
+async function searchAll(param, success, fail) {
+  console.log('param', param)
+  await local.get(`/memberRest/searchAll/`, param).then(success).catch(fail)
+}
+
 async function userConfirm(param, success, fail) {
   console.log('param', param)
   await local.post('/memberRest/login', param).then(success).catch(fail)
@@ -75,7 +80,8 @@ export {
   memberWithDrawal,
   uploadProfile,
   sendImage,
-  registURL
+  registURL,
+  searchAll
 }
 
 // function login(memberId, memberPassword, success, fail) {

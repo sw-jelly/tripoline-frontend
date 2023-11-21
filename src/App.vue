@@ -20,4 +20,14 @@ onMounted(() => {
   <Footer v-if="isLogin" />
 </template>
 
-<style scoped></style>
+<style>
+@font-face {
+  font-family: 'pretendard';
+  font-weight: bold;
+  src: url('@/fonts/pretendard/Pretendard-Regular.otf') format('otf');
+}
+
+.v-application {
+  font-family: 'pretendard', sans-serif !important;
+}
+</style>

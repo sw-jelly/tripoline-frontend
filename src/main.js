@@ -4,6 +4,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
+import { MotionPlugin } from '@vueuse/motion'
+
 import {
   DatePicker,
   RangePicker,
@@ -40,6 +42,7 @@ pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(router)
 app.use(vuetify)
+app.use(MotionPlugin)
 
 app.use(DatePicker)
 app.use(RangePicker)

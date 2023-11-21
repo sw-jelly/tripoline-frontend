@@ -15,11 +15,6 @@ const logout = async () => {
     router.push('/')
   }
 }
-
-// const memberName = ref('')
-// onMounted(() => {
-//   memberName.value = userInfo.value.memberName
-// })
 </script>
 
 <template>
@@ -55,7 +50,7 @@ const logout = async () => {
             v-if="userInfo != null && userInfo.memberPhoto"
             :src="`${userInfo.memberPhoto}`"
             alt="아바타"
-            class="rounded-full h-20 w-20"
+            class="rounded-full w-[75px] h-[75px]"
           />
           <img
             v-else

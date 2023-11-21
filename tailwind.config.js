@@ -4,7 +4,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colosr: {},
-    extend: {}
+    extend: {
+      fontFamily: {
+        sans: ['pretendard', 'Helvetica', 'Arial', 'sans-serif']
+      }
+    }
   },
   variants: {
     extend: {}

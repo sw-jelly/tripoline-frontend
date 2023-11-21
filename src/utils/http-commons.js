@@ -3,6 +3,7 @@ import { httpStatusCode } from './http-status'
 
 const { VITE_API_BASE_URL, VITE_ELECTRIC_CHARGING_STATION_URL, VITE_IMGBB_URL } = import.meta.env
 
+//IMGBB API axios Instance
 function IMG_AXIOS() {
   const instance = axios.create({
     baseURL: VITE_IMGBB_URL,

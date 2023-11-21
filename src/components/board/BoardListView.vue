@@ -149,6 +149,28 @@ onMounted(() => {
       <div class="flex flex-col w-2/3">
         <div class="flex flex-row">
           <img
+            v-if="board === 2"
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Alarm%20Clock.png"
+            alt="Alarm Clock"
+            width="100"
+            height="100"
+          />
+          <img
+            v-else-if="board === 1"
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Men%20with%20Bunny%20Ears.png"
+            alt="Men with Bunny Ears"
+            width="100"
+            height="100"
+          />
+          <img
+            v-else-if="board === 3"
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20professions/Man%20Technologist%20Light%20Skin%20Tone.png"
+            alt="Man Technologist Light Skin Tone"
+            width="100"
+            height="100"
+          />
+          <img
+            v-else
             src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane.png"
             alt="Airplane"
             width="100"

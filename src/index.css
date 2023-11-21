@@ -5,7 +5,8 @@
 
 @font-face {
   font-family: 'pretendard';
-  src: url('./fonts/pretendard/Pretendard-Medium.otf') format('otf');
+  font-weight: bold;
+  src: url('./fonts/pretendard/Pretendard-Regular.otf') format('otf');
 }
 
 #app {
@@ -19,7 +20,6 @@
   margin: 0;
   padding: 0;
   /* border: 0; */
-  font-family: 'pretendard';
   box-sizing: border-box;
 }
 

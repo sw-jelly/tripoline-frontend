@@ -40,7 +40,7 @@ const getPlanDetails = () => {
     planId,
     ({ data }) => {
       console.log('성공적으로 계획 상세 얻어오기 완료', data)
-      planDetailList.value = data
+      planDetailList.value = data ? data : []
       generateDateList(plan.value.startDate, plan.value.endDate)
     },
     (error) => {
@@ -72,10 +72,10 @@ const generateDateList = (startDate, endDate) => {
   }
 
   if (index.value != -1) {
-    planDetails.value = planDetailGroup.value[index.value]
+    planDetails.value = planDetailGroup.value[index.value] ? planDetailGroup.value[index.value] : []
   } else {
     index.value = 0
-    planDetails.value = planDetailGroup.value[0]
+    planDetails.value = planDetailGroup.value[0] ? planDetailGroup.value[0] : []
   }
   console.log('planDetailGroup', planDetailGroup.value)
   console.log(dateList.value)
@@ -94,6 +94,15 @@ const onTabChange = (value, type) => {
     noTitleKey.value = value
   }
 }
+
+const goToRegistDetailPage = () => {
+  router.push({
+    name: 'plan-regist-detail',
+    params: {
+      planId: planId
+    }
+  })
+}
 </script>
 
 <template>
@@ -105,14 +114,13 @@ const onTabChange = (value, type) => {
       @back="() => $router.go(-1)"
     >
       <template #extra>
-        <a-button key="3">Operation</a-button>
-        <a-button key="2">Operation</a-button>
-        <a-button key="1" type="primary">Primary</a-button>
+        <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
+        <a-button danger>삭제</a-button>
       </template>
     </a-page-header>
   </div>
   <div class="d-flex" style="width: 100%">
-    <KakaoMap :attractions="[]" :isPlan="false" @addPlanDetail="addPlanDetail" />
+    <KakaoMap :attractions="[]" :isPlan="false"/>
     <a-card
       style="width: 30%; height: 100vh; overflow-y: scroll"
       title="일별 계획"
@@ -126,7 +134,6 @@ const onTabChange = (value, type) => {
       <PlanDetailItem
         :plan-details="planDetails"
         :readonly="true"
-        @updatePlanDetails="updatePlanDetails"
       />
     </a-card>
   </div>

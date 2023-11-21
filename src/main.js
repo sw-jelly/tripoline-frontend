@@ -11,9 +11,11 @@ import {
   Timeline,
   PageHeader,
   Descriptions,
-  Button
+  Button,
+  Select,
+  Form,
+  Checkbox
 } from 'ant-design-vue'
-
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
@@ -38,6 +40,7 @@ pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(router)
 app.use(vuetify)
+
 app.use(DatePicker)
 app.use(RangePicker)
 app.use(Card)
@@ -45,5 +48,8 @@ app.use(Timeline)
 app.use(PageHeader)
 app.use(Descriptions)
 app.use(Button)
+app.use(Select)
+app.use(Form)
+app.use(Checkbox)
 
 app.mount('#app')

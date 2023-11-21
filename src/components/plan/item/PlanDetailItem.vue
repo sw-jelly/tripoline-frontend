@@ -8,11 +8,12 @@ const emit = defineEmits(['updatePlanDetails'])
 
 const onDragStart = (event) => {
   if (props.readonly) {
-    event.stopPropagation()
+    event.preventDefault()
   }
 }
 
 const onDragEnd = () => {
+  console.log('onDragEnd', clonedPlanDetails.value)
   clonedPlanDetails.value.forEach((planDetail, index) => {
     planDetail.visitOrder = index + 1
   })
@@ -23,12 +24,13 @@ watch(
   () => props.planDetails,
   (newVal) => {
     console.log('watch', newVal)
-    if (newVal == undefined || newVal.length === 0) {
+    if (newVal == undefined) {
       clonedPlanDetails.value = []
       return
     }
     clonedPlanDetails.value = [...newVal]
-  }
+  },
+  { deep: true }
 )
 </script>
 

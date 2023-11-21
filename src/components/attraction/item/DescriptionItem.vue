@@ -7,12 +7,16 @@ let planDetail = ref({
   contentId: 0,
   planDetailId: -1,
   visitOrder: 0,
+  title: null,
+  addr1: null,
   visitDate: null,
   memo: null
 })
 
 const addPlanDetail = () => {
   planDetail.value.contentId = props.info.contentId
+  planDetail.value.title = props.info.title
+  planDetail.value.addr1 = props.info.addr1
   emit('addPlanDetail', planDetail.value)
 }
 </script>

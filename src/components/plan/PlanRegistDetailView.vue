@@ -5,7 +5,9 @@ import { getPlan, getPlanDetailsByPlanId, savePlanDetail } from '@/api/plan.js'
 import { searchSido, searchGugun, searchByLocation, searchByTitle } from '@/api/attraction'
 import KakaoMap from '@/components/common/KakaoMap.vue'
 import VSelect from '@/components/common/VSelect.vue'
-import PlanDetailItem from './item/PlanDetailItem.vue'
+import PlanDetailItem from '@/components/plan/item/PlanDetailItem.vue'
+import PlanAttractionView from './PlanAttractionView.vue'
+import { Slide } from 'vue3-burger-menu'
 
 const sidoList = ref([])
 const gugunList = ref([{ text: '구/군 선택', value: 'all' }])
@@ -160,7 +162,7 @@ const getPlanDetails = () => {
     planId,
     ({ data }) => {
       console.log('성공적으로 계획 상세 얻어오기 완료', data)
-      planDetailList.value = data
+      planDetailList.value = data ? data : []
       generateDateList(plan.value.startDate, plan.value.endDate)
     },
     (error) => {
@@ -192,10 +194,10 @@ const generateDateList = (startDate, endDate) => {
   }
 
   if (index.value != -1) {
-    planDetails.value = planDetailGroup.value[index.value]
+    planDetails.value = planDetailGroup.value[index.value] ? planDetailGroup.value[index.value] : []
   } else {
     index.value = 0
-    planDetails.value = planDetailGroup.value[0]
+    planDetails.value = planDetailGroup.value[0] ? planDetailGroup.value[0] : []
   }
   console.log('planDetailGroup', planDetailGroup.value)
   console.log(dateList.value)
@@ -216,37 +218,22 @@ const onTabChange = (value, type) => {
 }
 
 const updatePlanDetails = (newPlanDetails) => {
-  planDetailGroup.value[index.value] = newPlanDetails
-  planDetailGroup.value[index.value].forEach((planDetail) => {
-    savePlanDetail(
-      planDetail,
-      () => {
-        console.log('성공적으로 계획 상세 등록 완료', planDetail)
-      },
-      (error) => {
-        console.log('계획 상세 등록 실패', error)
-        return
-      }
-    )
-  })
+  console.log('newPlanDetails', newPlanDetails)
+  planDetailGroup.value = [...newPlanDetails]
+  planDetails.value = planDetailGroup.value[index.value]
 }
 
 const addPlanDetail = (planDetail) => {
-  planDetail.planId = plan.value.planId
-  planDetail.visitDate = dateList.value[index.value].key
-  planDetail.visitOrder = planDetailGroup.value[index.value].length + 1
+  const newPlanDetail = {
+    ...planDetail,
+    planId: plan.value.planId,
+    visitDate: dateList.value[index.value].key,
+    visitOrder: planDetailGroup.value[index.value].length + 1
+  }
 
-  console.log('addPlanDetail', planDetail)
-  savePlanDetail(
-    planDetail,
-    () => {
-      console.log('성공적으로 계획 상세 등록 완료', planDetail)
-      getPlanDetails()
-    },
-    (error) => {
-      console.log('계획 상세 등록 실패', error)
-    }
-  )
+  planDetailGroup.value[index.value].push(newPlanDetail)
+  planDetailList.value.push(newPlanDetail)
+  planDetails.value = planDetailGroup.value[index.value]
 }
 
 const exitEditMode = () => {
@@ -255,6 +242,7 @@ const exitEditMode = () => {
 }
 
 const savePlan = () => {
+  console.log('planDetailList', planDetailList.value) // 로그 추가
   planDetailList.value.forEach((planDetail) => {
     savePlanDetail(
       planDetail,
@@ -267,6 +255,11 @@ const savePlan = () => {
       }
     )
   })
+}
+
+const isOpen = ref(false)
+const changeState = () => {
+  isOpen.value = !isOpen.value
 }
 </script>
 
@@ -294,6 +287,17 @@ const savePlan = () => {
       <button class="btn btn-success" @click="getAttrationsByTitle">검색</button>
     </div>
     <div class="d-flex" style="width: 100%">
+      <a-button danger @click="changeState">open</a-button>
+      <Slide
+        :burgerIcon="false"
+        width="400"
+        noOverlay
+        disableOutsideClick
+        :isOpen="isOpen"
+        @closeMenu="isOpen = false"
+      >
+        <PlanAttractionView />
+      </Slide>
       <KakaoMap :attractions="attractionList" :isPlan="true" @addPlanDetail="addPlanDetail" />
       <a-card
         style="width: 30%; height: 100vh; overflow-y: scroll"
@@ -315,4 +319,8 @@ const savePlan = () => {
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.bm-menu {
+  background-color: aliceblue;
+}
+</style>

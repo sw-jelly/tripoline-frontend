@@ -32,7 +32,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-stone-200">
+  <div
+    class="bg-stone-200"
+    v-motion
+    :initial="{ opacity: 0, y: 100 }"
+    :enter="{ opacity: 1, y: 0, scale: 1 }"
+  >
     <div class="flex flex-col flex-1">
       <carousel :items-to-show="1" :autoplay="10000" :wrap-around="true">
         <slide v-for="video in videoURL" :key="video.src" class="bg-stone-200">

@@ -55,6 +55,7 @@ onMounted(() => {
     getArticle()
     console.log(article.value.categoryId)
   }
+  article.value.memberId = userInfo.value.memberId
 })
 
 const currentMemberId = computed(() => {
@@ -67,7 +68,6 @@ function changeKey(val) {
 }
 
 function writeArticle() {
-  console.log('글등록하자!!', article.value)
   registArticle(
     article.value,
     ({ data }) => {
@@ -128,7 +128,11 @@ const setContent = (content) => {
   <form @submit.prevent="onSubmit">
     <div class="mb-3">
       <label for="categoryId" class="form-label">게시판 분류 : </label>
-      <VSelect :selectOption="boardOptions" @onKeySelect="changeKey" />
+      <VSelect
+        :selectOption="boardOptions"
+        @onKeySelect="changeKey"
+        :notice="props.type === 'regist' || props.type === 'modify' ? true : false"
+      />
     </div>
     <div class="mb-3">
       <label for="userid" class="form-label">작성자 ID : </label>

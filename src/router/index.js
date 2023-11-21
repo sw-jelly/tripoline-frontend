@@ -39,7 +39,19 @@ const router = createRouter({
           alert('접근 권한이 없습니다')
           next('/')
         }
-      }
+      },
+      children: [
+        {
+          path: '/admin/userlist/:modify?',
+          name: 'admin-userlist',
+          component: () => import('@/components/admin/AdminManage.vue')
+        },
+        {
+          path: '/admin/notice',
+          name: 'admin-notice',
+          component: () => import('@/components/board/BoardWriteView.vue')
+        }
+      ]
     },
     {
       path: '/home',

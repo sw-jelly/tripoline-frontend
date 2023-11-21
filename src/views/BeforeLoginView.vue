@@ -101,7 +101,12 @@ const signupshow = ref(false)
 </script>
 
 <template>
-  <div class="relative flex flex-col w-full h-full bg-stone-300">
+  <div
+    class="relative flex flex-col w-full h-full bg-stone-300"
+    v-motion
+    :initial="{ opacity: 0, y: 100 }"
+    :enter="{ opacity: 1, y: 0, scale: 1 }"
+  >
     <div class="relative flex flex-col w-full top-1/3 items-center justify-start h-[100px]">
       <Transition :duration="550" name="nested">
         <div class="flex justify-center items-center" v-if="!loginshow && !signupshow">

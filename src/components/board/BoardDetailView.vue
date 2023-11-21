@@ -42,8 +42,8 @@ const comments = ref([])
 const comment = ref({
   commentId: 0,
   articleId: 0,
-  memberId: 'ssafy',
-  memberName: 'ssafy',
+  memberId: userInfo.value.memberId,
+  memberName: userInfo.value.memberName,
   content: '',
   registerTime: ''
 })

@@ -19,7 +19,8 @@ const emit = defineEmits(['onKeySelect'])
 
 const key = ref(prop.select)
 
-const onSelect = () => {
+const onSelect = (value) => {
+  key.value = value
   console.log(key.value + '선택!!')
   emit('onKeySelect', key.value)
 }
@@ -27,11 +28,7 @@ const onSelect = () => {
 
 <template>
   <a-form-item>
-    <a-select
-      v-model="key"
-      @change="onSelect"
-      :disabled="readonly"
-    >
+    <a-select v-model="key" @change="onSelect" :disabled="readonly">
       <a-select-option
         v-for="option in selectOption"
         :value="option.value"

@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue'
 import Draggable from 'vuedraggable'
 
-const props = defineProps({ planDetails: Array, readonly: Boolean })
+const props = defineProps({ planDetails: Array, readonly: Boolean, index: Number })
 const clonedPlanDetails = ref([...props.planDetails])
 const emit = defineEmits(['updatePlanDetails'])
 
@@ -23,7 +23,7 @@ const onDragEnd = () => {
 watch(
   () => props.planDetails,
   (newVal) => {
-    console.log('watch', newVal)
+    console.log('watch !@!@', newVal)
     if (newVal == undefined) {
       clonedPlanDetails.value = []
       return
@@ -36,7 +36,10 @@ watch(
 
 <template>
   <a-timeline>
-    <div v-if="clonedPlanDetails.length === 0" class="text-center">
+    <div v-if="index == -1" class="text-center">
+      <p>날짜를 선택해주세요.</p>
+    </div>
+    <div v-if="clonedPlanDetails.length === 0 && index > 0" class="text-center">
       <p>추가된 계획이 없습니다.</p>
     </div>
     <div v-else>

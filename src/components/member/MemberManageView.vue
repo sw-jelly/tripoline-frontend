@@ -4,9 +4,10 @@ import { storeToRefs } from 'pinia'
 import { onMounted, ref } from 'vue'
 const memberStore = useMemberStore()
 const { userInfo } = storeToRefs(memberStore)
-const { userUpdate, userWithDrawal, getUserInfo, uploadProfileImage } = memberStore
+const { userUpdate, userWithDrawal, getUserInfo, uploadImage } = memberStore
 import { useRouter } from 'vue-router'
 import VSelect from '@/components/common/VSelect.vue'
+const { VITE_IMGBB_API } = import.meta.env
 const router = useRouter()
 const user = ref({})
 import { searchSido, searchGugun } from '@/api/attraction'
@@ -97,9 +98,10 @@ const handleFileChange = (e) => {
 const upload = async () => {
   const formData = new FormData()
   // form에서 선택된 데이터 가져오기
-  formData.append('formData', selectedFile.value[0])
-  formData.append('memberId', user.value.memberId)
-  await uploadProfileImage(formData)
+  formData.append('key', VITE_IMGBB_API)
+  formData.append('image', selectedFile.value[0])
+  // formData.append('memberId', user.value.memberId)
+  await uploadImage(formData, userInfo.value.memberId)
 }
 const readonly = ref(true)
 </script>
@@ -114,9 +116,15 @@ const readonly = ref(true)
       <!-- 사용자 정보 표시할 테이블 -->
       <div class="flex flex-col items-center justify-center">
         <img
-          :src="`http://localhost:8080${userInfo.memberPhoto}`"
+          v-if="userInfo.memberPhoto"
+          :src="`${userInfo.memberPhoto}`"
           alt="아바타"
           class="rounded-full h-24 w-24"
+        />
+        <img
+          v-else
+          src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+          class="rounded-full"
         />
         <!-- src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" -->
 

@@ -15,11 +15,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="app" class="flex flex-col flex-1">
-    <TheHeadingNavbar v-if="isLogin" />
-    <RouterView />
-    <Footer v-if="isLogin" />
-  </div>
+  <TheHeadingNavbar v-if="isLogin" />
+  <RouterView />
+  <Footer v-if="isLogin" />
 </template>
 
 <style scoped></style>

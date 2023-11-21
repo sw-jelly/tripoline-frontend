@@ -11,7 +11,9 @@ import {
   regist,
   updateMember,
   memberWithDrawal,
-  uploadProfile
+  uploadProfile,
+  sendImage,
+  registURL
 } from '@/api/member'
 import { httpStatusCode } from '@/utils/http-status'
 
@@ -55,6 +57,40 @@ export const useMemberStore = defineStore(
             console.log('회원정보 수정 실패')
           }
         },
+        (error) => {
+          console.error(error)
+        }
+      )
+    }
+
+    const registpath = (filepath, memberid) => {
+      console.log('registpath......', filepath, memberid)
+      registURL(
+        { fileurl: filepath, memberId: memberid },
+        async (response) => {
+          if (response.status === httpStatusCode.OK) {
+            await getUserInfo(sessionStorage.getItem('accessToken'))
+            return true
+          } else {
+            console.log('사진 등록 실패')
+          }
+        },
+        (error) => {
+          console.error(error)
+        }
+      )
+    }
+
+    const uploadImage = async (formData, memberId) => {
+      console.log('sendImage......', formData)
+
+      await sendImage(
+        formData,
+        ({ data }) => {
+          console.log(data.data.url)
+          registpath(data.data.url, memberId)
+        },
+
         (error) => {
           console.error(error)
         }
@@ -230,7 +266,9 @@ export const useMemberStore = defineStore(
       userRegist,
       userUpdate,
       userWithDrawal,
-      uploadProfileImage
+      uploadProfileImage,
+      uploadImage,
+      registpath
     }
   },
   { persist: true }

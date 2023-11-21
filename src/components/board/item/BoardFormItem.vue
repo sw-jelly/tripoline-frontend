@@ -3,6 +3,12 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { registArticle, articleDetail, updateArticle, likeArticle } from '@/api/board'
 import VSelect from '../../common/VSelect.vue'
+import Editor_Deploy from './Editor_Deploy.vue'
+import { computed } from 'vue'
+import { useMemberStore } from '@/stores/member'
+import { storeToRefs } from 'pinia'
+const memberStore = useMemberStore()
+const { userInfo } = storeToRefs(memberStore)
 
 // router, route setting
 const router = useRouter()
@@ -51,6 +57,10 @@ onMounted(() => {
   }
 })
 
+const currentMemberId = computed(() => {
+  return props.type === 'modify' ? article.value.memberId : userInfo.value.memberId
+})
+
 function changeKey(val) {
   console.log('BoardForm에서 선택한 조건 : ' + val)
   article.value.categoryId = val
@@ -70,7 +80,10 @@ function writeArticle() {
   )
 }
 
+const contentIsLoaded = ref(false)
+
 const getArticle = () => {
+  contentIsLoaded.value = true
   console.log(articleId + '번글 얻으러 가자!!!')
   // API 호출
   articleDetail(
@@ -78,6 +91,7 @@ const getArticle = () => {
     ({ data }) => {
       console.log('성공적으로 글 얻어오기 완료', data)
       article.value = data
+      contentIsLoaded.value = false
     },
     (error) => {
       console.log('글 얻어오기 실패', error)
@@ -103,6 +117,11 @@ const update = () => {
 function moveList() {
   router.push({ name: 'board-list' })
 }
+
+const setContent = (content) => {
+  console.log('content', content)
+  article.value.articleContent = content
+}
 </script>
 
 <template>
@@ -116,9 +135,10 @@ function moveList() {
       <input
         type="text"
         class="form-control"
-        v-model="article.memberId"
-        :disabled="isUseId"
+        v-model="currentMemberId"
         placeholder="작성자ID..."
+        readonly="readonly"
+        style="background-color: #e9ecef"
       />
     </div>
     <div class="mb-3">
@@ -135,13 +155,13 @@ function moveList() {
       <label for="member_name" class="form-label">이름 : </label>
       <input type="text" class="form-control" v-model="article.memberName" placeholder="이름..." />
     </div>
+
     <div class="mb-3">
-      <label for="formFile" class="form-label">이미지 첨부하기</label>
-      <input class="form-control" type="file" id="formFile" />
-    </div>
-    <div class="mb-3">
-      <label for="content" class="form-label">내용 : </label>
-      <textarea class="form-control" rows="10" v-model="article.articleContent"> </textarea>
+      <Editor_Deploy
+        :data="article.articleContent"
+        @setContent="setContent"
+        v-if="!contentIsLoaded"
+      />
     </div>
     <div class="col-auto text-center">
       <button

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { totalArticleList, categoryArticleList } from '@/api/board.js'
 import { bestArticleList } from '@/api/board.js'
 import { BoardCategoryEnum } from '@/Enums/Enum.js'
@@ -8,12 +8,8 @@ import { BoardCategoryEnum } from '@/Enums/Enum.js'
 import VSelect from '@/components/common/VSelect.vue'
 import BoardListItem from '@/components/board/item/BoardListItem.vue'
 import PageNavigation from '@/components/common/PageNavigation.vue'
-
+const route = useRoute()
 const router = useRouter()
-
-onMounted(() => {
-  getArticleList()
-})
 
 const { VITE_LIST_SIZE, VITE_ARTICLE_NAVIGATION_SIZE } = import.meta.env
 
@@ -133,21 +129,32 @@ const moveDetail = (article) => {
   router.push({ name: 'board-detail', params: { articleId: article } })
 }
 
-const moveDetail = (article) => {
-  router.push({ name: 'board-detail', params: { articleId: article } })
-}
-
 const moveWrite = () => {
   router.push({ name: 'board-write' })
 }
+
+onMounted(() => {
+  if (route.params.key == 2) {
+    board.value = route.params.key
+    changeCategory(2)
+  } else {
+    getArticleList()
+  }
+})
 </script>
 
 <template>
   <div>
     <div class="flex flex-col flex-1 items-center">
-      <div class="flex flex-col w-2/3 items-center">
-        <div class="col-lg-10">
-          <h2 class="my-3 py-3 text-center">
+      <div class="flex flex-col w-2/3">
+        <div class="flex flex-row">
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane.png"
+            alt="Airplane"
+            width="100"
+            height="100"
+          />
+          <h2 class="my-3 py-3">
             {{ BoardCategoryEnum[board] }}
           </h2>
         </div>
@@ -207,7 +214,6 @@ const moveWrite = () => {
                   <th scope="col">조회수</th>
                   <th scope="col">좋아요</th>
                   <th scope="col">댓글수</th>
-                  <th scope="col">댓글수</th>
                   <th scope="col">작성일(최종수정일)</th>
                 </tr>
               </thead>
@@ -236,7 +242,6 @@ const moveWrite = () => {
                   v-for="article in articles"
                   :key="article.articleNo"
                   :article="article"
-                  @moveDetail="moveDetail"
                   @moveDetail="moveDetail"
                 ></BoardListItem>
               </tbody>

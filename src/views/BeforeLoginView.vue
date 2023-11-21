@@ -123,7 +123,6 @@ const signupshow = ref(false)
     <div class="relative top-1/2 flex w-full justify-center items-center h-[50px]">
       <button
         class="bg-blue-500 hover:bg-blue-700 w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
-        class="bg-blue-500 hover:bg-blue-700 w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
         @click="loginshow = !loginshow"
       >
         로그인

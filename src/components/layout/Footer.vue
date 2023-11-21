@@ -7,7 +7,7 @@ const showAlert = () => {
 </script>
 
 <template>
-  <footer class="bg-stone-600 p-[10px]">
+  <footer class="flex flex-col bg-stone-600 p-[10px] bottom-[0]">
     <!-- footer영역 채워넣기 -->
     <div class="flex justify-around items-between">
       <div class="flex flex-col">

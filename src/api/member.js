@@ -1,7 +1,14 @@
 // API 통신 모아놓기
-import { localAxios } from '@/utils/http-commons'
+import { localAxios, IMG_AXIOS } from '@/utils/http-commons'
 
 const local = localAxios()
+const imgAXIOS = IMG_AXIOS()
+
+async function sendImage(formData, success, fail) {
+  console.log('formData', formData)
+  await imgAXIOS.post('', formData).then(success).catch(fail)
+  console.log('sendImage ok')
+}
 
 async function userConfirm(param, success, fail) {
   console.log('param', param)
@@ -13,6 +20,17 @@ async function userConfirm(param, success, fail) {
 async function findById(userid, success, fail) {
   local.defaults.headers['Authorization'] = sessionStorage.getItem('accessToken')
   await local.get(`/memberRest/info/${userid}`).then(success).catch(fail)
+}
+
+async function registURL(param, success, fail) {
+  await local
+    .put('/memberRest/imgbb', param, {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    })
+    .then(success)
+    .catch(fail)
 }
 
 async function tokenRegeneration(user, success, fail) {
@@ -55,7 +73,9 @@ export {
   regist,
   updateMember,
   memberWithDrawal,
-  uploadProfile
+  uploadProfile,
+  sendImage,
+  registURL
 }
 
 // function login(memberId, memberPassword, success, fail) {

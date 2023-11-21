@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'pretendard';
+  src: url('./fonts/pretendard/Pretendard-Medium.otf') format('otf');
+}
+
 #app {
   /* display: flex;
   flex-direction: column; */
@@ -14,7 +19,7 @@
   margin: 0;
   padding: 0;
   /* border: 0; */
-
+  font-family: 'pretendard';
   box-sizing: border-box;
 }
 
@@ -24,8 +29,7 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
-html,
-#app {
+html {
   width: 100%;
   height: 100%;
 }

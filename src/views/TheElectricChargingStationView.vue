@@ -84,7 +84,7 @@ const viewStation = (station) => {
 
 <template>
   <div class="container text-center mt-3">
-    <div class="alert alert-success" role="alert">전기차 충전소</div>
+    <div><h1>전기차 충전소</h1></div>
     <div class="row mb-2">
       <div class="col d-flex flex-row-reverse">
         <VehicleSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />

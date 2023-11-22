@@ -230,6 +230,7 @@ function updateComment() {
             글목록
           </button>
           <button
+            v-if="article.memberId === userInfo.memberId"
             type="button"
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-3 ms-1"
             @click="moveModify"
@@ -237,6 +238,7 @@ function updateComment() {
             글수정
           </button>
           <button
+            v-if="article.memberId === userInfo.memberId || userInfo.memberRole === 0"
             type="button"
             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-3 ms-1"
             @click="onDeleteArticle"

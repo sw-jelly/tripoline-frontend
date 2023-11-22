@@ -3,10 +3,24 @@ import { RouterLink } from 'vue-router'
 import { useMemberStore } from '@/stores/member'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
 const router = useRouter()
 const memberStore = useMemberStore()
 const { userLogout } = memberStore
 const { userInfo, isLogin } = storeToRefs(memberStore)
+import Typed from 'typed.js'
+
+const options = ref({
+  strings: ['Trip', 'poline', 'Tripoline'],
+  typeSpeed: 100,
+  delaySpeed: 150,
+  loop: true,
+  showCursor: false
+})
+let typed // Declare typed variable
+onMounted(() => {
+  typed = new Typed('#typed_header', options.value)
+})
 
 const logout = async () => {
   await userLogout(userInfo.memberId)
@@ -23,7 +37,9 @@ const logout = async () => {
       <RouterLink :to="{ name: 'main' }">
         <img src="@/assets/flight.png" width="90" />
       </RouterLink>
-      <h1 class="text-2xl mx-4">Tripoline</h1>
+      <div class="w-[100px]">
+        <h1 id="typed_header" class="text-2xl mx-4 text-black"></h1>
+      </div>
     </div>
     <div class="flex items-center">
       <ul class="cursor-pointer text-2xl">
@@ -61,8 +77,14 @@ const logout = async () => {
         <!-- src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" -->
 
         <li class="float-left ml-[10px]">
-          <span class="underline" v-if="userInfo">{{ userInfo.memberName }}</span
-          >님환영합니다
+          <span class="underline" v-if="userInfo"
+            ><RouterLink
+              style="text-decoration: none"
+              class="cursor-pointer text-black hover:text-blue-600"
+              :to="{ name: 'member' }"
+              >{{ userInfo.memberName }}</RouterLink
+            ></span
+          >님 환영합니다
         </li>
         <li class="float-left ml-[10px] cursor-pointer hover:text-red-300" @click="logout">
           로그아웃

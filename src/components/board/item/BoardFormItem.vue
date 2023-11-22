@@ -66,6 +66,8 @@ onMounted(() => {
     console.log(article.value.categoryId)
   }
   article.value.memberId = userInfo.value.memberId
+  article.value.memberName = userInfo.value.memberName
+
   if (route.params.planId != 0) {
     // planId로 plan 정보 얻어오기
     getPlan(

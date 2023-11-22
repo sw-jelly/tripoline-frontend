@@ -40,8 +40,10 @@ const showAlert = () => {
           <p>SSAFY 1학기 관통프로젝트</p>
           <p>SSAFY 서울 13반</p>
           <p>트리폴린</p>
-          <a class="text-white border-t solid underline cursor-pointer" @click="showAlert"
-            >도와주신분들</a
+          <RouterLink
+            class="text-white border-t solid underline cursor-pointer"
+            :to="{ name: 'specialthanks' }"
+            >도와주신분들</RouterLink
           >
         </div>
       </div>

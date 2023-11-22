@@ -103,6 +103,74 @@ const router = createRouter({
       component: TheElectricChargingStationView
     },
     {
+      path: '/weather',
+      name: 'weather',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/WeatherView.vue')
+    },
+    {
+      path: '/gallery',
+      name: 'gallery',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/GalleryView.vue'),
+      redirect: '/gallery/list',
+      children: [
+        {
+          path: 'list',
+          name: 'gallery-list',
+          component: () => import('@/components/gallery/GalleryList.vue')
+        }
+      ]
+    },
+    {
+      path: '/hotplace',
+      name: 'hotplace',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/HotPlaceView.vue')
+    },
+    {
+      path: '/specialthanks',
+      name: 'specialthanks',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/SpecialThanksView.vue')
+    },
+    {
+      path: '/news',
+      name: 'news',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/AttractionNewsView.vue')
+    },
+    {
       path: '/attraction',
       name: 'attraction',
       component: () => import('@/views/AttractionView.vue'),

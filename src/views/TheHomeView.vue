@@ -48,14 +48,7 @@ const attractionList = ref([])
 const cultureList = ref([])
 const totalCount = ref(0)
 
-let typed // Declare typed variable
-
-const filteredAttractionList = computed(() => {
-  return attractionList.value.filter((attraction) => attraction.firstimage !== '')
-})
-
-onMounted(() => {
-  typed = new Typed('#typed-text', options.value)
+const getAttractions = () => {
   const index = Math.random() * 94
   console.log(parseInt(index))
   searchAttraction(
@@ -70,6 +63,17 @@ onMounted(() => {
       console.log(error)
     }
   )
+}
+
+let typed // Declare typed variable
+
+const filteredAttractionList = computed(() => {
+  return attractionList.value.filter((attraction) => attraction.firstimage !== '')
+})
+
+onMounted(() => {
+  typed = new Typed('#typed-text', options.value)
+  getAttractions()
 })
 </script>
 
@@ -104,29 +108,60 @@ onMounted(() => {
     <!-- display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0
   var(--site-padding-horizon); background: #fff; box-shadow: 0 10px 10px #45454533; -->
 
-    <div class="flex flex-col justify-center h-[150px]">
-      <section class="flex flex-1 bg-white rounded-full">
-        <div class="flex flex-col flex-1">
-          <div class="flex flex-1 justify-center">
+    <div class="flex flex-col justify-center h-[150px] mt-[20px]">
+      <section class="flex flex-1 bg-green-200 rounded-full">
+        <div class="flex flex-col justify-center flex-1">
+          <div class="flex flex-1 justify-center mt-[10px]">
             <h2>
-              <span><span>여행을</span><strong>떠나보자</strong></span>
+              <span><span>여행을 떠나기전이라면 </span><strong>CheckList!</strong></span>
             </h2>
           </div>
           <div class="flex flex-1">
-            <ul class="flex flex-1 justify-around">
+            <ul class="flex flex-1 items-center text-center justify-around">
               <li>
-                <a href="/travelweekend/travel/kto.do"><span>날씨확인</span></a>
-              </li>
-              <li>
-                <a href="/travelweekend/travel/discount.do"
-                  ><span><RouterLink :to="{ name: 'estations' }">전기차충전소</RouterLink></span></a
+                <RouterLink class="no-underline text-black" :to="{ name: 'weather' }">
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Sun%20with%20Face.png"
+                    alt="Sun with Face"
+                    width="75"
+                    height="75"
+                  />
+                  <span class="text-black">날씨확인</span></RouterLink
                 >
               </li>
               <li>
-                <a href="/travelweekend/travel/event.do"><span>갤러리구경</span></a>
+                <RouterLink class="no-underline text-black" :to="{ name: 'estations' }">
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/High%20Voltage.png"
+                    alt="High Voltage"
+                    width="75"
+                    height="75"
+                  />
+
+                  <span>전기차 충전소</span></RouterLink
+                >
               </li>
               <li>
-                <a href="/travelweekend/theme.do"><span>전국 씨티투어</span></a>
+                <RouterLink class="no-underline text-black" :to="{ name: 'gallery' }">
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera%20with%20Flash.png"
+                    alt="Camera with Flash"
+                    width="75"
+                    height="75"
+                  />
+                  <span>갤러리구경</span></RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink class="no-underline text-black" :to="{ name: 'hotplace' }">
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                    alt="Star"
+                    width="75"
+                    height="75"
+                  />
+                  <span>핫플구경가기</span></RouterLink
+                >
               </li>
             </ul>
           </div>
@@ -135,10 +170,25 @@ onMounted(() => {
     </div>
 
     <div class="flex flex-col justify-center mt-[20px]">
-      <h2 class="text-center">현재 인기있는 관광지</h2>
-      <p class="text-center" v-if="totalCount > 0">{{ totalCount }}개의 관광지 정보가 있어요</p>
-      <p class="text-center" v-else>정보로딩중</p>
-      <Carousel :itemsToShow="3.95" :autoplay="1000" :wrapAround="true" :transition="500">
+      <h2 class="text-center">전국 방방곡곡의 유명한 관광지를 보여드릴게요</h2>
+      <div class="flex flex-col justify-center items-center text-center" v-if="totalCount">
+        Tripoline에는 {{ totalCount }}개의 관광지 정보가 있어요 <br />더 새로운 장소를 보고 싶다면?
+
+        <div class="flex gap-[10px]">
+          <img
+            class="align-self"
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Right%20Light%20Skin%20Tone.png"
+            alt="Backhand Index Pointing Right Light Skin Tone"
+            width="45"
+            height="35"
+          />
+          <button class="btn btn-primary" @click="getAttractions">새로운장소 추천받기</button>
+        </div>
+      </div>
+      <div class="flex justify-center" v-else>
+        <v-progress-circular indeterminate color="primary"></v-progress-circular>
+      </div>
+      <Carousel :itemsToShow="3.9" :autoplay="1000" :wrapAround="true" :transition="500">
         <Slide
           v-for="attraction in filteredAttractionList"
           :key="attraction.contentid"
@@ -147,7 +197,7 @@ onMounted(() => {
           <div class="card m-[10px]">
             <div class="top">
               <div class="userDetails">
-                <b>{{ attraction.title }}</b>
+                <b class="ml-[10px]">{{ attraction.title }}</b>
               </div>
               <div>
                 <!-- Settings Dot -->
@@ -171,7 +221,7 @@ onMounted(() => {
             </div>
 
             <!-- Description -->
-            <h4 class="message">주소 : {{ attraction.addr1 }}</h4>
+            <h4 class="message">{{ attraction.addr1 }}</h4>
           </div>
         </Slide>
         <template #addons>
@@ -182,7 +232,18 @@ onMounted(() => {
     </div>
     <!-- <a :href="meta.href"> </a> -->
     <div class="flex flex-col justify-center mt-[20px]">
-      <h1 class="text-center">집에서 떠나는 메타버스 여행</h1>
+      <div class="flex justify-center items-center bg-white">
+        <h1 class="text-center">
+          홈캉스라고 들어봤나? <span class="text-red">메타버스</span>로 떠나는 트리폴린!
+        </h1>
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20professions/Woman%20Fairy%20Medium-Light%20Skin%20Tone.png"
+          alt="Woman Fairy Medium-Light Skin Tone"
+          width="100"
+          height="100"
+        />
+      </div>
+
       <carousel :items-to-show="3" :wrap-around="true">
         <Slide v-for="meta in metaContents" :key="meta.href">
           <div class="flex items-center h-[300px]">

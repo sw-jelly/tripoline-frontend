@@ -8,7 +8,8 @@ function publicAxios() {
   const instance = axios.create({
     baseURL: VITE_PUBLIC_URL,
     headers: {
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/json;charset=utf-8',
+      Accept: '*/*;q=0.9'
     }
   })
   return instance

@@ -12,6 +12,10 @@ const prop = defineProps({
   readonly: {
     type: Boolean,
     default: false
+  },
+  description: {
+    type: String,
+    default: '선택'
   }
 })
 
@@ -28,7 +32,7 @@ const onSelect = (value) => {
 
 <template>
   <a-form-item>
-    <a-select v-model="key" @change="onSelect" :disabled="readonly">
+    <a-select v-model="key" @change="onSelect" :disabled="readonly" :placeholder="description">
       <a-select-option
         v-for="option in selectOption"
         :value="option.value"

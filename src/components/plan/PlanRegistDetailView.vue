@@ -6,6 +6,7 @@ import KakaoPlanMap from '@/components/common/KakaoPlanMap.vue'
 import PlanDetailItem from '@/components/plan/item/PlanDetailItem.vue'
 import PlanAttractionView from './PlanAttractionView.vue'
 import { Slide } from 'vue3-burger-menu'
+import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -158,13 +159,27 @@ watch(
 
 <template>
   <div>
-    <div class="d-flex justify-content-center">
-      <button class="btn btn-outline-primary" @click="exitEditMode">저장</button>
-    </div>
+    <a-float-button @click="openleftSide" class="leftSlideBtn">
+      <template #icon>
+        <DoubleRightOutlined />
+      </template>
+    </a-float-button>
+    <a-float-button @click="openRightSide" class="rightSlideBtn">
+      <template #icon>
+        <DoubleLeftOutlined />
+      </template>
+    </a-float-button>
+    <a-float-button @click="exitEditMode" description="저장" shape="square" class="saveBtn" />
+    <a-float-button
+      @click="() => $router.go(-1)"
+      description="돌아가기"
+      shape="square"
+      class="backBtn"
+    />
+
     <div class="d-flex" style="width: 100%">
-      <a-button danger @click="openleftSide">관광지 찾기</a-button>
       <Slide
-        class="sidebar"
+        class="sidebar left"
         :burgerIcon="false"
         width="400"
         noOverlay
@@ -177,13 +192,14 @@ watch(
           @add-plan-detail="addPlanDetail"
         />
       </Slide>
+
       <KakaoPlanMap
         :selected-attraction="selectedAttraction"
         :plan-details="planDetails"
         :can-draw="canDraw"
       />
       <Slide
-        class="sidebar"
+        class="sidebar right"
         right
         :burgerIcon="false"
         width="400"
@@ -193,7 +209,7 @@ watch(
         @closeMenu="isOpenRight = false"
       >
         <a-card
-          style="width: fit-content; height:auto overflow-y: scroll"
+          style="width: 100%; height: 100%; right: 5%"
           title="일별 계획"
           :tab-list="dateList"
           :active-tab-key="key"
@@ -210,20 +226,57 @@ watch(
           />
         </a-card>
       </Slide>
-      <a-button danger @click="openRightSide">일정 보기</a-button>
     </div>
   </div>
 </template>
 
 <style>
+.sidebar .bm-cross {
+  background: black;
+}
+
+.sidebar .right .bm-cross {
+  right: 370px;
+}
+
+.sidebar .left .bm-item-list {
+  margin-left: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+.leftSlideBtn {
+  top: 20%;
+  left: 2%;
+}
+
+.rightSlideBtn {
+  top: 20%;
+  right: 2%;
+}
+
+.saveBtn {
+  top: 20%;
+  right: 40%;
+  width: 70px;
+  height: 20px;
+}
+
+.backBtn {
+  top: 20%;
+  left: 40%;
+  width: 70px;
+  height: 20px;
+}
+
 .sidebar .bm-menu {
-  background-color: aliceblue;
+  background-color: white;
 }
 
 .sidebar .bm-item-list > * {
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  /* padding: 0.7em; */
+  margin-bottom: 10px;
 }
 </style>

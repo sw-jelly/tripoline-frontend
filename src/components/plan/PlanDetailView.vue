@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getPlan, getPlanDetailsByPlanId } from '@/api/plan.js'
+import { getPlan, getPlanDetailsByPlanId, deletePlan } from '@/api/plan.js'
 import KakaoPlanMap from '@/components/common/KakaoPlanMap.vue'
 import PlanDetailItem from '@/components/plan/item/PlanDetailItem.vue'
 
@@ -105,6 +105,23 @@ const goToRegistDetailPage = () => {
     }
   })
 }
+
+const removePlan = () => {
+  if (confirm('정말 삭제하시겠습니까?')) {
+    deletePlan(
+      planId,
+      () => {
+        console.log('성공적으로 계획 삭제 완료')
+        router.push({
+          name: 'plan-list'
+        })
+      },
+      (error) => {
+        console.log('계획 삭제 실패', error)
+      }
+    )
+  }
+}
 </script>
 
 <template>
@@ -117,7 +134,7 @@ const goToRegistDetailPage = () => {
     >
       <template #extra>
         <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
-        <a-button danger>삭제</a-button>
+        <a-button danger @click="removePlan">삭제</a-button>
       </template>
     </a-page-header>
   </div>

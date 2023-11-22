@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
+import { deletePlanDetail } from '@/api/plan.js'
 import Draggable from 'vuedraggable'
 
 const props = defineProps({ planDetails: Array, readonly: Boolean, index: Number })
@@ -32,6 +33,23 @@ watch(
   },
   { deep: true }
 )
+
+const removePlanDetail = (index) => {
+  let target = clonedPlanDetails.value.splice(index, 1)[0]
+  let targetId = target.planDetailId
+  props.planDetails.splice(index, 1)
+
+  if (targetId == -1) return
+  deletePlanDetail(
+    targetId,
+    () => {
+      console.log('성공적으로 계획 상세 삭제 완료')
+    },
+    (error) => {
+      console.log('계획 상세 삭제 실패', error)
+    }
+  )
+}
 </script>
 
 <template>
@@ -39,7 +57,7 @@ watch(
     <div v-if="index == -1" class="text-center">
       <p>날짜를 선택해주세요.</p>
     </div>
-    <div v-if="clonedPlanDetails.length === 0 && index > 0" class="text-center">
+    <div v-if="clonedPlanDetails.length === 0 && index > -1" class="text-center">
       <p>추가된 계획이 없습니다.</p>
     </div>
     <div v-else>
@@ -53,7 +71,9 @@ watch(
         <template v-slot:item="{ element, index }">
           <a-timeline-item class="draggable-item">
             <a-card style="width: 300px">
-              <p>{{ index + 1 }}</p>
+              <p style="display: flex; justify-content: space-between">
+                {{ index + 1 }}<a-button danger @click="removePlanDetail(index)">삭제</a-button>
+              </p>
               <p>{{ element.title }}</p>
               <p>{{ element.addr1 }}</p>
             </a-card>

@@ -5,6 +5,10 @@ import SelectItem from '@/components/common/SelectItem.vue'
 const props = defineProps({ selectedAttraction: Object })
 const emit = defineEmits(['addPlanDetail'])
 
+const sidoSelect = '시/도를 선택하세요'
+const gugunSelect = '구/군을 선택하세요'
+const contentSelect = '관광지 유형'
+
 const sidoList = ref([])
 const gugunList = ref([{ text: '구/군 선택', value: 'all' }])
 const contentList = ref([])
@@ -153,29 +157,27 @@ const addPlanDetail = () => {
 </script>
 
 <template>
-  <SelectItem :selectOption="sidoList" @onKeySelect="onChangeSido" />
-  <SelectItem :selectOption="gugunList" @onKeySelect="onChangeGugun" />
-  <SelectItem :selectOption="contentList" @onKeySelect="onChangeContentType" />
+  <SelectItem :selectOption="sidoList" :description="sidoSelect" @onKeySelect="onChangeSido" />
+  <SelectItem :selectOption="gugunList" :description="gugunSelect" @onKeySelect="onChangeGugun" />
+  <SelectItem
+    :selectOption="contentList"
+    :description="contentSelect"
+    @onKeySelect="onChangeContentType"
+  />
   <button class="btn btn-success" @click="getAttrationsByLocation">검색</button>
-  <div class="input-group d-flex justify-content-center mt-3">
-    <div class="form-outline col-md-3">
-      <input
-        v-model="param.keyword"
-        type="search"
-        label="Select"
-        variant="underlined"
-        placeholder="검색어를 입력하세요"
-      />
-    </div>
+
+  <div class="form-outline d-flex justify-content-center">
+    <input
+      v-model="param.keyword"
+      type="search"
+      label="Select"
+      variant="underlined"
+      placeholder="검색어를 입력하세요"
+    />
     <button class="btn btn-success" @click="getAttrationsByTitle">검색</button>
   </div>
+
   <table class="table table-hover">
-    <thead>
-      <tr class="text-center">
-        <th scope="col">이름</th>
-        <th scope="col">주소</th>
-      </tr>
-    </thead>
     <tbody>
       <tr
         class="text-center"

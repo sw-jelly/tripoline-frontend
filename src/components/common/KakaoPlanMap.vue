@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted, watchEffect } from 'vue'
+import { watch, onMounted } from 'vue'
 
 var map
 var infowindow = null
@@ -68,8 +68,12 @@ const initMap = () => {
   map = new kakao.maps.Map(container, options)
 }
 
+const closeInfoWindow = () => {
+  infowindow.setMap(null)
+}
+
 const openInfoWindow = (lat, lng) => {
-  if (infowindow) closeInfoWindow()
+  if (infowindow) infowindow.setMap(null)
 
   var moveLatLon = new kakao.maps.LatLng(lat, lng)
 
@@ -79,7 +83,7 @@ const openInfoWindow = (lat, lng) => {
     <div class="wrap">
       <div class="info">
         <div class="title">${selectedAttraction.value.title}
-            <div class="close" onclick="closeInfoWindow()" title="닫기"></div>
+            <div class="close" title="닫기"></div>
         </div>
         <div class="body">
           <div class="img">
@@ -95,16 +99,18 @@ const openInfoWindow = (lat, lng) => {
       </div>
     </div>
   `
+
   infowindow = new kakao.maps.CustomOverlay({
     position: moveLatLon,
     content: content
   })
 
   infowindow.setMap(map)
-}
 
-function closeInfoWindow() {
-  infowindow.setMap(null)
+  var closeBtn = document.querySelector('.wrap .close')
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeInfoWindow)
+  }
 }
 
 const drawLine = () => {
@@ -167,7 +173,7 @@ const deleteLine = () => {
 <style scoped>
 #map {
   width: 100%;
-  height: 1000px;
+  height: 100vh;
 }
 </style>
 

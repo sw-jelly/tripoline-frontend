@@ -61,7 +61,7 @@
   resolved "https://registry.npmjs.org/@ant-design/icons-svg/-/icons-svg-4.3.1.tgz"
   integrity sha512-4QBZg8ccyC6LPIRii7A0bZUk3+lEDCLnhB+FVsflGdcWPPmV+j3fire4AwwoqHV/BibgvBmR9ZIo4s867smv+g==
 
-"@ant-design/icons-vue@^7.0.0":
+"@ant-design/icons-vue@^7.0.0", "@ant-design/icons-vue@^7.0.1":
   version "7.0.1"
   resolved "https://registry.npmjs.org/@ant-design/icons-vue/-/icons-vue-7.0.1.tgz"
   integrity sha512-eCqY2unfZK6Fe02AwFlDHLfoyEFreP6rBwAZMIJ1LugmfMiVgwWDYlp1YsRugaPtICYOabV1iWxXdP12u9U43Q==
@@ -11089,11 +11089,7 @@ vue-types@^3.0.0:
   dependencies:
     is-plain-object "3.0.1"
 
-<<<<<<< HEAD
-vue@*, "vue@^2 || ^3.0.0-0", "vue@^2.6.14 || ^3.3.0", vue@^3.0.0, vue@^3.0.0-0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.1, vue@^3.2.0, vue@^3.2.25, vue@^3.3.0, vue@^3.3.4, vue@>=3.0.3, vue@>=3.2.0, vue@3.3.7:
-=======
 vue@*, "vue@^2 || ^3.0.0-0", "vue@^2.6.14 || ^3.3.0", vue@^3.0.0, vue@^3.0.0-0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.1, vue@^3.2.0, vue@^3.2.25, vue@^3.3.0, vue@^3.3.4, vue@>=3.0.0, vue@>=3.0.3, vue@>=3.2.0, vue@3.3.7:
->>>>>>> 41f8008dbc7c3dbcce2f815eee162f66c8b2c279
   version "3.3.7"
   resolved "https://registry.npmjs.org/vue/-/vue-3.3.7.tgz"
   integrity sha512-YEMDia1ZTv1TeBbnu6VybatmSteGOS3A3YgfINOfraCbf85wdKHzscD6HSS/vB4GAtI7sa1XPX7HcQaJ1l24zA==

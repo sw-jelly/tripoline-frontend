@@ -130,7 +130,7 @@ const router = createRouter({
           component: () => import('@/components/board/BoardListView.vue')
         },
         {
-          path: 'write',
+          path: 'write:planId',
           name: 'board-write',
           component: () => import('@/components/board/BoardWriteView.vue')
         },

@@ -15,12 +15,17 @@ const router = useRouter()
 const route = useRoute()
 
 // category select options
-const boardOptions = ref([
-  { text: '카테고리 선택', value: 'all' },
-  { text: '자유게시판', value: 1 },
-  { text: '공지사항', value: 2 },
-  { text: '질문게시판', value: 3 }
-])
+const boardOptions = ref([])
+if (route.params.planId == 0) {
+  boardOptions.value = [
+    { text: '카테고리 선택', value: 'all' },
+    { text: '자유게시판', value: 1 },
+    { text: '공지사항', value: 2 },
+    { text: '질문게시판', value: 3 }
+  ]
+} else {
+  boardOptions.value = [{ text: '여행 후기', value: 4 }]
+}
 
 // getting props
 const props = defineProps({ type: String })
@@ -56,6 +61,9 @@ onMounted(() => {
     console.log(article.value.categoryId)
   }
   article.value.memberId = userInfo.value.memberId
+  if (route.params.planId != 0) {
+    changeKey(4)
+  }
 })
 
 const currentMemberId = computed(() => {
@@ -136,6 +144,7 @@ const setContent = (content) => {
         :selectOption="boardOptions"
         @onKeySelect="changeKey"
         :notice="props.type === 'regist' || props.type === 'modify' ? true : false"
+        :review="route.params.planId === 1 ? true : false"
       />
     </div>
     <div class="mb-3">

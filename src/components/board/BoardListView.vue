@@ -30,7 +30,8 @@ const categoryOption = ref([
   { text: '게시판 선택', value: 'all' },
   { text: '자유게시판', value: 1 },
   { text: '공지사항', value: 2 },
-  { text: '질문게시판', value: 3 }
+  { text: '질문게시판', value: 3 },
+  { text: '여행 후기', value: 4 }
 ])
 
 /**
@@ -130,7 +131,7 @@ const moveDetail = (article) => {
 }
 
 const moveWrite = () => {
-  router.push({ name: 'board-write' })
+  router.push({ name: 'board-write', params: { planId: 0 } })
 }
 
 onMounted(() => {

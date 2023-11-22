@@ -20,6 +20,10 @@ const prop = defineProps({
   notice: {
     type: Boolean,
     default: false
+  },
+  review: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -47,6 +51,8 @@ const onSelect = () => {
 const computedOption = computed(() => {
   if (!prop.notice) {
     return prop.selectOption
+  } else if (prop.review) {
+    return prop.selectOption
   } else if (userInfo.value.memberRole === 0) {
     return prop.selectOption
   } else {
@@ -68,6 +74,7 @@ const computedOption = computed(() => {
       :value="option.value"
       :key="option.value"
       :disabled="option.value === 'all'"
+      :selected="option.value === 4"
     >
       {{ option.text }}
     </option>

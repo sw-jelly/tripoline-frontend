@@ -140,6 +140,13 @@ const removePlan = () => {
     )
   }
 }
+
+const goToTripReviewPage = () => {
+  console.log('후기쓰러가자!')
+  router.push({
+    name: 'board-write'
+  })
+}
 </script>
 
 <template>
@@ -155,7 +162,17 @@ const removePlan = () => {
           <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
           <a-button danger @click="removePlan">삭제</a-button>
         </template>
-        <p style="margin-bottom: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
+        <div style="display: flex; justify-content: space-between">
+          <p style="margin-bottom: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
+
+          <div
+            v-if="new Date() > new Date(plan.endDate)"
+            style="display: flex; align-items: center; justify-items: center"
+          >
+            <p style="margin: 0">종료된 여행이에요. &nbsp</p>
+            <a-button @click="goToTripReviewPage">후기 쓰러 가기</a-button>
+          </div>
+        </div>
       </a-page-header>
     </div>
     <div class="d-flex" style="width: 100%">

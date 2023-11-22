@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { searchSido, searchGugun, searchByLocation, searchByTitle } from '@/api/attraction'
 import SelectItem from '@/components/common/SelectItem.vue'
+import VSelect from '@/components/common/VSelect.vue'
 const props = defineProps({ selectedAttraction: Object })
 const emit = defineEmits(['addPlanDetail'])
 
@@ -84,48 +85,43 @@ const onChangeContentType = (val) => {
   param.value.contentTypeId = val
 }
 
-const getAttrationsByLocation = () => {
+const getAttrations = () => {
   console.log('선택된 친구들은...', param.value)
   if (param.value.sidoCode === 0) {
     alert('시/도는 필수 선택 사항입니다!')
     return
   }
-  searchByLocation(
-    param.value,
-    ({ data }) => {
-      console.log('searchByLocation data', data.attractions)
-      if (!data) {
-        alert('검색 결과가 없습니다!')
-        return
-      }
-      attractionList.value = data.attractions
-    },
-    (err) => {
-      console.log(err)
-    }
-  )
-}
-
-const getAttrationsByTitle = () => {
-  console.log('선택된 친구들은...', param.value)
   if (param.value.keyword === '') {
-    alert('검색어를 입력하세요!')
-    return
-  }
-  searchByTitle(
-    param.value,
-    ({ data }) => {
-      console.log('searchByTitle data', data.attractions)
-      if (!data) {
-        alert('검색 결과가 없습니다!')
-        return
+    searchByLocation(
+      param.value,
+      ({ data }) => {
+        console.log('searchByLocation data', data.attractions)
+        if (!data) {
+          alert('검색 결과가 없습니다!')
+          return
+        }
+        attractionList.value = data.attractions
+      },
+      (err) => {
+        console.log(err)
       }
-      attractionList.value = data.attractions
-    },
-    (err) => {
-      console.log(err)
-    }
-  )
+    )
+  } else {
+    searchByTitle(
+      param.value,
+      ({ data }) => {
+        console.log('searchByTitle data', data.attractions)
+        if (!data) {
+          alert('검색 결과가 없습니다!')
+          return
+        }
+        attractionList.value = data.attractions
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+  }
 }
 
 const viewAttraction = (attraction) => {
@@ -157,26 +153,33 @@ const addPlanDetail = () => {
 </script>
 
 <template>
-  <SelectItem :selectOption="sidoList" :description="sidoSelect" @onKeySelect="onChangeSido" />
-  <SelectItem :selectOption="gugunList" :description="gugunSelect" @onKeySelect="onChangeGugun" />
-  <SelectItem
-    :selectOption="contentList"
-    :description="contentSelect"
-    @onKeySelect="onChangeContentType"
-  />
-  <button class="btn btn-success" @click="getAttrationsByLocation">검색</button>
-
-  <div class="form-outline d-flex justify-content-center">
-    <input
-      v-model="param.keyword"
-      type="search"
-      label="Select"
-      variant="underlined"
-      placeholder="검색어를 입력하세요"
+  <div style="display: flex; align-items: center">
+    <img
+      src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Compass.png"
+      alt="Compass"
+      width="50"
+      height="50"
     />
-    <button class="btn btn-success" @click="getAttrationsByTitle">검색</button>
+    <h4 style="color: black">관광지 탐색</h4>
   </div>
-
+  <div class="flex flex-col">
+    <VSelect :selectOption="sidoList" :description="sidoSelect" @onKeySelect="onChangeSido" />
+    <VSelect :selectOption="gugunList" :description="gugunSelect" @onKeySelect="onChangeGugun" />
+    <VSelect
+      :selectOption="contentList"
+      :description="contentSelect"
+      @onKeySelect="onChangeContentType"
+    />
+    <div>
+      <a-input-search
+        v-model:value="param.keyword"
+        placeholder="키워드도 함께 입력해보세요!"
+        enter-button="찾기"
+        size="large"
+        @search="getAttrations"
+      />
+    </div>
+  </div>
   <table class="table table-hover">
     <tbody>
       <tr
@@ -194,4 +197,8 @@ const addPlanDetail = () => {
   </table>
 </template>
 
-<style></style>
+<style>
+.form-select {
+  width: 100%;
+}
+</style>

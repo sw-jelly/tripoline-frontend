@@ -59,7 +59,7 @@ const computedOption = computed(() => {
   <select
     v-model="key"
     @change="onSelect"
-    class="form-select form-select-sm me-2 w-50"
+    class="form-select form-select-sm me-2 mb-2"
     aria-label="검색조건"
     :disabled="readonly"
   >

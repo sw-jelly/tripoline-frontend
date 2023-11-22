@@ -1,14 +1,25 @@
 <script setup>
-import { watch, onMounted } from 'vue'
+import { watch, onMounted, ref } from 'vue'
+import { updatePlan } from '@/api/plan.js'
+import { EditOutlined } from '@ant-design/icons-vue'
 
+// const emit = defineEmits(['loadedSuccess'])
 var map
 var infowindow = null
 var polyline = null
 var markers = []
 var linePath = []
 
-const props = defineProps({ selectedAttraction: Object, planDetails: Array, canDraw: Boolean })
+const props = defineProps({
+  selectedAttraction: Object,
+  isEdit: Boolean,
+  plan: Object,
+  planDetails: Array,
+  canDraw: Boolean
+})
 const selectedAttraction = props.selectedAttraction
+
+console.log(props)
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -49,15 +60,15 @@ watch(
   { deep: true }
 )
 
-watch(
-  () => props.canDraw,
-  () => {
-    console.log('canDraw =>>>', props.canDraw)
-    drawLine()
-    props.canDraw = false
-  },
-  { deep: true }
-)
+// watch(
+//   () => props.canDraw,
+//   () => {
+//     console.log('canDraw =>>>', props.canDraw)
+//     drawLine()
+//     props.canDraw = false
+//   },
+//   { deep: true }
+// )
 
 const initMap = () => {
   const container = document.getElementById('map')
@@ -66,6 +77,8 @@ const initMap = () => {
     level: 3
   }
   map = new kakao.maps.Map(container, options)
+
+  // emit('loadedSuccess')
 }
 
 const closeInfoWindow = () => {
@@ -164,16 +177,77 @@ const deleteLine = () => {
   polyline.setMap(null)
   polyline = null
 }
+
+const editMode = ref(false)
+let tmpTitle = ''
+const editName = () => {
+  if (!editMode.value) {
+    tmpTitle = props.plan.planTitle
+  } else {
+    if (tmpTitle != props.plan.planTitle) {
+      updatePlan(
+        props.plan,
+        () => {
+          console.log('성공적으로 계획 수정 완료')
+        },
+        (error) => {
+          console.log('계획 수정 실패', error)
+        }
+      )
+    }
+  }
+  editMode.value = !editMode.value
+}
+const cancelEditName = () => {
+  props.plan.planTitle = tmpTitle
+  editMode.value = !editMode.value
+}
 </script>
 
 <template>
-  <div id="map"></div>
+  <div id="map-container">
+    <div v-if="isEdit" id="overlay-card">
+      <div>
+        <div v-if="!editMode" style="display: flex; justify-content: space-between">
+          <h3 style="margin: 0%">{{ plan.planTitle }}</h3>
+          <EditOutlined @click="editName" />
+        </div>
+        <div v-else style="display: flex; justify-content: space-between">
+          <a-input v-model:value="plan.planTitle" />
+          <a-button type="primary" @click="editName">저장</a-button>
+          <a-button type="primary" @click="cancelEditName">취소</a-button>
+        </div>
+      </div>
+      <p style="margin: 0%">{{ plan.sidoName }} {{ plan.gugunName }}</p>
+      <p style="margin: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
+    </div>
+    <div id="map"></div>
+  </div>
 </template>
 
 <style scoped>
 #map {
   width: 100%;
+  height: 100%;
+}
+
+#map-container {
+  position: relative;
+  width: 100%;
   height: 100vh;
+}
+
+#overlay-card {
+  position: absolute;
+  top: 10px;
+  left: 43%;
+  width: 300px;
+  background: white;
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 4;
 }
 </style>
 

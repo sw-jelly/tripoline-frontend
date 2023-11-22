@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getPlan, getPlanDetailsByPlanId, deletePlan } from '@/api/plan.js'
 import KakaoPlanMap from '@/components/common/KakaoPlanMap.vue'
@@ -18,6 +18,9 @@ const planDetails = ref([]) // 탭에 표시되는 (해당 날짜의) 계획 상
 const dateList = ref([])
 const index = ref(-1) // 몇 번째 탭인지
 const canDraw = ref(false)
+const key = ref('tab1')
+const noTitleKey = ref('app')
+const mapLoaded = ref(false)
 
 const getPlanInfo = async () => {
   await getPlan(
@@ -47,8 +50,8 @@ const getPlanDetails = async () => {
   )
 }
 
-onMounted(() => {
-  getPlanInfo()
+onMounted(async () => {
+  await getPlanInfo()
 })
 
 const generateDateList = (startDate, endDate) => {
@@ -80,10 +83,25 @@ const generateDateList = (startDate, endDate) => {
   }
   console.log('planDetailGroup', planDetailGroup.value)
   console.log(dateList.value)
+
+  // setting()
 }
 
-const key = ref('tab1')
-const noTitleKey = ref('app')
+// watch(mapLoaded.value, (newVal) => {
+//   console.log('mapLoaded', newVal)
+//   if (newVal) {
+//     setting()
+//   }
+// })
+
+// const settingLoaded = () => {
+//   mapLoaded.value = true
+// }
+
+// const setting = () => {
+//   if (mapLoaded.value) onTabChange(dateList.value[0].key, 'key')
+// }
+
 const onTabChange = (value, type) => {
   console.log(value, type)
 
@@ -125,37 +143,48 @@ const removePlan = () => {
 </script>
 
 <template>
-  <div class="demo-page-header" style="background-color: #f5f5f5; padding: 24px">
-    <a-page-header
-      :ghost="ghost"
-      :title="plan.planTitle"
-      :sub-title="plan.startDate + ' ~ ' + plan.endDate"
-      @back="() => $router.go(-1)"
-    >
-      <template #extra>
-        <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
-        <a-button danger @click="removePlan">삭제</a-button>
-      </template>
-    </a-page-header>
-  </div>
-  <div class="d-flex" style="width: 100%">
-    <KakaoPlanMap :selected-attraction="{}" :plan-details="planDetails" :can-draw="canDraw" />
-    <a-card
-      style="width: 30%; height: 100vh; overflow-y: scroll"
-      title="일별 계획"
-      :tab-list="dateList"
-      :active-tab-key="key"
-      @tabChange="(key) => onTabChange(key, 'key')"
-    >
-      <template #customTab="item">
-        <span v-if="item.key === 'tab1'">{{ item.key }}</span>
-      </template>
-      <PlanDetailItem :plan-details="planDetails" :readonly="true" :index="index" />
-    </a-card>
+  <div style="height: 100%; overflow: hidden">
+    <div class="demo-page-header" style="background-color: #f5f5f5; padding: 24px">
+      <a-page-header
+        :ghost="ghost"
+        :title="plan.planTitle"
+        :sub-title="plan.sidoName + ' ' + plan.gugunName"
+        @back="() => $router.push({ name: 'plan-list' })"
+      >
+        <template #extra>
+          <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
+          <a-button danger @click="removePlan">삭제</a-button>
+        </template>
+        <p style="margin-bottom: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
+      </a-page-header>
+    </div>
+    <div class="d-flex" style="width: 100%">
+      <KakaoPlanMap
+        :selected-attraction="{}"
+        :plan="plan"
+        :isEdit="false"
+        :plan-details="planDetails"
+        :can-draw="canDraw"
+      />
+      <a-card
+        style="width: 30%; height: 84vh; overflow-y: scroll"
+        title="일별 계획"
+        :tab-list="dateList"
+        :active-tab-key="key"
+        @tabChange="(key) => onTabChange(key, 'key')"
+      >
+        <PlanDetailItem :plan-details="planDetails" :readonly="true" :index="index" />
+      </a-card>
+    </div>
   </div>
 </template>
 
 <style scoped>
+#map {
+  width: 100%;
+  height: 84vh;
+}
+
 .demo-page-header :deep(tr:last-child td) {
   padding-bottom: 0;
 }

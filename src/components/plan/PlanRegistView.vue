@@ -117,7 +117,13 @@ const goToRegistDetail = () => {
 </script>
 
 <template>
-  <div>
+  <div style="display: flex; flex-direction: column; align-items: center">
+    <img
+      src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png"
+      alt="Rocket"
+      width="130"
+      height="130"
+    />
     <h1 class="text-center">어디로 여행을 떠나시겠어요?</h1>
     <div class="col-md-12 d-flex" style="flex-direction: column; align-items: center">
       <div class="col-md-8 d-flex mt-3">
@@ -140,7 +146,8 @@ const goToRegistDetail = () => {
     </div>
 
     <v-sheet max-width="300" class="mx-auto mt-3">
-      <v-form validate-on="submit lazy" @submit.prevent="submit">
+      <v-form validate-on="submit lazy" @submit.prevent="true">
+        <input @keyup.enter="goToRegistDetail" />
         <v-text-field
           v-model="params.planTitle"
           label="여행 이름 (선택)"

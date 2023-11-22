@@ -71,9 +71,10 @@ const removePlanDetail = (index) => {
         <template v-slot:item="{ element, index }">
           <a-timeline-item class="draggable-item">
             <a-card style="width: 300px">
-              <p style="display: flex; justify-content: space-between">
-                {{ index + 1 }}<a-button danger @click="removePlanDetail(index)">삭제</a-button>
-              </p>
+              
+                <p style="display: flex; justify-content: space-between">
+                  {{ index + 1 }}<div v-if="!readonly"><a-button danger @click="removePlanDetail(index)">삭제</a-button></div>
+                </p>
               <p>{{ element.title }}</p>
               <p>{{ element.addr1 }}</p>
             </a-card>

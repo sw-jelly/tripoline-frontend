@@ -18,10 +18,12 @@ const planDetailGroup = ref([]) // 날짜 별 계획 상세 리스트
 const planDetails = ref([]) // 탭에 표시되는 (해당 날짜의) 계획 상세 리스트
 const index = ref(-1) // 몇 번째 탭인지
 const dateList = ref([])
-const canDraw = ref(false)
 
-onMounted(() => {
-  getPlanInfo()
+const key = ref('tab1')
+const noTitleKey = ref('app')
+
+onMounted(async () => {
+  await getPlanInfo()
 })
 
 const getPlanInfo = async () => {
@@ -81,18 +83,16 @@ const generateDateList = (startDate, endDate) => {
   }
   console.log('planDetailGroup', planDetailGroup.value)
   console.log(dateList.value)
+  // onTabChange(dateList.value[0].key, 'key')
 }
 
-const key = ref('tab1')
-const noTitleKey = ref('app')
 const onTabChange = (value, type) => {
-  console.log(value, type)
+  console.log('눌렷다!', value, type)
 
   if (type === 'key') {
     key.value = value
     index.value = dateList.value.findIndex((date) => date.key === value)
     planDetails.value = planDetailGroup.value[index.value]
-    canDraw.value = true
   } else if (type === 'noTitleKey') {
     noTitleKey.value = value
   }
@@ -105,6 +105,10 @@ const updatePlanDetails = (newPlanDetails) => {
 }
 
 const addPlanDetail = (planDetail) => {
+  if (index.value == -1) {
+    onTabChange(dateList.value[0].key, 'key')
+  }
+
   const newPlanDetail = {
     ...planDetail,
     planId: plan.value.planId,
@@ -119,22 +123,23 @@ const addPlanDetail = (planDetail) => {
 
 const exitEditMode = () => {
   savePlan()
-  router.push({ name: 'plan-list' })
+  router.push({ name: 'plan-detail', params: { planId: plan.planId } })
 }
 
 const savePlan = () => {
-  console.log('planDetailList', planDetailList.value) // 로그 추가
-  planDetailList.value.forEach((planDetail) => {
-    savePlanDetail(
-      planDetail,
-      () => {
-        console.log('성공적으로 계획 상세 등록 완료', planDetail)
-      },
-      (error) => {
-        console.log('계획 상세 등록 실패', error)
-        return
-      }
-    )
+  planDetailGroup.value.forEach((planDetails) => {
+    planDetails.forEach((planDetail) => {
+      savePlanDetail(
+        planDetail,
+        () => {
+          console.log('성공적으로 계획 상세 등록 완료', planDetail)
+        },
+        (error) => {
+          console.log('계획 상세 등록 실패', error)
+          return
+        }
+      )
+    })
   })
 }
 
@@ -158,7 +163,7 @@ watch(
 </script>
 
 <template>
-  <div>
+  <div class="body" style="position: relative; width: 100%; height: 100vh; overflow: hidden">
     <a-float-button @click="openleftSide" class="leftSlideBtn">
       <template #icon>
         <DoubleRightOutlined />
@@ -169,19 +174,17 @@ watch(
         <DoubleLeftOutlined />
       </template>
     </a-float-button>
-    <a-float-button @click="exitEditMode" description="저장" shape="square" class="saveBtn" />
-    <a-float-button
-      @click="() => $router.go(-1)"
-      description="돌아가기"
-      shape="square"
-      class="backBtn"
-    />
 
-    <div class="d-flex" style="width: 100%">
+    <div class="btn-container">
+      <a-button @click="exitEditMode" class="saveBtn">저장</a-button>
+      <a-button @click="() => $router.go(-1)" class="backBtn">돌아가기</a-button>
+    </div>
+
+    <div style="display: flex; width: 100%">
       <Slide
         class="sidebar left"
         :burgerIcon="false"
-        width="400"
+        width="450"
         noOverlay
         disableOutsideClick
         :isOpen="isOpenleft"
@@ -195,29 +198,36 @@ watch(
 
       <KakaoPlanMap
         :selected-attraction="selectedAttraction"
+        :isEdit="true"
+        :plan="plan"
         :plan-details="planDetails"
-        :can-draw="canDraw"
       />
+
       <Slide
         class="sidebar right"
         right
         :burgerIcon="false"
-        width="400"
+        width="450"
         noOverlay
         disableOutsideClick
         :isOpen="isOpenRight"
         @closeMenu="isOpenRight = false"
       >
+        <div style="display: flex; align-items: center; width: 100%; padding-right: 10%">
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Sun%20with%20Face.png"
+            alt="Sun with Face"
+            width="50"
+            height="50"
+          />
+          <h4 style="color: black">여행 일정</h4>
+        </div>
         <a-card
           style="width: 100%; height: 100%; right: 5%"
-          title="일별 계획"
           :tab-list="dateList"
           :active-tab-key="key"
           @tabChange="(key) => onTabChange(key, 'key')"
         >
-          <template #customTab="item">
-            <span v-if="item.key === 'tab1'">{{ item.key }}</span>
-          </template>
           <PlanDetailItem
             :plan-details="planDetails"
             @updatePlanDetails="updatePlanDetails"
@@ -236,7 +246,7 @@ watch(
 }
 
 .sidebar .right .bm-cross {
-  right: 370px;
+  right: 410px;
 }
 
 .sidebar .left .bm-item-list {
@@ -246,31 +256,40 @@ watch(
 }
 
 .leftSlideBtn {
-  top: 20%;
-  left: 2%;
+  position: fixed;
+  top: 15%;
+  left: 20px;
 }
 
 .rightSlideBtn {
+  position: fixed;
+  top: 15%;
+  right: 20px;
+}
+
+.btn-container {
+  position: fixed;
+  width: fit-content;
   top: 20%;
-  right: 2%;
+  left: 46%;
+  padding: 3px;
+  z-index: 5;
 }
 
 .saveBtn {
-  top: 20%;
-  right: 40%;
-  width: 70px;
-  height: 20px;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin: 10px;
 }
 
 .backBtn {
-  top: 20%;
-  left: 40%;
-  width: 70px;
-  height: 20px;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar .bm-menu {
-  background-color: white;
+  background-color: whitesmoke;
+  padding-top: 10px;
 }
 
 .sidebar .bm-item-list > * {

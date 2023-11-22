@@ -5,7 +5,7 @@ defineProps({ plan: Object })
 <template>
   <router-link
     :to="{ name: 'plan-detail', params: { planId: plan.planId } }"
-    class="article-title link-dark"
+    class="article-title link-dark ga-3"
   >
     <v-card class="mx-auto" min-width="200" max-width="344">
       <v-card-item>

@@ -1,14 +1,16 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useMemberStore } from '@/stores/member'
 import { useRoute, useRouter } from 'vue-router'
 import { getPlan, getPlanDetailsByPlanId, deletePlan } from '@/api/plan.js'
 import KakaoPlanMap from '@/components/common/KakaoPlanMap.vue'
 import PlanDetailItem from '@/components/plan/item/PlanDetailItem.vue'
 
-const ghost = ref(false)
-
 const route = useRoute()
 const router = useRouter()
+const memberStore = useMemberStore()
+const { userInfo } = storeToRefs(memberStore)
 
 const planId = route.params.planId
 const plan = ref({})
@@ -20,7 +22,6 @@ const index = ref(-1) // 몇 번째 탭인지
 const canDraw = ref(false)
 const key = ref('tab1')
 const noTitleKey = ref('app')
-const mapLoaded = ref(false)
 
 const getPlanInfo = async () => {
   await getPlan(
@@ -74,6 +75,7 @@ const generateDateList = (startDate, endDate) => {
       tab: `${month}.${day}(${dayOfWeek})`
     })
     currentDate.setDate(currentDate.getDate() + 1)
+
   }
 
   if (index.value != -1) {
@@ -153,24 +155,37 @@ const goToTripReviewPage = () => {
   <div style="height: 100%; overflow: hidden">
     <div class="demo-page-header" style="background-color: #f5f5f5; padding: 24px">
       <a-page-header
-        :ghost="ghost"
         :title="plan.planTitle"
         :sub-title="plan.sidoName + ' ' + plan.gugunName"
         @back="() => $router.push({ name: 'plan-list' })"
       >
         <template #extra>
-          <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
-          <a-button danger @click="removePlan">삭제</a-button>
+          <div v-if="userInfo.memberId == plan.memberId">
+            <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
+            <a-button danger @click="removePlan">삭제</a-button>
+          </div>
         </template>
-        <div style="display: flex; justify-content: space-between">
+        <div
+          v-if="userInfo.memberId == plan.memberId"
+          style="display: flex; justify-content: space-between"
+        >
           <p style="margin-bottom: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
-
           <div
             v-if="new Date() > new Date(plan.endDate)"
             style="display: flex; align-items: center; justify-items: center"
           >
             <p style="margin: 0">종료된 여행이에요. &nbsp</p>
             <a-button @click="goToTripReviewPage">후기 쓰러 가기</a-button>
+          </div>
+          <div v-if="new Date() < new Date(plan.startDate)">
+            <p style="margin: 0">
+              D-{{ Math.ceil((new Date(plan.startDate) - new Date()) / (1000 * 60 * 60 * 24)) }}
+            </p>
+          </div>
+          <div
+            v-if="new Date() >= new Date(plan.startDate) && new Date() <= new Date(plan.endDate)"
+          >
+            <p style="margin: 0">즐거운 여행 되세요!</p>
           </div>
         </div>
       </a-page-header>
@@ -196,7 +211,7 @@ const goToTripReviewPage = () => {
   </div>
 </template>
 
-<style scoped>
+<style>
 #map {
   width: 100%;
   height: 84vh;
@@ -205,4 +220,8 @@ const goToTripReviewPage = () => {
 .demo-page-header :deep(tr:last-child td) {
   padding-bottom: 0;
 }
+
+/* .ant-page-header-heading-sub-title {
+  font-size: 50px;
+} */
 </style>

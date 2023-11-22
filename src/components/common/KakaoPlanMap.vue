@@ -15,11 +15,9 @@ const props = defineProps({
   isEdit: Boolean,
   plan: Object,
   planDetails: Array,
-  canDraw: Boolean
+  // canDraw: Boolean
 })
 const selectedAttraction = props.selectedAttraction
-
-console.log(props)
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -77,8 +75,6 @@ const initMap = () => {
     level: 3
   }
   map = new kakao.maps.Map(container, options)
-
-  // emit('loadedSuccess')
 }
 
 const closeInfoWindow = () => {

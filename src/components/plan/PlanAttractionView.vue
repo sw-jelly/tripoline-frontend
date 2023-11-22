@@ -141,7 +141,8 @@ const planDetail = ref({
   longitude: null
 })
 
-const addPlanDetail = () => {
+const addPlanDetail = (attraction) => {
+  selectedAttraction.value = attraction
   planDetail.value.contentId = selectedAttraction.value.contentId
   planDetail.value.title = selectedAttraction.value.title
   planDetail.value.addr1 = selectedAttraction.value.addr1
@@ -190,7 +191,7 @@ const addPlanDetail = () => {
       >
         <th>{{ attraction.title }}</th>
         <td>
-          {{ attraction.addr1 }}<br /><a-button danger @click="addPlanDetail">계획에 추가</a-button>
+          {{ attraction.addr1 }}<br /><a-button danger @click.stop="addPlanDetail(attraction)">계획에 추가</a-button>
         </td>
       </tr>
     </tbody>

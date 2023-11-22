@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BeforeLoginView from '@/views/BeforeLoginView.vue'
 import TheHomeView from '@/views/TheHomeView.vue'
 import { useMemberStore } from '@/stores/member'
-
+import TheElectricChargingStationView from '@/views/TheElectricChargingStationView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
 
@@ -89,6 +89,18 @@ const router = createRouter({
       path: '/member/withdrawal',
       name: 'member-withdrawal',
       component: () => import('@/components/MemberWithdrawalView.vue')
+    },
+    {
+      path: '/estations',
+      name: 'estations',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: TheElectricChargingStationView
     },
     {
       path: '/attraction',

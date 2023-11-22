@@ -5,10 +5,11 @@ const local = localAxios()
 const publicAPI = publicAxios()
 
 // 행사정보 조회
-function searchAttraction(categoryId, success, fail) {
+function searchAttraction(categoryId, pageNo, success, fail) {
+  console.log(`searchAttraction 호출.......${categoryId}, ${pageNo}`)
   publicAPI
     .get(
-      `areaBasedList1?MobileOS=ETC&MobileApp=TRIPOLINE&_type=json&numOfRows=30&contentTypeId=${categoryId}&serviceKey=${VITE_PUBLIC_API}`
+      `areaBasedList1?MobileOS=ETC&MobileApp=TRIPOLINE&_type=json&numOfRows=30&pageNo=${pageNo}&contentTypeId=${categoryId}&serviceKey=${VITE_PUBLIC_API}`
     )
     .then(success)
     .catch(fail)

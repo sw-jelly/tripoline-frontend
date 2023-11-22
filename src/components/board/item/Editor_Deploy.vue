@@ -6,7 +6,7 @@
 import { onMounted, ref, watch, onUnmounted } from 'vue'
 import Editor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
-
+import { boardImage } from '@/api/board'
 const props = defineProps({
   data: {
     type: String,
@@ -24,6 +24,19 @@ watch(
   }
 )
 
+const onUploadImage = async (blob, callback) => {
+  await boardImage(
+    blob,
+    (response) => {
+      callback(response.data.data.url, 'alt text')
+    },
+    (err) => {
+      console.log(err)
+      return false
+    }
+  )
+}
+
 const emit = defineEmits(['setContent'])
 const editor = ref()
 const editorHolder = ref()
@@ -35,6 +48,9 @@ onMounted(() => {
     height: '500px',
     initialEditType: 'wysiwyg',
     initialValue: props.data,
+    hooks: {
+      addImageBlobHook: onUploadImage
+    },
     events: {
       change: () => emit('setContent', editorHolder.value.getMarkdown())
       // .getHTML()

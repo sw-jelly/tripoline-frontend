@@ -62,6 +62,10 @@ const currentMemberId = computed(() => {
   return props.type === 'modify' ? article.value.memberId : userInfo.value.memberId
 })
 
+const currentMemberName = computed(() => {
+  return props.type === 'modify' ? article.value.memberName : userInfo.value.memberName
+})
+
 function changeKey(val) {
   console.log('BoardForm에서 선택한 조건 : ' + val)
   article.value.categoryId = val
@@ -157,7 +161,14 @@ const setContent = (content) => {
 
     <div class="mb-3">
       <label for="member_name" class="form-label">이름 : </label>
-      <input type="text" class="form-control" v-model="article.memberName" placeholder="이름..." />
+      <input
+        type="text"
+        class="form-control"
+        v-model="currentMemberName"
+        readonly="readonly"
+        placeholder="이름..."
+        style="background-color: #e9ecef"
+      />
     </div>
 
     <div class="mb-3">

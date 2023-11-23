@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/stores/member'
 import { onMounted } from 'vue'
+const { VITE_CHATBOT_PLUGIN_KEY } = import.meta.env
 
 const memberStore = useMemberStore()
 const { isLogin } = storeToRefs(memberStore)
@@ -46,7 +47,7 @@ const { isLogin } = storeToRefs(memberStore)
 })()
 
 ChannelIO('boot', {
-  pluginKey: 'c3cd8834-b1ed-4d47-83e5-cccc282cbf0f' // fill your plugin key
+  pluginKey: VITE_CHATBOT_PLUGIN_KEY
 })
 
 onMounted(() => {

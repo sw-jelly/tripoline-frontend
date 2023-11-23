@@ -14,7 +14,7 @@ const hotplaces = ref([]) // 핫플레이스 리스트
 const hotplace = ref({}) // 선택된 핫플레이스
 const showModal = ref(false)
 
-const liked = ref(false) // 즐겨찾기 여부
+const isLike = ref(false) // 즐겨찾기 여부
 const params = ref({
   contentId: 0,
   memberId: 0
@@ -51,7 +51,7 @@ const openModal = (attraction) => {
 }
 
 const closeModal = () => {
-  liked.value = false
+  getHotPlaceList()
   showModal.value = false
 }
 
@@ -61,7 +61,8 @@ const checkIfFavorite = () => {
   )
 
   console.log('checkIfFavorite', favoriteItem != undefined)
-  if (!!favoriteItem) liked.value = true
+  if (!!favoriteItem) isLike.value = true
+  else isLike.value = false
   return {
     liked: !!favoriteItem,
     favoriteId: favoriteItem ? favoriteItem.favoriteId : null
@@ -80,6 +81,7 @@ const heartit = () => {
       ({ data }) => {
         console.log('성공적으로 즐겨찾기 등록 완료', data)
         getFavoriteList()
+        hotplace.value.likeCount++
       },
       (error) => {
         console.log('즐겨찾기 등록 실패', error)
@@ -92,12 +94,14 @@ const heartit = () => {
       ({ data }) => {
         console.log('성공적으로 즐겨찾기 삭제 완료', data)
         getFavoriteList()
+        hotplace.value.likeCount--
       },
       (error) => {
         console.log('즐겨찾기 삭제 실패', error)
       }
     )
   }
+  isLike.value = !isLike.value
 }
 
 onMounted(() => {
@@ -144,7 +148,7 @@ onMounted(() => {
       <div class="absolute bg-white p-4 z-60">
         <img :src="hotplace.firstImage" alt="Modal Image" />
         <div class="like-area">
-          <button :class="['heart-btn', { liked: liked }]" @click.stop="heartit">
+          <button :class="['heart-btn', { liked: isLike }]" @click.stop="heartit">
             <svg class="heart heart-icon" viewBox="0 0 32 29.6">
               <path
                 d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"

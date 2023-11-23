@@ -35,7 +35,7 @@ const metaContents = ref([
 ])
 
 const options = ref({
-  strings: ['여행이 함께 하는곳', 'Tripoline'],
+  strings: ['여행이 함께 하는 곳', 'Tripoline'],
   typeSpeed: 100,
   delaySpeed: 150,
   loop: true,
@@ -113,7 +113,7 @@ onMounted(() => {
         <div class="flex flex-col justify-center flex-1">
           <div class="flex flex-1 justify-center mt-[10px]">
             <h2>
-              <span><span>여행을 떠나기전이라면 </span><strong>CheckList!</strong></span>
+              <span><span>여행을 떠나기 전이라면 </span><strong>CheckList!</strong></span>
             </h2>
           </div>
           <div class="flex flex-1">
@@ -126,7 +126,7 @@ onMounted(() => {
                     width="75"
                     height="75"
                   />
-                  <span class="text-black">날씨확인</span></RouterLink
+                  <span class="text-black">날씨 확인</span></RouterLink
                 >
               </li>
               <li>
@@ -149,7 +149,7 @@ onMounted(() => {
                     width="75"
                     height="75"
                   />
-                  <span>갤러리구경</span></RouterLink
+                  <span>갤러리 구경</span></RouterLink
                 >
               </li>
               <li>
@@ -160,7 +160,7 @@ onMounted(() => {
                     width="75"
                     height="75"
                   />
-                  <span>핫플구경가기</span></RouterLink
+                  <span>핫플 구경가기</span></RouterLink
                 >
               </li>
             </ul>

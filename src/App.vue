@@ -64,11 +64,63 @@ onMounted(() => {
 <style>
 @font-face {
   font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-Black.otf');
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-Bold.otf');
   font-weight: bold;
-  src: url('@/fonts/pretendard/Pretendard-Regular.otf') format('otf');
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-ExtraBold.otf');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-ExtraLight.otf');
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-Light.otf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-Medium.otf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-Regular.otf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-SemiBold.otf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'pretendard';
+  src: url('@/fonts/pretendard/Pretendard-Thin.otf');
+  font-weight: 100;
 }
 
 .v-application {
+  font-family: 'pretendard', sans-serif !important;
+}
+
+#app {
   font-family: 'pretendard', sans-serif !important;
 }
 </style>

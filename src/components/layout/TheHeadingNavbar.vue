@@ -8,19 +8,6 @@ const router = useRouter()
 const memberStore = useMemberStore()
 const { userLogout } = memberStore
 const { userInfo, isLogin } = storeToRefs(memberStore)
-import Typed from 'typed.js'
-
-const options = ref({
-  strings: ['Trip', 'poline', 'Tripoline'],
-  typeSpeed: 100,
-  delaySpeed: 150,
-  loop: true,
-  showCursor: false
-})
-let typed // Declare typed variable
-onMounted(() => {
-  typed = new Typed('#typed_header', options.value)
-})
 
 const logout = async () => {
   await userLogout(userInfo.memberId)
@@ -60,6 +47,9 @@ const logout = async () => {
         </li>
         <li class="float-left ml-[10px] hover:text-blue-500">
           <RouterLink class="nav-link" :to="{ name: 'plan' }">여행계획</RouterLink>
+        </li>
+        <li class="float-left ml-[10px] hover:text-blue-500">
+          <RouterLink class="nav-link" :to="{ name: 'hotplace' }">핫플레이스</RouterLink>
         </li>
       </ul>
     </div>
@@ -126,10 +116,11 @@ const logout = async () => {
 
 <style scoped>
 @font-face {
-    font-family: 'Tenada';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Tenada';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 * {
   font-family: 'pretendard', sans-serif !important;

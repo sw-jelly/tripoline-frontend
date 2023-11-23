@@ -2,7 +2,6 @@
 import { ref, onMounted, computed } from 'vue'
 import { listweather } from '@/api/weather.js'
 import { WeatherEnum } from '@/Enums/Enum.js'
-import VSelect from '../common/VSelect.vue'
 
 const param = ref({
   pageNo: 1,
@@ -56,17 +55,17 @@ const getColspan = (key) => {
   return Object.keys(groupedData.value[key]).length
 }
 onMounted(() => {
-  const today = new Date()
-  const year = today.getFullYear()
-  const month = today.getMonth() + 1
-  let date = today.getDate()
-  let hour = today.getHours() - 1
-  if (hour < 0) {
-    hour = 24 + hour
-    date = date - 1
-  }
-  param.value.base_date = year + '' + month + '' + date
-  param.value.base_time = hour.toString().padStart(2, '0') + '00'
+  // const today = new Date()
+  // const year = today.getFullYear()
+  // const month = today.getMonth() + 1
+  // let date = today.getDate()
+  // let hour = today.getHours() - 1
+  // if (hour < 0) {
+  //   hour = 24 + hour
+  //   date = date - 1
+  // }
+  // param.value.base_date = year + '' + month + '' + date
+  // param.value.base_time = hour.toString().padStart(2, '0') + '00'
 
   listweather(
     param.value,
@@ -80,23 +79,23 @@ onMounted(() => {
     }
   )
 })
-const onSelect = (e) => {
-  // area.value를 선택한 text로 변경
-  area.value = selectOption.value[e.target.value - 1].text
-  param.value.nx = selectOption.value[e.target.value - 1].x
-  param.value.ny = selectOption.value[e.target.value - 1].y
+// const onSelect = (e) => {
+//   // area.value를 선택한 text로 변경
+//   area.value = selectOption.value[e.target.value - 1].text
+//   param.value.nx = selectOption.value[e.target.value - 1].x
+//   param.value.ny = selectOption.value[e.target.value - 1].y
 
-  listweather(
-    param.value,
-    ({ data }) => {
-      weatherList.value = data.response.body.items.item
-      grouping()
-    },
-    (err) => {
-      console.log(err)
-    }
-  )
-}
+//   listweather(
+//     param.value,
+//     ({ data }) => {
+//       weatherList.value = data.response.body.items.item
+//       grouping()
+//     },
+//     (err) => {
+//       console.log(err)
+//     }
+//   )
+// }
 
 const area = ref('서울')
 

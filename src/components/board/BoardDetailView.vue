@@ -12,7 +12,7 @@ import Tiptap from '@/components/Tiptap/Tiptap.vue'
 
 <script setup>
 import { clsx } from 'clsx'
-
+import { BoardCategoryEnum } from '@/Enums/Enum.js'
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMemberStore } from '@/stores/member'
@@ -162,51 +162,37 @@ function updateComment() {
       </div>
       <div id="boardContents">
         <div id="boardHeader" class="flex flex-col">
-          <h1 class="text-2xl">게시판 : 게시판분류</h1>
+          <h1 class="text-2xl">게시판 : {{ BoardCategoryEnum[article.categoryId] }}</h1>
           <h1 class="text-2xl">제목 : {{ article.articleTitle }}</h1>
           <div class="flex justify-between">
-            <div class="flex justify-center flex-start">
-              작성자 : {{ article.memberName }}
-              <div class="flex flex-col items-center">
-                <img
-                  class="avatar me-2 float-md-start bg-light p-2 rounded-full"
-                  :src="`http://localhost:8080/tripoline/assets/img/${userInfo.memberPhoto}`"
-                  width="30"
-                  v-if="userInfo.memberPhoto"
-                />
-                <img
-                  v-else
-                  src="https://www.gravatar.com/"
-                  class="avatar me-2 float-md-start bg-light p-2 rounded-full"
-                  width="30"
-                />
-                {{ article.registerTime }}
-              </div>
+            <div class="flex w-full justify-between gap-[15px]">
+              <h5>작성자 : {{ article.memberName }}</h5>
+              <h5>작성일 : {{ article.registerTime }}</h5>
             </div>
-            <div class="flex items-center gap-[10px]">
-              <img
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Eye.png"
-                alt="Eye"
-                width="25"
-                height="25"
-              />
-              <p>{{ article.viewCount }}</p>
-              <img
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Writing%20Hand%20Medium-Light%20Skin%20Tone.png"
-                alt="Writing Hand Medium-Light Skin Tone"
-                width="25"
-                height="25"
-              />
-              <p>{{ comments.length }}</p>
-              <img
-                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up.png"
-                alt="Thumbs Up"
-                width="25"
-                height="25"
-                @click="like"
-              />
-              <p class="pr-[10px]">{{ article.likeCount }}</p>
-            </div>
+          </div>
+          <div class="flex w-full justify-end items-center flex-end gap-[10px]">
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Eye.png"
+              alt="Eye"
+              width="30"
+              height="30"
+            />
+            <p>{{ article.viewCount }}</p>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Writing%20Hand%20Medium-Light%20Skin%20Tone.png"
+              alt="Writing Hand Medium-Light Skin Tone"
+              width="30"
+              height="30"
+            />
+            <p>{{ comments.length }}</p>
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thumbs%20Up.png"
+              alt="Thumbs Up"
+              width="30"
+              height="30"
+              @click="like"
+            />
+            <p class="pr-[10px]">{{ article.likeCount }}</p>
           </div>
         </div>
         <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />

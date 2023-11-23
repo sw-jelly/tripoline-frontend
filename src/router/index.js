@@ -112,7 +112,15 @@ const router = createRouter({
           next('/')
         }
       },
-      component: () => import('@/views/WeatherView.vue')
+      component: () => import('@/views/WeatherView.vue'),
+      redirect: '/weather/list',
+      children: [
+        {
+          path: 'list',
+          name: 'weather-list',
+          component: () => import('@/components/weather/weatherList.vue')
+        }
+      ]
     },
     {
       path: '/gallery',
@@ -144,7 +152,20 @@ const router = createRouter({
           next('/')
         }
       },
-      component: () => import('@/views/HotPlaceView.vue')
+      component: () => import('@/views/HotPlaceView.vue'),
+      redirect: '/hotplace/list',
+      children: [
+        {
+          path: 'list',
+          name: 'hotplace-list',
+          component: () => import('@/components/hotplace/HotPlaceList.vue')
+        },
+        {
+          path: '/hotplace/detail:contentId',
+          name: 'hotplace-detail',
+          component: () => import('@/components/hotplace/HotPlaceDetail.vue')
+        }
+      ]
     },
     {
       path: '/specialthanks',
@@ -210,7 +231,7 @@ const router = createRouter({
           component: () => import('@/components/board/BoardListView.vue')
         },
         {
-          path: 'write:planId',
+          path: 'write:planId?',
           name: 'board-write',
           component: () => import('@/components/board/BoardWriteView.vue')
         },

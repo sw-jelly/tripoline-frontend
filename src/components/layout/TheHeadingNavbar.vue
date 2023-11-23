@@ -70,7 +70,7 @@ const logout = async () => {
             v-if="userInfo != null && userInfo.memberPhoto"
             :src="`${userInfo.memberPhoto}`"
             alt="아바타"
-            class="rounded-full w-[75px] h-[75px]"
+            class="rounded-full w-[60px] h-[60px]"
           />
           <img
             v-else

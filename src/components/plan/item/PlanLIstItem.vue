@@ -5,14 +5,14 @@ defineProps({ plan: Object })
 <template>
   <router-link
     :to="{ name: 'plan-detail', params: { planId: plan.planId } }"
-    class="article-title link-dark ga-3"
+    class="article-title link-dark ge-3"
   >
-    <v-card class="mx-auto" min-width="200" max-width="344">
+    <v-card class="mx-auto" min-width="280">
       <v-card-item>
         <div>
-          <div class="text-overline mb-1">{{ plan.sidoName }} {{ plan.gugunName }}</div>
-          <div class="text-h6 mb-1">{{ plan.planTitle }}</div>
-          <div class="text-caption">{{ plan.startDate }} ~ {{ plan.endDate }}</div>
+          <div class="text-body-2 mb-1">{{ plan.sidoName }} {{ plan.gugunName }}</div>
+          <div class="text-h5 mb-1">{{ plan.planTitle }}</div>
+          <div class="text-subtitle-1">{{ plan.startDate }} ~ {{ plan.endDate }}</div>
         </div>
       </v-card-item>
     </v-card>

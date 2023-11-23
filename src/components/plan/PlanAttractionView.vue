@@ -288,6 +288,7 @@ const heartit = (attraction) => {
 <style>
 .form-select {
   width: 100%;
+  font-size: 16px;
 }
 
 :focus {

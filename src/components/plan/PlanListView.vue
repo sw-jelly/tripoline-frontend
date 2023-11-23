@@ -45,7 +45,7 @@ const goToRegist = () => {
       width="120"
       height="120"
     />
-    <h1 class="text-center">나의 여행 계획</h1>
+    <h1 class="text-center mb-3">나의 여행 계획</h1>
     <v-col class="text-center" cols="12" @click="goToRegist">
       <v-btn class="mb-3" size="x-large">새 여행 계획 추가하기</v-btn>
     </v-col>

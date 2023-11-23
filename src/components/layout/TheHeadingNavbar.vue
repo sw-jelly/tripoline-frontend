@@ -34,8 +34,12 @@ const logout = async () => {
 <template>
   <nav class="flex min-h-[100px] align-center justify-around bg-white text-black font-mono">
     <div class="flex items-center">
-      <RouterLink :to="{ name: 'main' }">
-        <img src="@/assets/flight.png" width="90" />
+      <RouterLink :to="{ name: 'main' }" class="no-underline">
+        <!-- <img src="@/assets/flight.png" width="90" /> -->
+        <span
+          class="animate-move-bg bg-gradient-to-r from-indigo-500 via-pink-500 to-indigo-500 bg-[length:400%] bg-clip-text text-transparent text-4xl font-bold"
+          >TRIPOLINE
+        </span>
       </RouterLink>
       <div class="w-[100px]">
         <h1 id="typed_header" class="text-2xl mx-4 text-black"></h1>
@@ -121,7 +125,27 @@ const logout = async () => {
 </template>
 
 <style scoped>
+@font-face {
+    font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 * {
   font-family: 'pretendard', sans-serif !important;
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-move-bg {
+  animation: moveBackground 5s linear infinite;
+  font-family: 'Tenada', sans-serif !important;
 }
 </style>

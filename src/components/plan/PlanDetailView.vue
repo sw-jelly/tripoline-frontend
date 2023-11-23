@@ -155,7 +155,7 @@ const goToTripReviewPage = () => {
 
 <template>
   <div style="height: 100%; overflow: hidden">
-    <div class="demo-page-header" style="background-color: #f5f5f5; padding: 24px">
+    <div class="demo-page-header" style="background-color: #f5f5f5; padding: 15px">
       <a-page-header
         :title="plan.planTitle"
         :sub-title="plan.sidoName + ' ' + plan.gugunName"
@@ -163,31 +163,33 @@ const goToTripReviewPage = () => {
       >
         <template #extra>
           <div v-if="userInfo.memberId == plan.memberId">
-            <a-button key="2" @click="goToRegistDetailPage">수정</a-button>
-            <a-button danger @click="removePlan">삭제</a-button>
+            <a-button class="btn-normal" key="2" @click="goToRegistDetailPage">수정</a-button>
+            <a-button class="btn-red" danger @click="removePlan">삭제</a-button>
           </div>
         </template>
         <div
           v-if="userInfo.memberId == plan.memberId"
           style="display: flex; justify-content: space-between"
         >
-          <p style="margin-bottom: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
+          <p style="margin-bottom: 0%; font-size: 20px">
+            {{ plan.startDate }} - {{ plan.endDate }}
+          </p>
           <div
             v-if="new Date() > new Date(plan.endDate)"
             style="display: flex; align-items: center; justify-items: center"
           >
-            <p style="margin: 0">종료된 여행이에요. &nbsp</p>
-            <a-button @click="goToTripReviewPage">후기 쓰러 가기</a-button>
+            <p style="margin: 0; font-size: 18px">종료된 여행이에요. &nbsp</p>
+            <a-button class="btn-normal" @click="goToTripReviewPage">후기 쓰러 가기</a-button>
           </div>
           <div v-if="new Date() < new Date(plan.startDate)">
-            <p style="margin: 0">
+            <p style="margin: 0; font-size: 18px">
               D-{{ Math.ceil((new Date(plan.startDate) - new Date()) / (1000 * 60 * 60 * 24)) }}
             </p>
           </div>
           <div
             v-if="new Date() >= new Date(plan.startDate) && new Date() <= new Date(plan.endDate)"
           >
-            <p style="margin: 0">즐거운 여행 되세요!</p>
+            <p style="margin: 0; font-size: 18px">즐거운 여행 되세요!</p>
           </div>
         </div>
       </a-page-header>
@@ -223,7 +225,28 @@ const goToTripReviewPage = () => {
   padding-bottom: 0;
 }
 
-/* .ant-page-header-heading-sub-title {
-  font-size: 50px;
-} */
+* {
+  font-family: 'pretendard', sans-serif !important;
+}
+
+.ant-page-header .ant-page-header-heading-title {
+  font-size: 30px;
+}
+
+.ant-card .ant-card-head-title {
+  font-size: 20px;
+}
+
+.btn-normal {
+  font-size: 18px;
+  padding-bottom: 30px;
+  border: 1px solid rgb(5, 86, 10, 0.8);
+  color : rgb(5, 86, 10, 0.8);
+}
+
+.btn-red {
+  margin-left: 5px;
+  font-size: 18px;
+  padding-bottom: 30px;
+}
 </style>

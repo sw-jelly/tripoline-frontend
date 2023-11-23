@@ -131,7 +131,7 @@ const goToRegistDetail = () => {
     />
     <h1 class="text-center">어디로 여행을 떠나시겠어요?</h1>
     <div class="col-md-12 d-flex" style="flex-direction: column; align-items: center">
-      <div class="col-md-8 d-flex mt-3">
+      <div class="col-md-4 d-flex mt-3" style="height: 60px">
         <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
         <VSelect :selectOption="gugunList" @onKeySelect="onChangeGugun" />
       </div>
@@ -150,17 +150,19 @@ const goToRegistDetail = () => {
       </a-space>
     </div>
 
-    <v-sheet max-width="300" class="mx-auto mt-3">
+    <v-sheet max-width="500" min-width="300" class="mx-auto mt-3">
       <v-form validate-on="submit lazy" @submit.prevent="true">
         <input @keyup.enter="goToRegistDetail" />
         <v-text-field
           v-model="params.planTitle"
+          size="large"
           label="여행 이름 (선택)"
           :placeholder="defaultTitle"
         ></v-text-field>
 
         <v-btn
           :loading="loading"
+          size="large"
           type="submit"
           block
           class="mt-2"
@@ -169,7 +171,31 @@ const goToRegistDetail = () => {
         ></v-btn>
       </v-form>
     </v-sheet>
+    <a class="my-a-tag" @click="() => $router.go(-1)">목록으로 돌아가기</a>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.my-a-tag {
+  color: #1890ff;
+  align-self: center;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.form-select {
+  font-size: 20px;
+}
+
+.v-input__control {
+  height: 60px;
+}
+
+a-space .ant-picker {
+  height: 50px;
+}
+
+a-space .ant-picker .ant-picker-input {
+  font-size: 30px;
+}
+</style>

@@ -98,7 +98,7 @@ const heartit = () => {
             <img :src="props.info.firstImage" />
             <div class="card_details">
               <div class="name">
-                {{ props.info.title }}
+                {{ props.info.title }}&nbsp;
                 <button :class="['heart-btn', { liked: liked }]" @click="heartit">
                   <svg class="heart heart-icon" viewBox="0 0 32 29.6">
                     <path
@@ -125,7 +125,8 @@ const heartit = () => {
 }
 
 .heart {
-  width: 20px;
+  width: 15px;
+  height: 15px;
   fill: gray;
   transition:
     fill 0.5s,

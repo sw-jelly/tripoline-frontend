@@ -117,7 +117,12 @@ const goToRegistDetail = () => {
 </script>
 
 <template>
-  <div style="display: flex; flex-direction: column; align-items: center">
+  <div
+    style="display: flex; flex-direction: column; align-items: center"
+    v-motion
+    :initial="{ opacity: 0, y: 100 }"
+    :enter="{ opacity: 1, y: 0, scale: 1 }"
+  >
     <img
       src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png"
       alt="Rocket"

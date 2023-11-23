@@ -18,7 +18,9 @@ import {
   Form,
   Checkbox,
   FloatButton,
-  Input
+  Input,
+  List,
+  Avatar
 } from 'ant-design-vue'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -58,5 +60,7 @@ app.use(Form)
 app.use(Checkbox)
 app.use(FloatButton)
 app.use(Input)
+app.use(List)
+app.use(Avatar)
 
 app.mount('#app')

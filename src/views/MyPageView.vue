@@ -7,7 +7,7 @@
     :initial="{ opacity: 0, y: 100 }"
     :enter="{ opacity: 1, y: 0, scale: 1 }"
   >
-    <h1 class="ml-[100px]">마이페이지</h1>
+    <h1 class="ml-[100px]">My Page</h1>
     <router-view></router-view>
   </div>
 </template>

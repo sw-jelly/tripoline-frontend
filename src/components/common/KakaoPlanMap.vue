@@ -3,7 +3,7 @@ import { watch, onMounted, ref } from 'vue'
 import { updatePlan } from '@/api/plan.js'
 import { EditOutlined } from '@ant-design/icons-vue'
 
-// const emit = defineEmits(['loadedSuccess'])
+const emit = defineEmits(['exitEditMode'])
 var map
 var infowindow = null
 var polyline = null
@@ -14,7 +14,7 @@ const props = defineProps({
   selectedAttraction: Object,
   isEdit: Boolean,
   plan: Object,
-  planDetails: Array,
+  planDetails: Array
   // canDraw: Boolean
 })
 const selectedAttraction = props.selectedAttraction
@@ -198,12 +198,17 @@ const cancelEditName = () => {
   props.plan.planTitle = tmpTitle
   editMode.value = !editMode.value
 }
+
+const exitEditMode = () => {
+  console.log('exitEditMode')
+  emit('exitEditMode')
+}
 </script>
 
 <template>
   <div id="map-container">
     <div v-if="isEdit" id="overlay-card">
-      <div>
+      <div id="card">
         <div v-if="!editMode" style="display: flex; justify-content: space-between">
           <h3 style="margin: 0%">{{ plan.planTitle }}</h3>
           <EditOutlined @click="editName" />
@@ -213,9 +218,13 @@ const cancelEditName = () => {
           <a-button type="primary" @click="editName">저장</a-button>
           <a-button type="primary" @click="cancelEditName">취소</a-button>
         </div>
+        <p style="margin: 0%">{{ plan.sidoName }} {{ plan.gugunName }}</p>
+        <p style="margin: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
       </div>
-      <p style="margin: 0%">{{ plan.sidoName }} {{ plan.gugunName }}</p>
-      <p style="margin: 0%">{{ plan.startDate }} - {{ plan.endDate }}</p>
+      <div class="btn-container">
+        <a-button @click="exitEditMode" class="saveBtn">저장</a-button>
+        <a-button @click="() => $router.go(-1)" class="backBtn">돌아가기</a-button>
+      </div>
     </div>
     <div id="map"></div>
   </div>
@@ -236,14 +245,38 @@ const cancelEditName = () => {
 #overlay-card {
   position: absolute;
   top: 10px;
-  left: 43%;
+  left: 40%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+#card {
   width: 300px;
   background: white;
-  padding: 10px;
-  /* border: 1px solid #ccc; */
   border-radius: 5px;
+  padding: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 4;
+}
+
+.btn-container {
+  width: fit-content;
+  margin-top: 5px;
+}
+
+.saveBtn {
+  background-color: white;
+  height: 40px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+}
+
+.backBtn {
+  background-color: white;
+  height: 40px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 </style>
 
@@ -283,7 +316,7 @@ const cancelEditName = () => {
 
 .wrap .info:nth-child(1) {
   border: 0;
-  box-shadow: 0px 1px 2px #888;
+  box-shadow: 0px 3px 5px #888;
 }
 
 .info .title {

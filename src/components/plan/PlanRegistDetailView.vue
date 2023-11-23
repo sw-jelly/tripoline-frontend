@@ -122,6 +122,7 @@ const addPlanDetail = (planDetail) => {
 }
 
 const exitEditMode = () => {
+  console.log('exitEditMode!!')
   savePlan()
   router.push({ name: 'plan-detail', params: { planId: plan.planId } })
 }
@@ -163,22 +164,17 @@ watch(
 </script>
 
 <template>
-  <div class="body" style="position: relative; width: 100%; height: 100vh; overflow: hidden">
+  <div class="body">
     <a-float-button @click="openleftSide" class="leftSlideBtn">
       <template #icon>
-        <DoubleRightOutlined />
+        <DoubleRightOutlined style="color: grey" />
       </template>
     </a-float-button>
     <a-float-button @click="openRightSide" class="rightSlideBtn">
       <template #icon>
-        <DoubleLeftOutlined />
+        <DoubleLeftOutlined style="color: grey" />
       </template>
     </a-float-button>
-
-    <div class="btn-container">
-      <a-button @click="exitEditMode" class="saveBtn">저장</a-button>
-      <a-button @click="() => $router.go(-1)" class="backBtn">돌아가기</a-button>
-    </div>
 
     <div style="display: flex; width: 100%">
       <Slide
@@ -201,6 +197,7 @@ watch(
         :isEdit="true"
         :plan="plan"
         :plan-details="planDetails"
+        @exit-edit-mode="exitEditMode"
       />
 
       <Slide
@@ -242,11 +239,11 @@ watch(
 
 <style>
 .sidebar .bm-cross {
-  background: black;
+  background-color: black;
 }
 
 .sidebar .right .bm-cross {
-  right: 410px;
+  right: 425px;
 }
 
 .sidebar .left .bm-item-list {
@@ -255,39 +252,8 @@ watch(
   height: 100%;
 }
 
-.leftSlideBtn {
-  position: fixed;
-  top: 15%;
-  left: 20px;
-}
-
-.rightSlideBtn {
-  position: fixed;
-  top: 15%;
-  right: 20px;
-}
-
-.btn-container {
-  position: fixed;
-  width: fit-content;
-  top: 20%;
-  left: 46%;
-  padding: 3px;
-  z-index: 5;
-}
-
-.saveBtn {
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  margin: 10px;
-}
-
-.backBtn {
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
 .sidebar .bm-menu {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   background-color: whitesmoke;
   padding-top: 10px;
 }
@@ -297,5 +263,26 @@ watch(
   flex-direction: column;
   text-decoration: none;
   margin-bottom: 10px;
+}
+
+.ant-float-btn .ant-float-btn-body {
+  border-color: lightslategray;
+  background-color: white;
+}
+
+.leftSlideBtn {
+  position: fixed;
+  width: 50px;
+  height: 48px;
+  top: 10%;
+  left: 20px;
+}
+
+.rightSlideBtn {
+  position: fixed;
+  width: 50px;
+  height: 48px;
+  top: 10%;
+  right: 20px;
 }
 </style>

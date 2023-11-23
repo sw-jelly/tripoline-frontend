@@ -146,7 +146,7 @@ const deleteFavoriteItem = (item) => {
   <div class="flex flex-1">
     <div class="flex flex-col" style="width: 45%">
       <div class="flex items-center justify-center">
-        <h2 class="my-3 py-3 text-center">내정보</h2>
+        <h2 class="my-3 py-3 text-center">내 정보</h2>
       </div>
       <!-- 테일윈드식으로 사용자 정보 테이블형식으로 보여주기 -->
       <div class="flex flex-col w-1/3 mx-auto justify-center">

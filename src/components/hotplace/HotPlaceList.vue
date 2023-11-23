@@ -124,12 +124,15 @@ onMounted(() => {
           >
             <h4>{{ attraction.title }}</h4>
             <p>{{ attraction.addr1 }}</p>
+
             <img
               :src="attraction.firstImage"
               onerror="this.src='http://localhost:8080/tripoline/assets/img/noimage.jpg'"
               @click="openModal(attraction)"
             />
-            <div><HeartOutlined />&nbsp;{{ attraction.likeCount }}</div>
+            <div class="flex items-center justify-end m-0">
+              <HeartOutlined />&nbsp;{{ attraction.likeCount }}
+            </div>
           </div>
         </div>
       </div>

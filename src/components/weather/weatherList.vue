@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { listweather } from '@/api/weather.js'
 import { WeatherEnum } from '@/Enums/Enum.js'
 
@@ -55,17 +55,17 @@ const getColspan = (key) => {
   return Object.keys(groupedData.value[key]).length
 }
 onMounted(() => {
-  // const today = new Date()
-  // const year = today.getFullYear()
-  // const month = today.getMonth() + 1
-  // let date = today.getDate()
-  // let hour = today.getHours() - 1
-  // if (hour < 0) {
-  //   hour = 24 + hour
-  //   date = date - 1
-  // }
-  // param.value.base_date = year + '' + month + '' + date
-  // param.value.base_time = hour.toString().padStart(2, '0') + '00'
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = today.getMonth() + 1
+  let date = today.getDate()
+  let hour = today.getHours() - 1
+  if (hour < 0) {
+    hour = 24 + hour
+    date = date - 1
+  }
+  param.value.base_date = year + '' + month + '' + date
+  param.value.base_time = hour.toString().padStart(2, '0') + '00'
 
   listweather(
     param.value,
@@ -79,23 +79,24 @@ onMounted(() => {
     }
   )
 })
-// const onSelect = (e) => {
-//   // area.value를 선택한 text로 변경
-//   area.value = selectOption.value[e.target.value - 1].text
-//   param.value.nx = selectOption.value[e.target.value - 1].x
-//   param.value.ny = selectOption.value[e.target.value - 1].y
 
-//   listweather(
-//     param.value,
-//     ({ data }) => {
-//       weatherList.value = data.response.body.items.item
-//       grouping()
-//     },
-//     (err) => {
-//       console.log(err)
-//     }
-//   )
-// }
+const onSelect = (e) => {
+  // area.value를 선택한 text로 변경
+  area.value = selectOption.value[e.target.value - 1].text
+  param.value.nx = selectOption.value[e.target.value - 1].x
+  param.value.ny = selectOption.value[e.target.value - 1].y
+
+  listweather(
+    param.value,
+    ({ data }) => {
+      weatherList.value = data.response.body.items.item
+      grouping()
+    },
+    (err) => {
+      console.log(err)
+    }
+  )
+}
 
 const area = ref('서울')
 
@@ -284,39 +285,6 @@ const selectOption = ref([
             </template>
           </tbody>
         </table>
-
-        <!-- <table class="table table-fixed">
-          <thead>
-            <tr>
-              <th>날짜</th>
-              <th v-for="key in keys" :key="key">
-                {{ key }}
-              </th>
-            </tr>
-            <tr>
-              <th>시간</th>
-              <th v-for="key in keys" :key="key">
-                <span v-for="time in Object.keys(groupedData[key])" :key="time">
-                  {{ time }}
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>데이터</td>
-            </tr>
-            <tr>
-              <td>데이터</td>
-            </tr>
-            <tr>
-              <td>데이터</td>
-            </tr>
-            <tr>
-              <td>데이터</td>
-            </tr>
-          </tbody>
-        </table> -->
       </div>
     </div>
   </div>

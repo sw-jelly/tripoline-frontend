@@ -119,7 +119,8 @@ const regist = async () => {
     alert('생년월일을 선택해주세요')
     return
   } else {
-    userRegist(User.value)
+    await userRegist(User.value)
+    alert('정상 등록 완료')
     router.go(0)
   }
 }

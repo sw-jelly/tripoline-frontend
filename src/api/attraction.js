@@ -15,8 +15,6 @@ function searchAttraction(categoryId, pageNo, success, fail) {
     .catch(fail)
 }
 
-//
-
 // 관광지 검색 ()
 function searchByLocation(params, success, fail) {
   local.get('attractionRest/searchByLocation', { params }).then(success).catch(fail)
@@ -34,4 +32,8 @@ function searchByTitle(params, success, fail) {
   local.get('attractionRest/searchByTitle', { params }).then(success).catch(fail)
 }
 
-export { searchByLocation, searchSido, searchGugun, searchByTitle, searchAttraction }
+function getHotPlaces(success, fail) {
+  local.get('attractionRest/hotplace').then(success).catch(fail)
+}
+
+export { searchByLocation, searchSido, searchGugun, searchByTitle, searchAttraction, getHotPlaces }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/stores/member'
 import { registFavorite, deleteFavorite, getIsFavorite, getFavoriteCount } from '@/api/favorite.js'

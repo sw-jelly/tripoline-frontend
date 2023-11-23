@@ -183,34 +183,38 @@ onMounted(() => {
         </div>
         <div class="flex flex-col h-full w-full">
           <div class="flex items-center justify-center">
-            <div class="flex w-full justify-evenly">
-              <button
-                type="button"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-indent"
-                @click="moveWrite"
-              >
-                글쓰기
-              </button>
+            <div class="flex flex-row w-full justify-between">
+              <div class="flex">
+                <button
+                  type="button"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-indent"
+                  @click="moveWrite"
+                >
+                  글쓰기
+                </button>
 
-              <button
-                v-if="!isBest"
-                type="button"
-                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
-                @click="getBestArticleList"
-              >
-                베스트
-              </button>
-              <button
-                v-else
-                type="button"
-                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                @click="getArticleList"
-              >
-                일반글
-              </button>
-              <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
+                <button
+                  v-if="!isBest"
+                  type="button"
+                  class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
+                  @click="getBestArticleList"
+                >
+                  베스트
+                </button>
+                <button
+                  v-else
+                  type="button"
+                  class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                  @click="getArticleList"
+                >
+                  일반글
+                </button>
+                <div>
+                  <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <form class="flex">
                 <!-- @onKeySelect="changeKey" -->
                 <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />

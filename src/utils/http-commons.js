@@ -6,8 +6,19 @@ const {
   VITE_API_BASE_URL,
   VITE_ELECTRIC_CHARGING_STATION_URL,
   VITE_IMGBB_URL,
-  VITE_PUBLIC_URL
+  VITE_PUBLIC_URL,
+  VITE_WEATHER_URL
 } = import.meta.env
+
+function weatherAxios() {
+  const instance = axios.create({
+    baseURL: VITE_WEATHER_URL,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+  })
+  return instance
+}
 
 function galleryAxios() {
   const instance = axios.create({
@@ -125,4 +136,4 @@ function localAxios() {
   return instance
 }
 
-export { localAxios, stationAxios, IMG_AXIOS, publicAxios, galleryAxios }
+export { localAxios, stationAxios, IMG_AXIOS, publicAxios, galleryAxios, weatherAxios }

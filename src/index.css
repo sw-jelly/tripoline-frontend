@@ -3,12 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'pretendard';
-  font-weight: bold;
-  src: url('./fonts/pretendard/Pretendard-Regular.otf') format('otf');
-}
-
 #app {
   /* display: flex;
   flex-direction: column; */

@@ -75,7 +75,6 @@ const generateDateList = (startDate, endDate) => {
       tab: `${month}.${day}(${dayOfWeek})`
     })
     currentDate.setDate(currentDate.getDate() + 1)
-
   }
 
   if (index.value != -1) {
@@ -146,7 +145,10 @@ const removePlan = () => {
 const goToTripReviewPage = () => {
   console.log('후기쓰러가자!')
   router.push({
-    name: 'board-write'
+    name: 'board-write',
+    params: {
+      review: true
+    }
   })
 }
 </script>

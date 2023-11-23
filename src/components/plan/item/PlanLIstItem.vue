@@ -20,6 +20,10 @@ defineProps({ plan: Object })
 </template>
 
 <style scoped>
+* {
+  font-family: 'pretendard', sans-serif !important;
+}
+
 a {
   text-decoration: none;
 }

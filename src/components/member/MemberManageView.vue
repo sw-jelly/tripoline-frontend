@@ -314,4 +314,8 @@ const deleteFavoriteItem = (item) => {
   margin-top: 10px;
   box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.38);
 }
+
+* {
+  font-family: 'pretendard', sans-serif !important;
+}
 </style>

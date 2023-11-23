@@ -123,4 +123,12 @@ onMounted(() => {
 #app {
   font-family: 'pretendard', sans-serif !important;
 }
+
+&:root {
+  font-family: 'pretendard', sans-serif !important;
+}
+
+body {
+  font-family: 'pretendard', sans-serif !important;
+}
 </style>

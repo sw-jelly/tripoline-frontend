@@ -120,4 +120,8 @@ const logout = async () => {
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+* {
+  font-family: 'pretendard', sans-serif !important;
+}
+</style>

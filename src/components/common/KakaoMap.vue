@@ -15,7 +15,8 @@ const info = ref({
   addr1: '',
   tel: '',
   overview: '',
-  firstImage: ''
+  firstImage: '',
+  favoriteCount: 0
 })
 const pos = ref(null)
 
@@ -102,7 +103,8 @@ const loadMarkers = () => {
         addr1: spot.addr1,
         tel: spot.tel,
         overview: spot.overview,
-        firstImage: spot.firstImage
+        firstImage: spot.firstImage,
+        favoriteCount: 0
       }
       if (!info.value.firstImage.includes('tong')) {
         info.value.firstImage = 'http://localhost:8080/tripoline/assets/img/noimage.jpg'

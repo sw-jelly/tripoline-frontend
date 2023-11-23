@@ -5,7 +5,8 @@ export const BoardCategoryEnum = {
   0: '전체게시판',
   1: '자유게시판',
   2: '공지사항',
-  3: '질문게시판'
+  3: '질문게시판',
+  4: '여행 후기'
 }
 
 export const AdminCategoryEnum = {

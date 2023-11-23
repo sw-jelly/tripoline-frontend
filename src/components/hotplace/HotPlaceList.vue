@@ -2,11 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/stores/member'
-import {
-  getFavoriteListByMemberId,
-  registFavorite,
-  deleteFavorite
-} from '@/api/favorite'
+import { getFavoriteListByMemberId, registFavorite, deleteFavorite } from '@/api/favorite'
 import { getHotPlaces } from '@/api/attraction'
 import { HeartOutlined } from '@ant-design/icons-vue'
 
@@ -39,7 +35,7 @@ const getFavoriteList = () => {
   getFavoriteListByMemberId(
     userInfo.value.memberId,
     ({ data }) => {
-      favoriteList.value = data
+      favoriteList.value = data ? data : []
       console.log('즐겨찾기 리스트', favoriteList.value)
     },
     (error) => {
@@ -124,7 +120,11 @@ onMounted(() => {
           >
             <h4>{{ attraction.title }}</h4>
             <p>{{ attraction.addr1 }}</p>
-            <img :src="attraction.firstImage" alt="galTitle" @click="openModal(attraction)" />
+            <img
+              :src="attraction.firstImage"
+              onerror="this.src='http://localhost:8080/tripoline/assets/img/noimage.jpg'"
+              @click="openModal(attraction)"
+            />
             <div><HeartOutlined />&nbsp;{{ attraction.likeCount }}</div>
           </div>
         </div>
@@ -144,14 +144,16 @@ onMounted(() => {
       <div class="absolute bg-white p-4 z-60">
         <img :src="hotplace.firstImage" alt="Modal Image" />
         <div class="like-area">
-          <button :class="['heart-btn', { liked: liked }]" @click="heartit">
+          <button :class="['heart-btn', { liked: liked }]" @click.stop="heartit">
             <svg class="heart heart-icon" viewBox="0 0 32 29.6">
               <path
                 d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"
               />
             </svg>
           </button>
-          <div style="font-weight: lighter; font-size: 20px; z-index: 1">&nbsp;{{ hotplace.likeCount }}</div>
+          <div style="font-weight: lighter; font-size: 20px; z-index: 1">
+            &nbsp;{{ hotplace.likeCount }}
+          </div>
         </div>
       </div>
     </div>

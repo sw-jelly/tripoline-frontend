@@ -125,7 +125,7 @@ const deleteMember = async () => {
           <td>{{ member.memberId }}</td>
           <td>{{ member.memberName }}</td>
           <td>{{ member.memberEmail }}</td>
-          <td>{{ member.memberGender }}</td>
+          <td>{{ member.memberPhone }}</td>
           <td>{{ member.memberGender }}</td>
           <td v-if="modify === 'modify'">
             <input

@@ -147,7 +147,7 @@ const goToTripReviewPage = () => {
   router.push({
     name: 'board-write',
     params: {
-      review: true
+      planId: planId
     }
   })
 }
@@ -241,7 +241,7 @@ const goToTripReviewPage = () => {
   font-size: 18px;
   padding-bottom: 30px;
   border: 1px solid rgb(5, 86, 10, 0.8);
-  color : rgb(5, 86, 10, 0.8);
+  color: rgb(5, 86, 10, 0.8);
 }
 
 .btn-red {

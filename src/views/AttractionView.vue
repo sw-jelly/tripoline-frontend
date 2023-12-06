@@ -126,23 +126,42 @@ const getAttrationsByTitle = () => {
 
 <template>
   <div class="col-md-12 d-flex" style="flex-direction: column; align-items: center">
-    <div class="col-md-8 d-flex mt-3">
-      <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
-      <VSelect :selectOption="gugunList" @onKeySelect="onChangeGugun" />
-      <VSelect :selectOption="contentList" @onKeySelect="onChangeContentType" />
-      <button class="btn btn-success" @click="getAttrationsByLocation">검색</button>
-    </div>
-    <div class="input-group d-flex justify-content-center mt-3">
-      <div class="form-outline col-md-3">
-        <input
-          v-model="param.keyword"
-          type="search"
-          label="Select"
-          variant="underlined"
-          placeholder="검색어를 입력하세요"
+    <div
+      class="col-md-12 d-flex"
+      style="flex-direction: column; align-items: center"
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{ opacity: 1, y: 0, scale: 1 }"
+    >
+      <div class="d-flex items-center">
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Compass.png"
+          alt="Compass"
+          width="50"
+          height="50"
+          class="mb-1"
         />
+        <h1>&nbsp;관광지 검색</h1>
       </div>
-      <button class="btn btn-success" @click="getAttrationsByTitle">검색</button>
+      <div class="col-md-8 d-flex mt-3">
+        <VSelect :selectOption="sidoList" @onKeySelect="onChangeSido" />
+        <VSelect :selectOption="gugunList" @onKeySelect="onChangeGugun" />
+        <VSelect :selectOption="contentList" @onKeySelect="onChangeContentType" />
+        <button class="btn btn-success" @click="getAttrationsByLocation">검색</button>
+      </div>
+      <div class="input-group d-flex justify-content-center mt-3">
+        <div class="form-outline col-md-3">
+          <input
+            v-model="param.keyword"
+            class="form-control"
+            type="search"
+            label="Select"
+            variant="underlined"
+            placeholder="검색어를 입력하세요"
+          />
+        </div>
+        <button class="btn btn-success" @click="getAttrationsByTitle">검색</button>
+      </div>
     </div>
     <KakaoMap :attractions="attractionList" :isPlan="false" />
   </div>

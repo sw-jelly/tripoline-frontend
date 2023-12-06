@@ -1,27 +1,58 @@
-<script setup></script>
-
+import { RouterLink } from 'vue-router';
 <template>
   <div class="flex flex-col flex-1 w-full min-h-full">
-    <h2 class="ml-[100px]">어드민페이지</h2>
-    <div>컨트롤러 버튼영역 (회원조회, 관리(탈퇴) 등 )</div>
-    <div class="flex flex-row flex-1 bg-red-300">
-      <div class="flex flex-grow-1 bg-yellow-300">서브 버튼</div>
-      <div class="flex flex-grow-3 bg-blue-500">
-        <table class="table table-fixed w-2/3">
-          <thead>
-            <tr>
-              <th>번호</th>
-              <th>아이디</th>
-              <th>닉네임</th>
-              <th>이메일</th>
-              <th>상태</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+    <h1 class="ml-[100px]">어드민페이지</h1>
+    <div class="flex flex-col justify-center items-center h-[50px]">
+      <ul class="flex w-full h-full items-center m-0 justify-start gap-[20px]">
+        <li>
+          <RouterLink :to="{ name: 'admin-userlist' }" class="no-underline">
+            <button class="text-black hover:bg-blue-100 text-2xl">사용자조회</button>
+          </RouterLink>
+        </li>
+        <li>
+          <router-link
+            :to="{ name: 'admin-userlist', params: { modify: 'modify' } }"
+            class="no-underline"
+          >
+            <button class="text-black hover:bg-blue-100 text-2xl">사용자관리</button>
+          </router-link>
+        </li>
+
+        <li>
+          <router-link to="/admin/notice" class="no-underline">
+            <button class="text-black hover:bg-blue-100 text-2xl">공지사항등록</button>
+          </router-link>
+        </li>
+      </ul>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.menu-bar {
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.menu-bar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-bar li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.menu-bar li a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px;
+}
+
+.menu-bar li a:hover {
+  background-color: #ddd;
+}
+</style>

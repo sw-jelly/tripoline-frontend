@@ -80,6 +80,7 @@ const User = ref({
 
 const login = async () => {
   console.log('login ing!!!! !!!')
+
   await userLogin(loginUser.value)
 
   let token = sessionStorage.getItem('accessToken')
@@ -88,8 +89,40 @@ const login = async () => {
 }
 
 const regist = async () => {
-  userRegist(User.value)
-  router.go(0)
+  // 정보가 없으면 진행하지 않는다
+  if (User.value.memberId === '') {
+    alert('아이디를 입력해주세요')
+    return
+  }
+  if (User.value.memberPassword === '') {
+    alert('비밀번호를 입력해주세요')
+    return
+  }
+  if (User.value.memberName === '') {
+    alert('닉네임을 입력해주세요')
+    return
+  }
+  if (User.value.memberEmail === '') {
+    alert('이메일을 입력해주세요')
+    return
+  }
+  if (User.value.memberGender === '') {
+    alert('성별을 입력해주세요')
+    return
+  }
+  if (User.value.memberPhone === '') {
+    alert('전화번호를 입력해주세요')
+    return
+  }
+
+  if (User.value.memberBirthdate === '') {
+    alert('생년월일을 선택해주세요')
+    return
+  } else {
+    await userRegist(User.value)
+    alert('정상 등록 완료')
+    router.go(0)
+  }
 }
 
 const handleDatePickerChange = (date) => {
@@ -101,7 +134,12 @@ const signupshow = ref(false)
 </script>
 
 <template>
-  <div class="relative flex flex-col w-full h-full bg-stone-300">
+  <div
+    class="relative flex flex-col w-full h-full bg-stone-300"
+    v-motion
+    :initial="{ opacity: 0, y: 100 }"
+    :enter="{ opacity: 1, y: 0, scale: 1 }"
+  >
     <div class="relative flex flex-col w-full top-1/3 items-center justify-start h-[100px]">
       <Transition :duration="550" name="nested">
         <div class="flex justify-center items-center" v-if="!loginshow && !signupshow">
@@ -124,6 +162,8 @@ const signupshow = ref(false)
       <button
         class="bg-blue-500 hover:bg-blue-700 w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
         @click="loginshow = !loginshow"
+        @keydown.enter.prevent
+        type="button"
       >
         로그인
       </button>
@@ -173,6 +213,7 @@ const signupshow = ref(false)
       <button
         class="bg-stone-500 hover:bg-white w-[200px] text-black font-bold py-2 px-4 rounded mr-2"
         @click="signupshow = !signupshow"
+        @keydown.enter.prevent
       >
         회원가입
       </button>
@@ -319,12 +360,14 @@ const signupshow = ref(false)
                     <button
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                       @click="regist"
+                      type="button"
                     >
                       회원가입
                     </button>
                     <button
                       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                       @click="signupshow = !signupshow"
+                      type="button"
                     >
                       취소
                     </button>

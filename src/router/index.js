@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BeforeLoginView from '@/views/BeforeLoginView.vue'
 import TheHomeView from '@/views/TheHomeView.vue'
 import { useMemberStore } from '@/stores/member'
-
+import TheElectricChargingStationView from '@/views/TheElectricChargingStationView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
 
@@ -39,7 +39,19 @@ const router = createRouter({
           alert('접근 권한이 없습니다')
           next('/')
         }
-      }
+      },
+      children: [
+        {
+          path: '/admin/userlist/:modify?',
+          name: 'admin-userlist',
+          component: () => import('@/components/admin/AdminManage.vue')
+        },
+        {
+          path: '/admin/notice',
+          name: 'admin-notice',
+          component: () => import('@/components/board/BoardWriteView.vue')
+        }
+      ]
     },
     {
       path: '/home',
@@ -77,6 +89,107 @@ const router = createRouter({
       path: '/member/withdrawal',
       name: 'member-withdrawal',
       component: () => import('@/components/MemberWithdrawalView.vue')
+    },
+    {
+      path: '/estations',
+      name: 'estations',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: TheElectricChargingStationView
+    },
+    {
+      path: '/weather',
+      name: 'weather',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/WeatherView.vue'),
+      redirect: '/weather/list',
+      children: [
+        {
+          path: 'list',
+          name: 'weather-list',
+          component: () => import('@/components/weather/weatherList.vue')
+        }
+      ]
+    },
+    {
+      path: '/gallery',
+      name: 'gallery',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/GalleryView.vue'),
+      redirect: '/gallery/list',
+      children: [
+        {
+          path: 'list',
+          name: 'gallery-list',
+          component: () => import('@/components/gallery/GalleryList.vue')
+        }
+      ]
+    },
+    {
+      path: '/hotplace',
+      name: 'hotplace',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/HotPlaceView.vue'),
+      redirect: '/hotplace/list',
+      children: [
+        {
+          path: 'list',
+          name: 'hotplace-list',
+          component: () => import('@/components/hotplace/HotPlaceList.vue')
+        },
+        {
+          path: '/hotplace/detail:contentId',
+          name: 'hotplace-detail',
+          component: () => import('@/components/hotplace/HotPlaceDetail.vue')
+        }
+      ]
+    },
+    {
+      path: '/specialthanks',
+      name: 'specialthanks',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/SpecialThanksView.vue')
+    },
+    {
+      path: '/news',
+      name: 'news',
+      beforeEnter: (to, from, next) => {
+        if (useMemberStore().isLogin) {
+          next()
+        } else {
+          next('/')
+        }
+      },
+      component: () => import('@/views/AttractionNewsView.vue')
     },
     {
       path: '/attraction',
@@ -118,7 +231,7 @@ const router = createRouter({
           component: () => import('@/components/board/BoardListView.vue')
         },
         {
-          path: 'write',
+          path: 'write:planId?',
           name: 'board-write',
           component: () => import('@/components/board/BoardWriteView.vue')
         },

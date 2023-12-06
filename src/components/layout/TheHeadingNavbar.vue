@@ -3,6 +3,7 @@ import { RouterLink } from 'vue-router'
 import { useMemberStore } from '@/stores/member'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
 const router = useRouter()
 const memberStore = useMemberStore()
 const { userLogout } = memberStore
@@ -15,20 +16,21 @@ const logout = async () => {
     router.push('/')
   }
 }
-
-// const memberName = ref('')
-// onMounted(() => {
-//   memberName.value = userInfo.value.memberName
-// })
 </script>
 
 <template>
   <nav class="flex min-h-[100px] align-center justify-around bg-white text-black font-mono">
     <div class="flex items-center">
-      <RouterLink :to="{ name: 'main' }">
-        <img src="@/assets/flight.png" width="90" />
+      <RouterLink :to="{ name: 'main' }" class="no-underline">
+        <!-- <img src="@/assets/flight.png" width="90" /> -->
+        <span
+          class="animate-move-bg bg-gradient-to-r from-indigo-500 via-pink-500 to-indigo-500 bg-[length:400%] bg-clip-text text-transparent text-4xl font-bold"
+          >TRIPOLINE
+        </span>
       </RouterLink>
-      <h1 class="text-2xl mx-4">Tripoline</h1>
+      <div class="w-[100px]">
+        <h1 id="typed_header" class="text-2xl mx-4 text-black"></h1>
+      </div>
     </div>
     <div class="flex items-center">
       <ul class="cursor-pointer text-2xl">
@@ -46,6 +48,9 @@ const logout = async () => {
         <li class="float-left ml-[10px] hover:text-blue-500">
           <RouterLink class="nav-link" :to="{ name: 'plan' }">여행계획</RouterLink>
         </li>
+        <li class="float-left ml-[10px] hover:text-blue-500">
+          <RouterLink class="nav-link" :to="{ name: 'hotplace' }">핫플레이스</RouterLink>
+        </li>
       </ul>
     </div>
     <div class="flex flex-row items-center text-2xl">
@@ -55,7 +60,7 @@ const logout = async () => {
             v-if="userInfo != null && userInfo.memberPhoto"
             :src="`${userInfo.memberPhoto}`"
             alt="아바타"
-            class="rounded-full h-20 w-20"
+            class="rounded-full w-[60px] h-[60px]"
           />
           <img
             v-else
@@ -66,8 +71,14 @@ const logout = async () => {
         <!-- src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" -->
 
         <li class="float-left ml-[10px]">
-          <span class="underline" v-if="userInfo">{{ userInfo.memberName }}</span
-          >님환영합니다
+          <span class="underline" v-if="userInfo"
+            ><RouterLink
+              style="text-decoration: none"
+              class="cursor-pointer text-black hover:text-blue-600"
+              :to="{ name: 'member' }"
+              >{{ userInfo.memberName }}</RouterLink
+            ></span
+          >님 환영합니다
         </li>
         <li class="float-left ml-[10px] cursor-pointer hover:text-red-300" @click="logout">
           로그아웃
@@ -103,4 +114,29 @@ const logout = async () => {
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+@font-face {
+  font-family: 'Tenada';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  font-family: 'pretendard', sans-serif !important;
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-move-bg {
+  animation: moveBackground 5s linear infinite;
+  font-family: 'Tenada', sans-serif !important;
+}
+</style>

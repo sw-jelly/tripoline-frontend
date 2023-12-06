@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { registArticle, articleDetail, updateArticle, likeArticle } from '@/api/board'
+import { getPlan } from '@/api/plan'
 import VSelect from '../../common/VSelect.vue'
 import Editor_Deploy from './Editor_Deploy.vue'
 import { computed } from 'vue'
@@ -10,17 +11,26 @@ import { storeToRefs } from 'pinia'
 const memberStore = useMemberStore()
 const { userInfo } = storeToRefs(memberStore)
 
+// 후기 작성을 위한 요소들
+const plan = ref({})
+const isChecked = ref(false)
+
 // router, route setting
 const router = useRouter()
 const route = useRoute()
 
 // category select options
-const boardOptions = ref([
-  { text: '카테고리 선택', value: 'all' },
-  { text: '자유게시판', value: 1 },
-  { text: '공지사항', value: 2 },
-  { text: '질문게시판', value: 3 }
-])
+const boardOptions = ref([])
+if (route.params.planId == 0) {
+  boardOptions.value = [
+    { text: '카테고리 선택', value: 'all' },
+    { text: '자유게시판', value: 1 },
+    { text: '공지사항', value: 2 },
+    { text: '질문게시판', value: 3 }
+  ]
+} else {
+  boardOptions.value = [{ text: '여행 후기', value: 4 }]
+}
 
 // getting props
 const props = defineProps({ type: String })
@@ -55,10 +65,34 @@ onMounted(() => {
     getArticle()
     console.log(article.value.categoryId)
   }
+  article.value.memberId = userInfo.value.memberId
+  article.value.memberName = userInfo.value.memberName
+
+  if (route.params.planId != 0) {
+    // planId로 plan 정보 얻어오기
+    getPlan(
+      route.params.planId,
+      ({ data }) => {
+        console.log('성공적으로 plan 얻어오기 완료', data)
+        plan.value = data
+        console.log('plan', plan.value)
+      },
+      (error) => {
+        console.log('plan 얻어오기 실패', error)
+      }
+    )
+    changeKey(4)
+  } else {
+    changeKey(1)
+  }
 })
 
 const currentMemberId = computed(() => {
   return props.type === 'modify' ? article.value.memberId : userInfo.value.memberId
+})
+
+const currentMemberName = computed(() => {
+  return props.type === 'modify' ? article.value.memberName : userInfo.value.memberName
 })
 
 function changeKey(val) {
@@ -67,7 +101,12 @@ function changeKey(val) {
 }
 
 function writeArticle() {
-  console.log('글등록하자!!', article.value)
+  // 경로 주의
+  // isChecked가 true이면 plan으로 통하는 경로를 넣어준다.
+  if (isChecked.value) {
+    article.value.articleContent += `\n\n[${userInfo.value.memberName}님의 ${plan.value.planTitle} 계획 보러 가기](http://localhost:9000/plan/detail/${plan.value.planId})`
+  }
+
   registArticle(
     article.value,
     ({ data }) => {
@@ -126,9 +165,15 @@ const setContent = (content) => {
 
 <template>
   <form @submit.prevent="onSubmit">
-    <div class="mb-3">
+    <!-- 인성오빠가 후기 카테고리 성공하면 다시 살아날 친구 (v-show) -->
+    <div v-show="route.params.planId == 0" class="mb-3">
       <label for="categoryId" class="form-label">게시판 분류 : </label>
-      <VSelect :selectOption="boardOptions" @onKeySelect="changeKey" />
+      <VSelect
+        :selectOption="boardOptions"
+        @onKeySelect="changeKey"
+        :notice="props.type === 'regist' || props.type === 'modify' ? true : false"
+        :review="route.params.planId === 1 ? true : false"
+      />
     </div>
     <div class="mb-3">
       <label for="userid" class="form-label">작성자 ID : </label>
@@ -153,7 +198,21 @@ const setContent = (content) => {
 
     <div class="mb-3">
       <label for="member_name" class="form-label">이름 : </label>
-      <input type="text" class="form-control" v-model="article.memberName" placeholder="이름..." />
+      <input
+        type="text"
+        class="form-control"
+        v-model="currentMemberName"
+        readonly="readonly"
+        placeholder="이름..."
+        style="background-color: #e9ecef"
+      />
+    </div>
+
+    <div v-if="route.params.planId != 0" class="mb-3">
+      <input type="checkbox" id="share" name="share" v-model="isChecked" class="form-check-input" />
+      <label for="share" class="form-label"
+        >&nbsp;계획 공유하기 (해당 계획의 링크가 함께 공유됩니다)</label
+      >
     </div>
 
     <div class="mb-3">

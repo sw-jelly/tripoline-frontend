@@ -30,7 +30,8 @@ const categoryOption = ref([
   { text: '게시판 선택', value: 'all' },
   { text: '자유게시판', value: 1 },
   { text: '공지사항', value: 2 },
-  { text: '질문게시판', value: 3 }
+  { text: '질문게시판', value: 3 },
+  { text: '여행 후기', value: 4 }
 ])
 
 /**
@@ -130,7 +131,7 @@ const moveDetail = (article) => {
 }
 
 const moveWrite = () => {
-  router.push({ name: 'board-write' })
+  router.push({ name: 'board-write', params: { planId: 0 } })
 }
 
 onMounted(() => {
@@ -149,6 +150,28 @@ onMounted(() => {
       <div class="flex flex-col w-2/3">
         <div class="flex flex-row">
           <img
+            v-if="board === 2"
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Alarm%20Clock.png"
+            alt="Alarm Clock"
+            width="100"
+            height="100"
+          />
+          <img
+            v-else-if="board === 1"
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Men%20with%20Bunny%20Ears.png"
+            alt="Men with Bunny Ears"
+            width="100"
+            height="100"
+          />
+          <img
+            v-else-if="board === 3"
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20professions/Man%20Technologist%20Light%20Skin%20Tone.png"
+            alt="Man Technologist Light Skin Tone"
+            width="100"
+            height="100"
+          />
+          <img
+            v-else
             src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane.png"
             alt="Airplane"
             width="100"
@@ -160,34 +183,38 @@ onMounted(() => {
         </div>
         <div class="flex flex-col h-full w-full">
           <div class="flex items-center justify-center">
-            <div class="flex w-full justify-evenly">
-              <button
-                type="button"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-indent"
-                @click="moveWrite"
-              >
-                글쓰기
-              </button>
+            <div class="flex flex-row w-full justify-between">
+              <div class="flex">
+                <button
+                  type="button"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-indent"
+                  @click="moveWrite"
+                >
+                  글쓰기
+                </button>
 
-              <button
-                v-if="!isBest"
-                type="button"
-                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
-                @click="getBestArticleList"
-              >
-                베스트
-              </button>
-              <button
-                v-else
-                type="button"
-                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                @click="getArticleList"
-              >
-                일반글
-              </button>
-              <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
+                <button
+                  v-if="!isBest"
+                  type="button"
+                  class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 ml-4 border border-gray-400 rounded shadow"
+                  @click="getBestArticleList"
+                >
+                  베스트
+                </button>
+                <button
+                  v-else
+                  type="button"
+                  class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                  @click="getArticleList"
+                >
+                  일반글
+                </button>
+                <div>
+                  <VSelect :selectOption="categoryOption" @onKeySelect="changeCategory" />
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <form class="flex">
                 <!-- @onKeySelect="changeKey" -->
                 <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />

@@ -41,10 +41,6 @@ const copyCommnet = () => {
   comment.value = JSON.parse(JSON.stringify(props.comment))
 }
 
-const copyComment = () => {
-  comment.value = JSON.parse(JSON.stringify(props.comment))
-}
-
 function deactiveModfiy() {
   isUpdate.value = false
   comment.value.content = temp.value
@@ -84,11 +80,6 @@ const formatDate = (timestamp) => {
   return `${year}-${month}-${day}`
 }
 </script>
-
-<!-- 
-axios -> api 
-<a href="" />  
--->
 
 <template>
   <div id="comment">

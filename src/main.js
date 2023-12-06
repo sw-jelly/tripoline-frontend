@@ -4,6 +4,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
+import { MotionPlugin } from '@vueuse/motion'
+
 import {
   DatePicker,
   RangePicker,
@@ -11,9 +13,15 @@ import {
   Timeline,
   PageHeader,
   Descriptions,
-  Button
+  Button,
+  Select,
+  Form,
+  Checkbox,
+  FloatButton,
+  Input,
+  List,
+  Avatar
 } from 'ant-design-vue'
-
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
@@ -38,6 +46,8 @@ pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(router)
 app.use(vuetify)
+app.use(MotionPlugin)
+
 app.use(DatePicker)
 app.use(RangePicker)
 app.use(Card)
@@ -45,5 +55,12 @@ app.use(Timeline)
 app.use(PageHeader)
 app.use(Descriptions)
 app.use(Button)
+app.use(Select)
+app.use(Form)
+app.use(Checkbox)
+app.use(FloatButton)
+app.use(Input)
+app.use(List)
+app.use(Avatar)
 
 app.mount('#app')

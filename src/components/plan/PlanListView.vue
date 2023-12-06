@@ -38,12 +38,18 @@ const goToRegist = () => {
 </script>
 
 <template>
-  <v-container>
-    <h1 class="text-center">나의 여행 계획</h1>
+  <v-container class="d-flex flex-column align-center">
+    <img
+      src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Spiral%20Calendar.png"
+      alt="Spiral Calendar"
+      width="120"
+      height="120"
+    />
+    <h1 class="text-center mb-3">나의 여행 계획</h1>
     <v-col class="text-center" cols="12" @click="goToRegist">
-      <v-btn size="x-large">새 여행 계획 추가하기</v-btn>
+      <v-btn class="mb-3" size="x-large">새 여행 계획 추가하기</v-btn>
     </v-col>
-    <v-row align="center" justify="start">
+    <v-row class="d-flex flex-wrap ga-3" justify="start">
       <PlanListItem v-for="(plan, i) in plans" :key="i" :plan="plan" />
     </v-row>
   </v-container>

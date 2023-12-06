@@ -2,11 +2,24 @@
 defineProps({ article: Object })
 // enum 불러오기
 import { BoardCategoryEnum } from '@/Enums/Enum.js'
+import { clsx } from 'clsx'
 </script>
 
 <template>
   <tr
-    class="text-center bg-white h-[50px] border-y border-solid border-gray-500 hover:bg-stone-200 cursor-pointer"
+    :class="
+      clsx({
+        'text-center': true,
+        'bg-white': article.categoryId !== 2,
+        'h-[50px]': true,
+        'border-y': true,
+        'border-solid': true,
+        'border-gray-500': true,
+        'hover:bg-stone-200': true,
+        'cursor-pointer': true,
+        'bg-yellow-100': article.categoryId === 2
+      })
+    "
     @click="$emit('moveDetail', article.articleId)"
   >
     <!-- boardCategoryEnum에 정의된 매핑된 값 불러오기 -->

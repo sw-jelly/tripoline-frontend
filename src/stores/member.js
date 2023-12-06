@@ -13,7 +13,8 @@ import {
   memberWithDrawal,
   uploadProfile,
   sendImage,
-  registURL
+  registURL,
+  searchAll
 } from '@/api/member'
 import { httpStatusCode } from '@/utils/http-status'
 
@@ -115,6 +116,38 @@ export const useMemberStore = defineStore(
       )
     }
 
+    const adminWithDrawal = async (withDrawalList) => {
+      // 각각의 memberWithDrawal 함수 호출을 프로미스로 매핑
+      const withdrawalPromises = withDrawalList.map((memberId) => {
+        return new Promise((resolve, reject) => {
+          memberWithDrawal(
+            memberId,
+            (response) => {
+              if (response.status === httpStatusCode.OK) {
+                console.log('회원탈퇴 성공')
+                resolve(memberId) // 성공한 경우 memberId를 반환
+              } else {
+                console.log('회원탈퇴 실패')
+                reject(new Error('회원탈퇴 실패'))
+              }
+            },
+            (error) => {
+              console.error(error)
+              reject(error)
+            }
+          )
+        })
+      })
+
+      try {
+        // 모든 회원탈퇴 프로미스가 완료될 때까지 대기
+        const results = await Promise.all(withdrawalPromises)
+        alert(results.length + '명의 회원탈퇴가 완료되었습니다.')
+      } catch (error) {
+        console.error('모든 회원탈퇴 중 에러 발생:', error)
+        alert('모든 회원탈퇴를 완료하지 못했습니다.')
+      }
+    }
     const userWithDrawal = async (memberId) => {
       console.log('withdrawal......', memberId)
       await memberWithDrawal(
@@ -268,7 +301,8 @@ export const useMemberStore = defineStore(
       userWithDrawal,
       uploadProfileImage,
       uploadImage,
-      registpath
+      registpath,
+      adminWithDrawal
     }
   },
   { persist: true }

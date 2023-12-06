@@ -51,7 +51,10 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 - SpringBoot
 - MyBatis
 - MySQL
-- Swagger 
+- Swagger
+
+### 사용 API
+
 
 #### 유스케이스
 

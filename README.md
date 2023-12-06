@@ -9,7 +9,8 @@
 SSAFY 10기 OO반 최종프로젝트 최우수상 수상 
 
 
-## 시연영상 [추가예정]
+## 시연영상 
+[영상보기](https://www.youtube.com/watch?v=XbaKYXYshVQ)
 ### 타임라인
 - 프로젝트 소개 00:00 
 - 로그인, 회원가입 00:47 
@@ -158,5 +159,5 @@ http://api.data.go.kr/openapi/tn_pubr_public_trrsrt_api
 <img width="1047" alt="화면설계서3" src="https://github.com/JIINSUNG/EnjoyTripFrontEnd/assets/49591292/b02bdfef-26d1-48ad-a499-d63b9f203aa0">
 
 #### 문의 
-- SSAFY 10기 지인성 
-crm03008@gmail.com 
+- SSAFY 10기 지인성 crm03008@gmail.com 
+

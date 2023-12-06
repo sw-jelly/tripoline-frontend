@@ -69,7 +69,7 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 
 - MyBatis
   
- <img width="627" alt="mybatis" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/2aba7e7f-bce2-46e7-852b-b18be84ee2ff">
+<img width="627" alt="mybatis" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/2aba7e7f-bce2-46e7-852b-b18be84ee2ff">
 
 - MySQL
   
@@ -77,7 +77,7 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 
 - Swagger
   
-  <img width="627" alt="swagger" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/10b50ed2-010b-4402-87ba-01db5906b860">
+<img width="627" alt="swagger" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/10b50ed2-010b-4402-87ba-01db5906b860">
 
 
 ### 형상관리, 협업 툴

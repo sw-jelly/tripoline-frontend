@@ -1,110 +1,62 @@
 # 관통프로젝트
-### 프로젝트이름 : EnjoyTripVue
-### 제출일: 2023.11.10일 23시 59분
+### 프로젝트이름 : EnjoyTrip (Tripoline)
+### 제출일: 2023.11.24일 
 
 ### 참여 페어
 - 지인성(조장), 양유경
 
-### 처리된 요구사항 목록
-|난이도|구현기능|세부|작성여부(O/X)|
-|:---:|---|---|:---:|
-|기본|QnA 게시판 Vue를 적용한 웹페이지|게시글목록|O|
-|기본|QnA 게시판 Vue를 적용한 웹페이지|게시글등록|O|
-|기본|QnA 게시판 Vue를 적용한 웹페이지|게시글수정|O|
-|기본|QnA 게시판 Vue를 적용한 웹페이지|게시글검색|O|
-|기본|서버측 구현|게시글 등록|O|
-|기본|서버측 구현|게시글 수정|O|
-|기본|서버측 구현|게시글 삭제|O|
-|기본|서버측 구현|게시글 상세검색|O|
-|기본|서버측 구현|게시글 목록|O|
-|추가|나만의 여행 계획 관리 페이지||X|
-|심화|HotPlace 관리  페이지||X|
+### 성과 
+SSAFY 10기 OO반 최종프로젝트 최우수상 수상 
 
-<br/>
 
-## [중요] 데이터 베이스 설정
-1. resources > sql 폴더에 '먼저 실행해주세요' 파일을 실행해주세요
-2. dump 파일을 import 해주세요!
-<br/>
+## 시연영상 [추가예정]
+### 구현한 기능들
+- 최초 화면
+- 로그인, 회원가입
+- 헤더 소개
+- 홈화면소개
+- 메인 캐러셀
+- 하단 캐러셀(메타버스
+- 푸터 소개
+- 404 에러페이지 소개
+- 공지사항
+- 게시판
+- 글 작성
+- 게시판 접근제어
+- 게시글 수정, 삭제
+- 게시글 댓글
+- 관광지검색
+- 관광지 좋아요
+- 여행계획
+- 여행계획 추가
+- 기존여행계획 보기
+- 여행 후기
+- 핫플레이스
+- 로그아웃
+- 마이페이지
+- 사진수정, 좋아요한 관광지 조회
+- 어드민페이지 
+- 날씨확인
+- 전기차충전소
+- 갤러리 구경
+- 챗봇 
 
-## 실행화면 캡쳐
-구현 기능: FrontEnd(Vue) + BackEnd(SpringMVC(Controller), Model(Dao, Service, Dto))
+## 사용한 기술 스택
+### FrontEnd
+- Vue3
+- Axios
+- tailwind
+- bootstrap
+### BackEnd
+- SpringBoot
+- MyBatis
+- MySQL
+- Swagger 
 
-### [게 시 판]
+#### 유스케이스
 
-#### 1. 게시글 목록
-![image](/uploads/e794f830c669ab7a688673aca96b4eae/image.png)
+#### ERD
 
----
+#### 클래스다이어그램
 
-#### 2. 게시글 등록
-![image](/uploads/63284e96393588f47cefba92ba32c081/image.png)
-![image](/uploads/32e5f6f90cfc2c6d11a0333f9fadd9cc/image.png)
-
----
-
-#### 3. 게시글 수정
-![image](/uploads/1379e822fde7704651b3f7f02d6b1b70/image.png)
-![image](/uploads/5f3cf13a3a54e235d224ae5b6e0cbcb9/image.png)
-
----
-
-#### 4. 게시글 상세보기
-![image](/uploads/83df659430763695ba1af5acb5f62a4a/image.png)
-
----
-
-#### 5. 게시글 검색
-![image](/uploads/cbc585689c3065744eccbf7be663042e/image.png)
-![image](/uploads/dfbf5550b9b0eb38b6badd80aecfd8f2/image.png)
-
----
-
-#### 6. 게시글 삭제
-![image](/uploads/ec0eca7d2727abff2264ed538db150ce/image.png)
-![image](/uploads/e754e16dfbdba7f9475c3c642af0096e/image.png)
-
-#### 7. 카테고리 별 게시글 보기
-<__질문게시판__> <br/>
-![image](/uploads/d3c00b66f7053cc39b5c7f14465f5fd6/image.png)
-<__자유게시판__> <br/>
-![image](/uploads/dd42605c4c2058631e76d10cb8ec3db3/image.png)
-
----
-
-#### 8. 게시글 댓글 (QnA 답변) 
-<__댓글 보기__> <br/>
-![image](/uploads/2f2021f75c59b07967e884ff2d179f09/image.png)
-<br/> <__댓글 수정__> <br/>
-![image](/uploads/2459313e6be63157dd2a74a8a77ea72a/image.png)
-<br/> <__댓글 삭제__> <br/>
-![image](/uploads/14e6af0efe4a6fb3ab31f89ef92c5633/image.png)
-<br/> 댓글 2 삭제 후 <br/>
-![image](/uploads/f628fccaf51b159d687a3fd6586315a3/image.png)
-
----
-
-#### 9. 베스트 글 모아보기
-<__전체 보기__> <br/>
-![image](/uploads/766a9c87047c7c742e0874f9045c450a/image.png)
-
-<br/> <__베스트 글__> <br/>
-![image](/uploads/401ab0a6916ef694487e379386f08045/image.png)
-
----
----
-
-### [회 원 페 이 지 - Vue 적용]
-<__로그인__> <br/>
-![image](/uploads/8a1258d51124a6a40e39b23e34e42806/image.png)
-
-<br/> <__회원 가입__> <br/>
-![image](/uploads/595a8a020a3660fd876154cc503f40ec/image.png)
-
----
----
-
-### [관 광 지 검 색]
-![image](/uploads/408ad4b99552247ca089d9f3f05f5967/image.png)
-![image](/uploads/d46eb648a1395929559abbf937a4713f/image.png)
-
+#### 구현 사진들 

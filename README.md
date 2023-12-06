@@ -42,18 +42,91 @@ SSAFY 10기 OO반 최종프로젝트 최우수상 수상
 - 챗봇 
 
 ## 사용한 기술 스택
+
 ### FrontEnd
 - Vue3
+
+<img width="627" alt="vue3" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/36c85dec-a8c9-4949-90b1-2819f1424885">
+
 - Axios
+
+<img width="627" alt="biitstrap" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/2406901e-fad5-447c-94b3-c0ae4429a5a6">
+
 - tailwind
+
+<img width="627" alt="tailwind" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/751eb223-72a6-46da-969f-a2c1b70a3cf4">
+
 - bootstrap
+
+<img width="627" alt="axios" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/d8ba361f-c7cc-49e1-b7a4-755cd974aeba">
+
+
+  
 ### BackEnd
 - SpringBoot
-- MyBatis
-- MySQL
-- Swagger
 
-### 사용 API
+<img width="627" alt="springboot" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/818b502d-b914-41f5-bd81-40eb8850630e">
+
+- MyBatis
+  
+ <img width="627" alt="mybatis" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/2aba7e7f-bce2-46e7-852b-b18be84ee2ff">
+
+- MySQL
+  
+<img width="627" alt="mysql" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/968bb331-0d27-49e4-a448-92a3d44d849a">
+
+- Swagger
+  
+  <img width="627" alt="swagger" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/10b50ed2-010b-4402-87ba-01db5906b860">
+
+
+### 형상관리, 협업 툴
+Git, GitLab (형상관리)
+
+<img width="627" alt="ssafygitlab" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/574d2df2-dd52-4ac7-83c6-e2386520fa70">
+
+Matter Most (소통 및 자료 공유) 
+
+<img width="248" alt="mattermost" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/27ae925c-cba0-4139-9c30-8fc740cbf510">
+
+
+
+
+
+### 사용 API, 라이브러리
+tour api를 통한 관광 데이터 이용 
+
+<img width="248" alt="tourapi" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/c85d72c3-c3cc-46f6-b001-5bcf56908339">
+
+imgbb를 통한 사용자 프로필 및 게시판 사진 업로드 
+
+<img width="107" alt="imgbb" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/07a19395-3afa-4083-addf-838fa951e638">
+
+공공데이터 포털을 동안 관광 데이터 이용 
+
+<img width="228" alt="공공데이터" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/be7e17c6-d753-4cc6-93dd-286d57f4afbd">
+
+
+
+
+
+기상청 단기예보 서비스
+http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
+
+한국전력공사 전기차충전소 운영정보
+https://infuser.odcloud.kr/api/stages/38249/api-docs?1653531202059
+
+한국관광공사 관광사진 정보
+http://apis.data.go.kr/B551011/PhotoGalleryService1
+
+한국관광공사 관광정보 서비스
+http://apis.data.go.kr/B551011/KorService1
+
+전국문화축제 표준 데이터
+[http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api](https://www.data.go.kr/iim/api/selectAPIAcountView.do)
+
+전국관광지정보 표준데이터
+http://api.data.go.kr/openapi/tn_pubr_public_trrsrt_api
 
 
 #### 유스케이스 다이어그램

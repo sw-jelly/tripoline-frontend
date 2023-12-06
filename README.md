@@ -106,8 +106,9 @@ imgbb를 통한 사용자 프로필 및 게시판 사진 업로드
 
 <img width="228" alt="공공데이터" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/be7e17c6-d753-4cc6-93dd-286d57f4afbd">
 
+채널톡을 이용한 챗봇 서비스 탑재
 
-
+<img width="228" alt="챗봇" src="https://github.com/JIINSUNG/EnjoyTripBackEnd/assets/49591292/44e2540b-f631-40d5-b53a-b37d93a866f7">
 
 
 기상청 단기예보 서비스
